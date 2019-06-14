@@ -1,0 +1,6 @@
+cd /
+cd C:\Users\youssef\Desktop\ecommerce\backend\EC\Scripts
+activate
+cd /
+cd C:\Users\youssef\Desktop\ecommerce\backend\ecommerce\ecommerce
+py manage.py runserver

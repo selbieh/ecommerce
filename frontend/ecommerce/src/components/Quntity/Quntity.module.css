@@ -1,0 +1,18 @@
+.Quntity{
+    display: flex;
+}
+.ico{
+    background-color: #7b1fa2;
+    color: aliceblue;
+}
+.Quntity p{
+
+    margin: 5px;
+    text-align: center;
+    margin: auto;
+} 
+.ico:hover{
+    background-color: aliceblue;
+    color: #7b1fa2;
+    pointer-events: none
+}
