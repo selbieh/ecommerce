@@ -27,7 +27,7 @@ class App extends Component {
               <Route path='/cart'  component={ShopCart}/>
               <Route path='/' exact component={Home}/>
               <Route path='/login' exact component={Login} {...this.props}/>
-              <Route path='/register' exact component={Register} {...this.props}/>
+              <Route path='/register' exact component={Register}  {...this.props}/>
 
               
 

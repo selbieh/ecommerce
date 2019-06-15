@@ -52,7 +52,7 @@ import Modal from '@material-ui/core/Modal';
           open={open}
           onClose={handleClose}
         >
-          <div style={modalStyle} className={classes.paper}>
+          <div style={modalStyle} className={classes.paper} >
             {props.children}
           </div>
         </Modal>

@@ -15,6 +15,8 @@ import Modal from '../../Modal/Modal';
 import {styles} from './useStyles';
 import Box from '@material-ui/core/Box/Box';
 import { red } from '@material-ui/core/colors';
+import joi from '@hapi/joi';
+import Close from '@material-ui/icons/Close';
 
 
 
@@ -22,36 +24,100 @@ import { red } from '@material-ui/core/colors';
 
 
 class Login extends Component {
+
+
   state = { 
-    error:{},
+    error:{
+      userName:'',
+      password:''
+    },
     value:{
-      phone:'',
+      userName:'',
       password:''
     }
    }
 
-   valueInputHandler=(e,name)=>{
-     const newEventValue={
-       ...this.state,
-       ...this.state.value
+   schema={
+    userName:joi.string().required().regex(/^[0][0-9]{10}$/).error(errors => {
+      return {
+        message: "رقم المحمول غير صحيح "
+      };
+    }),
+
+    password:joi.string().required().min(5).max(30).error(errors => {
+      return {
+        message: "على الاقل خمس عناصر "
+      };
+    }),
+  }
+
+  formValidate=()=>{
+    const result=joi.validate(this.state.value,this.schema,{abortEarly:false})
+    const errorOject={}
+      
+      if(result.error){
+
+      for (let i of result.error.details){
+        errorOject[i.path[0]]=i.message
       }
-    newEventValue.value[name]=e.target.value
+      this.setState({error:errorOject}) 
+
+      }else{
+        this.setState({error:{}}) 
+
+      }    
+  }
+
+
+   componentDidUpdate(_, prevState){
+  
+    if (prevState.value.userName !==  this.state.value.userName ||
+       prevState.value.password !==this.state.value.password){
+     this.formValidate()
+
+    }
+   }
+
+  
+  
+
+ 
+   submitHandler=(event)=>{
+    event.preventDefault();
+       }
+
+
+   valueInputHandler=(e,name)=>{
+     const cloneState={
+       ...this.state,
+      }
+      const clonedValue={...cloneState.value}
+      clonedValue[name]=e.target.value
     this.setState({
-      state:newEventValue
+      value:clonedValue
     })
    }
+
+
+   cancelFormHandler=()=>{
+     this.props.history.push('/')
+   }
+   
    
   render() {
 
-  const {classes}= this.props
-    
+  const {classes}= this.props;
     return (
 
-      <Modal>
+      <Modal  >
 
 
 
       <Container component="main" maxWidth="xs">
+      <Typography align="right" >
+            <Close color="inherit" onClick={this.cancelFormHandler}/>
+      </Typography>
+
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -60,23 +126,22 @@ class Login extends Component {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={this.submitHandler}>
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="email"
-              label="رقم الهاتف"
-              name="phone"
-              autoComplete="email"
+              label="رقم المحمول"
+              name="userName"
               autoFocus
-              placeholder='EX: 0122XXXXXXX'
-              onChange={(e)=>this.valueInputHandler(e,'phone')}
+              placeholder=' 0122XXXXXXX مثال'
+              onChange={(e)=>this.valueInputHandler(e,'userName')}
             />
 
   <Box color={red}>
-       input vaild username
+       {this.state.error.userName}
   </Box>
  
 
@@ -96,7 +161,7 @@ class Login extends Component {
             />
 
             <Box color={red}>
-                input vaild username
+              {this.state.error.password}
            </Box>
  
             <FormControlLabel

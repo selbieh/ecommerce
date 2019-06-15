@@ -108,6 +108,7 @@ class PrimarySearchAppBar extends React.Component {
 
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
+
   };
   handelLogInRedirect=()=>{
    //console.log(this.props)
@@ -119,6 +120,15 @@ class PrimarySearchAppBar extends React.Component {
      this.props.history.push('/register')
      this.handleMenuClose()
    }
+
+   handelCartRedirect=()=>{
+    this.props.history.push('/cart')
+    this.handleMobileMenuClose();
+
+    
+
+   }
+
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
@@ -133,8 +143,8 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handelLogInRedirect}>LOGIN</MenuItem>
-        <MenuItem onClick={this.handelRegisterRedirect} >Register</MenuItem>
+        <MenuItem onClick={this.handelLogInRedirect}>تسجيل دخول</MenuItem>
+        <MenuItem onClick={this.handelRegisterRedirect} >حساب جديد</MenuItem>
       </Menu>
     );
 
@@ -147,19 +157,19 @@ class PrimarySearchAppBar extends React.Component {
         onClose={this.handleMenuClose}
       >
         
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
+        <MenuItem onClick={this.handelCartRedirect} >
+          <IconButton color="inherit" >
             <Badge badgeContent={11} color="secondary">
               <ShoppingCart />
             </Badge>
           </IconButton>
-          <p>SHOP CART</p>
+          <p >عربه التسوق</p>
         </MenuItem>
         <MenuItem onClick={this.handleProfileMenuOpen}>
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
-          <p>Profile</p>
+          <p>حسابي</p>
         </MenuItem>
       </Menu>
     );
@@ -177,7 +187,7 @@ class PrimarySearchAppBar extends React.Component {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder=".....بحث"
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -187,7 +197,7 @@ class PrimarySearchAppBar extends React.Component {
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               
-              <IconButton color="inherit">
+              <IconButton color="inherit" onClick={this.handelCartRedirect}>
                 <Badge badgeContent={17} color="secondary">
                   <ShoppingCart />
                 </Badge>
