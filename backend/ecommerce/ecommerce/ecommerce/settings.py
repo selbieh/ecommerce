@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'products',
+    'shopcart',
+    'orders',
     'sorl.thumbnail',
     #DJANGO DRF
     'rest_framework',
@@ -119,7 +121,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
-
+#make password brity easy
 AUTH_PASSWORD_VALIDATORS = [
     #{
        # 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
