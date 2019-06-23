@@ -4,7 +4,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import SelectRoute from './SelectRoute/SelectRoute';
 
 
 
@@ -33,7 +32,7 @@ class MainPic extends Component {
       const { classes } = this.props;
 
         return (
-          <div style={{width:'100%',height:'auto',textAlign:'center',position:'relative'}}>
+          <div style={{width:'100%',height:'auto',textAlign:'center',position:'relative'}} onClick={this.props.scroll}>
             <img src={img} alt='pic' style={{width:'100%',height:'auto',border:'0px'}}/>
             
             <div style={{position:'absolute',top:'30%',left:'50%',transform:'translate(-50%,-50%)' }}>
@@ -60,7 +59,6 @@ class MainPic extends Component {
           <Button variant="outlined"  style={{backgroundColor:'#7b1fa2',color:'white'}}>عرض المنتجات</Button>
 
           </div>
-          <SelectRoute/>
               
           </div>  
         );

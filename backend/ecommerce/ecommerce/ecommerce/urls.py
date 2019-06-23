@@ -14,8 +14,27 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
+from . import views
+from django.conf.urls import url
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+#from allauth.account.views import confirm_email as allauthemailconfirmation
+
+#from  django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("products/",include("products.urls")),
+    path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^account-confirm-email/(?P<key>[-:\w]+)/$', views.activate_account,
+        name='account_confirm_email')
+
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

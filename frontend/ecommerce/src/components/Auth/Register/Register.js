@@ -15,38 +15,52 @@ import Box from '@material-ui/core/Box/Box';
 import { red } from '@material-ui/core/colors';
 import joi from '@hapi/joi';
 import Close from '@material-ui/icons/Close';
-
-
-
-
-
-
-
-
-
+import axios from 'axios';
 
 
 class SignUp extends Component {
   state = {
     value:{
-      userName:'',
+      username:'',
       email:'',
-      password:''
+      password1:'',
+      password2:''
 
     },
     error:{
       userName:'',
       email:'',
-      password:''
-    }
+      password1:'',
+      password2:''
+
+    },
+    backendError:''
     }
 
 
+   
+    
     
 
     submitHandler=(event)=>{
       event.preventDefault();
+      axios.post('http://127.0.0.1:8000/rest-auth/registration/',this.state.value).then(res=>{
+        console.log(res)
+        this.setState({backendError:''})
+  
+      }).catch((error)=>{
+        console.log(error.response.data)
+        //if (error.response.data['non_field_errors']['0']){
+         // let errorObject=''
+          //errorObject='خطأ في كلمه المرور او اسم المستخدم'
+          //this.setState({backendError:errorObject})
+       // }
+       
+      })
          }
+
+
+
 
          valueInputHandler=(e,name)=>{
           const cloneState={
@@ -62,17 +76,23 @@ class SignUp extends Component {
         
         
         schema={
-          userName:joi.string().regex(/^[0][0-9]{10}$/).error(errors => {
+          username:joi.string().regex(/^[0][0-9]{10}$/).error(errors => {
             return {
               message: "رقم المحمول غير صحيح "
             };
           }),
       
-          password:joi.string().required().min(5).max(30).error(errors => {
+          password1:joi.string().required().min(5).max(30).error(errors => {
             return {
               message: "على الاقل خمس عناصر "
             };
           }),
+          password2:joi.string().required().min(5).max(30).error(errors => {
+            return {
+              message: "على الاقل خمس عناصر "
+            };
+          }),
+
 
           email:joi.string().email({ minDomainSegments: 2 }).error(errors => {
             return {
@@ -82,25 +102,31 @@ class SignUp extends Component {
         }
       
         formValidate=()=>{
-          const result=joi.validate(this.state.value,this.schema,{abortEarly:false})
           const errorOject={}
-            
-            if(result.error){
-      
+          const result=joi.validate(this.state.value,this.schema,{abortEarly:false})
+         
+          if(result.error){
             for (let i of result.error.details){
               errorOject[i.path[0]]=i.message
             }
             this.setState({error:errorOject}) 
       
-            }else{
-              this.setState({error:{}}) 
-      
+            }else if(this.state.value.password1 !==this.state.value.password2){
+                errorOject['password2']='لابد من تطابق كلمتي السر '
+                this.setState({error:errorOject}) 
+           }else{
+             this.setState({error:{}})
+
+              }
+
+
             }    
-        }
+
         componentDidUpdate(_, prevState){
   
-          if (prevState.value.userName !==  this.state.value.userName ||
-             prevState.value.password !==this.state.value.password||
+          if (prevState.value.username !==  this.state.value.username ||
+             prevState.value.password1 !==this.state.value.password1||
+             prevState.value.password2 !==this.state.value.password2||
              prevState.value.email !==this.state.value.email ){
            this.formValidate()
       
@@ -115,6 +141,19 @@ class SignUp extends Component {
 
 
     const {classes}= this.props
+
+    
+  let isButtuDisabled=true;
+  if(!this.state.error.username && 
+    !this.state.error.password1 && 
+    !this.state.error.password2 && 
+    !this.state.error.email && 
+    this.state.value.password1.trim().length !== 0 &&
+    this.state.value.password2.trim().length !== 0 &&
+    this.state.value.email.trim().length !== 0 &&
+    this.state.value.username.trim().length ){
+    isButtuDisabled=false;
+  }
 
       return (
 
@@ -135,25 +174,29 @@ class SignUp extends Component {
             <Typography component="h1" variant="h5">
               سجل الان
             </Typography>
+            <Box color={red}> 
+            {this.state.backendError}
+      </Box>
+
             <form className={classes.form} onSubmit={this.submitHandler}>
               <Grid container spacing={2}>
                 <Grid item xs={12} >
                   <TextField
                     autoComplete="fname"
-                    name="userName"
+                    name="username"
                     variant="outlined"
                     required
                     fullWidth
                     id="firstName"
                     label="رقم المحمول"
                     autoFocus
-                    onChange={(e)=>this.valueInputHandler(e,'userName')}
+                    onChange={(e)=>this.valueInputHandler(e,'username')}
 
                   />
                 </Grid>
                 
                 <Box color={red}>
-                    {this.state.error.userName}
+                    {this.state.error.username}
                 </Box>
                 
                 <Grid item xs={12}>
@@ -178,17 +221,34 @@ class SignUp extends Component {
                     variant="outlined"
                     required
                     fullWidth
-                    name="password"
+                    name="password1"
                     label="كلمه السر"
                     type="password"
-                    id="password"
+                    id="password1"
                     autoComplete="current-password"
-                    onChange={(e)=>this.valueInputHandler(e,'password')}
+                    onChange={(e)=>this.valueInputHandler(e,'password1')}
 
                   />
                 </Grid>
                 <Box color={red}>
-                    {this.state.error.password}
+                    {this.state.error.password1}
+                </Box>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password2"
+                    label="تأكيد كلمه السر"
+                    type="password"
+                    id="password2"
+                    autoComplete="current-password"
+                    onChange={(e)=>this.valueInputHandler(e,'password2')}
+
+                  />
+                </Grid>
+                <Box color={red}>
+                    {this.state.error.password2}
                 </Box>
  
                 
@@ -199,6 +259,8 @@ class SignUp extends Component {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                disabled={isButtuDisabled}
+
               >
                 
                 سجل الان

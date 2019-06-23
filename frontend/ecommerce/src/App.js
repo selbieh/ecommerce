@@ -6,7 +6,7 @@ import Home from './components/Home/Home';
 import Footer from './components/Footer/Footer';
 import ShopCart from './components/ShopCart/ShopCart';
 import AllProdduct from "./components/AllProdduct/AllProdduct";
-import MainPic from "./components/MainPic/MainPic";
+import MainPic from "./components/HomeWithAnimate/HomeWithAnimate";
 import Login from './components/Auth/Login/Login';
 import Register from './components/Auth/Register/Register';
 

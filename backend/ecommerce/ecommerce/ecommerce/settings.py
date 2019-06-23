@@ -25,7 +25,15 @@ SECRET_KEY = 'n7kws6^_u1k*0@m56kuqu6#$y*aedeq(thtxteolr19tfz!&pb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS=['*']
+
+CORS_ORIGIN_WHITELIST =['https://localhost:3000']
+#CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+
+
+
 
 
 # Application definition
@@ -37,16 +45,44 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'products',
+    'sorl.thumbnail',
+    #DJANGO DRF
+    'rest_framework',
+    #DJANGO REST-AUTH
+    'rest_framework.authtoken',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth',
+    'rest_auth.registration',
+    #will not used but for make framework works without bugs
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
+    #django header Cores
+    'corsheaders',
+
+
 ]
 
 MIDDLEWARE = [
+
+    # django cors header
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    #'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+
+
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -54,7 +90,7 @@ ROOT_URLCONF = 'ecommerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,26 +121,39 @@ DATABASES = {
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
+    #{
+       # 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    #},
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+'OPTIONS': {
+            'min_length': 5,
+        }
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+   # {
+        #'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    #},
+   # {
+       # 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    #},
 ]
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -117,4 +166,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+#make settig as it is ..create staticfiles inside app foler
+#create static_cdn_test beside the app folder
 STATIC_URL = '/static/'
+LOCAL_STATIC_CDN_PATH = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn_test')# must be created outside project folder beside mai app folder
+STATIC_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, 'static') # live cdn AWS S3   / will create static folder inside static_cdn_test wich is outside the project folder
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'staticfiles') #in project folder create staticfiles folder and add all static on it
+]
+MEDIA_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, 'media') #will auto created inside static_cdn_test wich is outside the project folder
+MEDIA_URL = '/media/' # django-storages
+
+
+#Rest-auth Site_ID
+SITE_ID = 1
+# REST AUTH MAIL CONFIG
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sayed.freelancer.web@gmail.com'
+EMAIL_HOST_PASSWORD = 'freelancerdjango'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

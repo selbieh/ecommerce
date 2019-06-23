@@ -17,6 +17,7 @@ import Box from '@material-ui/core/Box/Box';
 import { red } from '@material-ui/core/colors';
 import joi from '@hapi/joi';
 import Close from '@material-ui/icons/Close';
+import axios from 'axios';
 
 
 
@@ -28,17 +29,20 @@ class Login extends Component {
 
   state = { 
     error:{
-      userName:'',
+      username:'',
       password:''
     },
     value:{
       userName:'',
       password:''
-    }
+    },
+    backendError:''
    }
 
+
+   //joi schema
    schema={
-    userName:joi.string().required().regex(/^[0][0-9]{10}$/).error(errors => {
+    username:joi.string().required().regex(/^[0][0-9]{10}$/).error(errors => {
       return {
         message: "رقم المحمول غير صحيح "
       };
@@ -51,6 +55,8 @@ class Login extends Component {
     }),
   }
 
+
+  //form validation
   formValidate=()=>{
     const result=joi.validate(this.state.value,this.schema,{abortEarly:false})
     const errorOject={}
@@ -68,10 +74,11 @@ class Login extends Component {
       }    
   }
 
+//form validate due to input chages
 
    componentDidUpdate(_, prevState){
   
-    if (prevState.value.userName !==  this.state.value.userName ||
+    if (prevState.value.username !==  this.state.value.username ||
        prevState.value.password !==this.state.value.password){
      this.formValidate()
 
@@ -80,13 +87,28 @@ class Login extends Component {
 
   
   
-
+//form submit
  
    submitHandler=(event)=>{
     event.preventDefault();
+    axios.post('http://127.0.0.1:8000/rest-auth/login/',this.state.value).then(res=>{
+      console.log(res.data)
+      this.setState({backendError:''})
+
+    }).catch((error)=>{
+      if (error.response.data['non_field_errors']['0']){
+        let errorObject=''
+        errorObject='خطأ في كلمه المرور او اسم المستخدم'
+        this.setState({backendError:errorObject})
+      }
+     
+    })
+
        }
 
 
+
+//   valueInputHandler    
    valueInputHandler=(e,name)=>{
      const cloneState={
        ...this.state,
@@ -98,7 +120,7 @@ class Login extends Component {
     })
    }
 
-
+//cancel redidreict 
    cancelFormHandler=()=>{
      this.props.history.push('/')
    }
@@ -107,12 +129,19 @@ class Login extends Component {
   render() {
 
   const {classes}= this.props;
+
+  let isButtuDisabled=true;
+  if(!this.state.error.username && 
+    !this.state.error.password && 
+    this.state.value.password.trim().length !== 0 &&
+    this.state.value.username.trim().length ){
+    isButtuDisabled=false;
+  }
     return (
 
       <Modal  >
 
-
-
+     
       <Container component="main" maxWidth="xs">
       <Typography align="right" >
             <Close color="inherit" onClick={this.cancelFormHandler}/>
@@ -123,8 +152,12 @@ class Login extends Component {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
+        <Box color={red}> 
+            {this.state.backendError}
+      </Box>
+
           <Typography component="h1" variant="h5">
-            Sign in
+            تسجيل دخول
           </Typography>
           <form className={classes.form} noValidate onSubmit={this.submitHandler}>
             <TextField
@@ -134,14 +167,14 @@ class Login extends Component {
               fullWidth
               id="email"
               label="رقم المحمول"
-              name="userName"
+              name="username"
               autoFocus
               placeholder=' 0122XXXXXXX مثال'
-              onChange={(e)=>this.valueInputHandler(e,'userName')}
+              onChange={(e)=>this.valueInputHandler(e,'username')}
             />
 
   <Box color={red}>
-       {this.state.error.userName}
+       {this.state.error.username}
   </Box>
  
 
@@ -174,6 +207,7 @@ class Login extends Component {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={isButtuDisabled}
             >
               Sign In
             </Button>
