@@ -15,7 +15,11 @@ import Box from '@material-ui/core/Box/Box';
 import { red } from '@material-ui/core/colors';
 import joi from '@hapi/joi';
 import Close from '@material-ui/icons/Close';
-import axios from 'axios';
+import {connect} from 'react-redux';
+import Spinner from '../../spinner/spinner';
+import * as asyncAction from '../../../store/authStore/asyncActions';
+import {Redirect} from 'react-router';
+
 
 
 class SignUp extends Component {
@@ -28,39 +32,23 @@ class SignUp extends Component {
 
     },
     error:{
-      userName:'',
+      username:'',
       email:'',
       password1:'',
       password2:''
 
     },
-    backendError:''
     }
 
 
    
-    
-    
-
+   
     submitHandler=(event)=>{
       event.preventDefault();
-      axios.post('http://127.0.0.1:8000/rest-auth/registration/',this.state.value).then(res=>{
-        console.log(res)
-        this.setState({backendError:''})
-  
-      }).catch((error)=>{
-        console.log(error.response.data)
-        //if (error.response.data['non_field_errors']['0']){
-         // let errorObject=''
-          //errorObject='خطأ في كلمه المرور او اسم المستخدم'
-          //this.setState({backendError:errorObject})
-       // }
-       
-      })
+      const data=this.state.value
+      this.props.register(data)
+     
          }
-
-
-
 
          valueInputHandler=(e,name)=>{
           const cloneState={
@@ -116,10 +104,7 @@ class SignUp extends Component {
                 this.setState({error:errorOject}) 
            }else{
              this.setState({error:{}})
-
               }
-
-
             }    
 
         componentDidUpdate(_, prevState){
@@ -155,133 +140,176 @@ class SignUp extends Component {
     isButtuDisabled=false;
   }
 
-      return (
+  let redirect=null;
+  if (this.props.isAuthed && !this.props.backendError){
+    redirect=<Redirect to = '/'/>
+  }
 
+  if (!this.props.showSpiner){
+    return (
 
-        <Modal >
-    
-        <Container component="main" maxWidth="xs">
+      <Modal >
+  
+      <Container component="main" maxWidth="xs">
 
-        <Typography align="right" >
-            <Close color="inherit" onClick={this.cancelFormHandler}/>
-      </Typography>
+      <Typography align="right" >
+          <Close color="inherit" onClick={this.cancelFormHandler}/>
+    </Typography>
 
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            سجل الان
+          </Typography>
+       
+          <form className={classes.form} onSubmit={this.submitHandler}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} >
+                <TextField
+                  autoComplete="fname"
+                  name="username"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="رقم المحمول"
+                  autoFocus
+                  onChange={(e)=>this.valueInputHandler(e,'username')}
+
+                />
+              </Grid>
+              
+              { this.props.backendError? <Box color={red}>
+                  {this.props.backendError.username}
+              </Box> :null}
+
+              <Box color={red}>
+                  {this.state.error.username}
+              </Box>
+              
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="بريد الكتروني"
+                  name="email"
+                  autoComplete="email"
+                  onChange={(e)=>this.valueInputHandler(e,'email')}
+
+                />
+              </Grid>
+              <Box color={red}> 
+              {this.state.error.email}
+            </Box>
+            { this.props.backendError? <Box color={red}>
+                  {this.props.backendError.email}
+              </Box> :null}
+              
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password1"
+                  label="كلمه السر"
+                  type="password"
+                  id="password1"
+                  autoComplete="current-password"
+                  onChange={(e)=>this.valueInputHandler(e,'password1')}
+
+                />
+              </Grid>
+              <Box color={red}>
+                  {this.state.error.password1}
+              </Box>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password2"
+                  label="تأكيد كلمه السر"
+                  type="password"
+                  id="password2"
+                  autoComplete="current-password"
+                  onChange={(e)=>this.valueInputHandler(e,'password2')}
+
+                />
+              </Grid>
+              <Box color={red}>
+                  {this.state.error.password2}
+              </Box>
+
+              
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              disabled={isButtuDisabled}
+
+            >
+              
               سجل الان
-            </Typography>
-            <Box color={red}> 
-            {this.state.backendError}
-      </Box>
-
-            <form className={classes.form} onSubmit={this.submitHandler}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} >
-                  <TextField
-                    autoComplete="fname"
-                    name="username"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="رقم المحمول"
-                    autoFocus
-                    onChange={(e)=>this.valueInputHandler(e,'username')}
-
-                  />
-                </Grid>
-                
-                <Box color={red}>
-                    {this.state.error.username}
-                </Box>
-                
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="بريد الكتروني"
-                    name="email"
-                    autoComplete="email"
-                    onChange={(e)=>this.valueInputHandler(e,'email')}
-
-                  />
-                </Grid>
-
-                <Box color={red}>
-                    {this.state.error.email}
-                </Box>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password1"
-                    label="كلمه السر"
-                    type="password"
-                    id="password1"
-                    autoComplete="current-password"
-                    onChange={(e)=>this.valueInputHandler(e,'password1')}
-
-                  />
-                </Grid>
-                <Box color={red}>
-                    {this.state.error.password1}
-                </Box>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password2"
-                    label="تأكيد كلمه السر"
-                    type="password"
-                    id="password2"
-                    autoComplete="current-password"
-                    onChange={(e)=>this.valueInputHandler(e,'password2')}
-
-                  />
-                </Grid>
-                <Box color={red}>
-                    {this.state.error.password2}
-                </Box>
- 
-                
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link href="#" variant="body2">
+                  لديك حساب بالفعل ؟ سجل دخول
+                </Link>
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disabled={isButtuDisabled}
-
-              >
-                
-                سجل الان
-              </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    لديك حساب بالفعل ؟ سجل دخول
-                  </Link>
-                </Grid>
-              </Grid>
-            </form>
-          </div>
-          
-        </Container>
-        </Modal>
+            </Grid>
+          </form>
+        </div>
+        
+      </Container>
+      </Modal>
+  
+    )
     
-      );
+  }else{
+    return ( 
+    <React.Fragment>
+        <Modal >
+          <Container component="main" maxWidth="xs" >
+              <div align='center' >
+                    <Spinner  align='center' />
+              </div>
+          </Container>
+        </Modal>
+
+          {redirect}
+
+    </React.Fragment>
+   
+    )}
+     
   }
 }
 
-export default withStyles(styles)(SignUp);
+const mapsStateToProps=state=>{
+  return{
+    backendError:state.registerBackendError,
+    showSpiner:state.showSpiner,
+    isAuthed:state.token !==null 
+  }
+}
+
+const mapActionsToProps=(dispatch)=>{
+  return{
+  
+    register:(data)=> dispatch(asyncAction.asyncRegister(data))
+  }
+
+}
+
+export default connect(mapsStateToProps,mapActionsToProps) (withStyles(styles)(SignUp));
 
 

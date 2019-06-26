@@ -17,7 +17,12 @@ import Box from '@material-ui/core/Box/Box';
 import { red } from '@material-ui/core/colors';
 import joi from '@hapi/joi';
 import Close from '@material-ui/icons/Close';
-import axios from 'axios';
+import {connect} from 'react-redux';
+import * as asyncActions from '../../../store/authStore/asyncActions';
+import Spinner from '../../spinner/spinner';
+import {Redirect} from 'react-router';
+
+
 
 
 
@@ -33,10 +38,9 @@ class Login extends Component {
       password:''
     },
     value:{
-      userName:'',
+      username:'',
       password:''
-    },
-    backendError:''
+    }
    }
 
 
@@ -91,18 +95,7 @@ class Login extends Component {
  
    submitHandler=(event)=>{
     event.preventDefault();
-    axios.post('http://127.0.0.1:8000/rest-auth/login/',this.state.value).then(res=>{
-      console.log(res.data)
-      this.setState({backendError:''})
-
-    }).catch((error)=>{
-      if (error.response.data['non_field_errors']['0']){
-        let errorObject=''
-        errorObject='خطأ في كلمه المرور او اسم المستخدم'
-        this.setState({backendError:errorObject})
-      }
-     
-    })
+    this.props.login(this.state.value)
 
        }
 
@@ -137,6 +130,13 @@ class Login extends Component {
     this.state.value.username.trim().length ){
     isButtuDisabled=false;
   }
+
+ let redirect=null;
+  if (this.props.isAuthed && this.props.loginBackendError ===null){
+    redirect=<Redirect to = '/'/>
+  }
+
+  if (!this.props.showSpiner ){
     return (
 
       <Modal  >
@@ -153,7 +153,7 @@ class Login extends Component {
             <LockOutlinedIcon />
           </Avatar>
         <Box color={red}> 
-            {this.state.backendError}
+            {this.props.loginBackendError}
       </Box>
 
           <Typography component="h1" variant="h5">
@@ -231,8 +231,40 @@ class Login extends Component {
       </Modal>
       
     );
+  }else{
+    return ( 
+    <React.Fragment>
+        <Modal >
+          <Container component="main" maxWidth="xs" >
+              <div align='center' >
+                    <Spinner  align='center' />
+              </div>
+          </Container>
+        </Modal>
+
+          {redirect}
+
+    </React.Fragment>
+   
+    )}
+     
   }
 }
 
-export default withStyles(styles)(Login);
+const mapeStateToProps=state=>{
+  return{
+    showSpiner:state.showSpiner,
+    isAuthed:state.token !==null ,
+    loginBackendError:state.loginBackendError,
+  }
+}
+
+const mapActionToProps=dispatch=>{
+  return{
+    login:(data)=>dispatch(asyncActions.asyncLogin(data))
+  }
+}
+
+
+export default connect(mapeStateToProps,mapActionToProps) ( withStyles(styles)(Login));
 

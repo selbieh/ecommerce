@@ -7,84 +7,14 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
-
-
 import MoreIcon from '@material-ui/icons/MoreVert';
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-  title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing (2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing (3),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    width: theme.spacing (9),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-  },
-  inputInput: {
-    paddingTop: theme.spacing(),
-    paddingRight: theme.spacing(),
-    paddingBottom: theme.spacing(),
-    paddingLeft: theme.spacing (10),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 200,
-    },
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
-  },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
-});
+import {styles} from './NavBarStyle';
+import {connect} from 'react-redux';
+import * as asynAction from '../../store/authStore/asyncActions';
 
 class PrimarySearchAppBar extends React.Component {
   state = {
@@ -111,22 +41,21 @@ class PrimarySearchAppBar extends React.Component {
 
   };
   handelLogInRedirect=()=>{
-   //console.log(this.props)
     this.props.history.push('/login')
     this.handleMenuClose()
   }
   handelRegisterRedirect=()=>{
-    //console.log(this.props)
      this.props.history.push('/register')
      this.handleMenuClose()
    }
 
    handelCartRedirect=()=>{
     this.props.history.push('/cart')
-    this.handleMobileMenuClose();
+    this.handleMobileMenuClose(); 
+   }
 
-    
-
+   logoutHandler=()=>{
+     this.props.logout()
    }
 
   render() {
@@ -143,8 +72,11 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
+        {!this.props.isAuthed?
+        <div>
         <MenuItem onClick={this.handelLogInRedirect}>تسجيل دخول</MenuItem>
         <MenuItem onClick={this.handelRegisterRedirect} >حساب جديد</MenuItem>
+        </div>:<MenuItem onClick={this.logoutHandler} > تسجيل خروج</MenuItem>}
       </Menu>
     );
 
@@ -225,6 +157,16 @@ class PrimarySearchAppBar extends React.Component {
   }
 }
 
+const mapStateToProps=state=>{
+  return{
+    isAuthed:state.token !==null 
+  }
+}
 
+const mapActionsToProps=dispatch=>{
+  return{
+    logout:()=>dispatch(asynAction.asyncLougout())
+  }
+}
 
-export default withStyles(styles)(PrimarySearchAppBar);
+export default connect(mapStateToProps,mapActionsToProps) (withStyles(styles)(PrimarySearchAppBar));

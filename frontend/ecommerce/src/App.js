@@ -9,29 +9,32 @@ import AllProdduct from "./components/AllProdduct/AllProdduct";
 import MainPic from "./components/HomeWithAnimate/HomeWithAnimate";
 import Login from './components/Auth/Login/Login';
 import Register from './components/Auth/Register/Register';
-
+import {asyncAppStart} from './store/authStore/asyncActions';
+import {connect} from 'react-redux'
 
 
 import {Route,withRouter} from 'react-router-dom';
 
 
 class App extends Component {
+
+  componentDidMount(){
+    this.props.checkToken()
+  }
+
   render() {
     return (
       <React.Fragment>
               <CssBaseline />
               <div className="App">
-              <Navbar {...this.props}/>
-              <MainPic {...this.props}/>
-              <Route path='/products' component={AllProdduct}/>
-              <Route path='/cart'  component={ShopCart}/>
-              <Route path='/' exact component={Home}/>
-              <Route path='/login' exact component={Login} {...this.props}/>
-              <Route path='/register' exact component={Register}  {...this.props}/>
-
-              
-
-              <Footer/>
+                <Navbar {...this.props}/>
+                <MainPic {...this.props}/>
+                <Route path='/products' component={AllProdduct}/>
+                <Route path='/cart'  component={ShopCart}/>
+                <Route path='/' exact component={Home}/>
+                <Route path='/login' exact component={Login} {...this.props}/>
+                <Route path='/register' exact component={Register}  {...this.props}/>
+                <Footer/>
               </div>
       </React.Fragment>
       
@@ -39,4 +42,10 @@ class App extends Component {
   }
 }
 
-export default withRouter (App);
+const mapActionAsProps=dispatch=>{
+  return{
+    checkToken:()=>dispatch(asyncAppStart())
+  }
+}
+
+export default connect(null,mapActionAsProps) (withRouter (App));
