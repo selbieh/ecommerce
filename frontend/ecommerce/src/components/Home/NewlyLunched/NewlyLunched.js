@@ -1,35 +1,16 @@
+
+
 import React, { Component } from 'react';
 import NewlyCard from './NewlyCard/NewlyCard';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import image1 from './1.jpg';
-import image2 from './2.jpg';
-import image3 from './3.jpg';
+import {connect} from 'react-redux'; 
 
 
 
 
 class NewlyLunched extends Component {
 
-    state={
-         images : [
-            {
-              url: `url(${image1})`,
-              title: 'مكتب صغير',
-              width: '100%',
-            },
-            {
-              url: `url(${image2})`,
-              title: 'مكتب 3',
-              width: '100%',
-            },
-            {
-              url: `url(${image3})`,
-              title: 'مكتب ستيرو',
-              width: '100%',
-            },
-          ]
-    }
     
     render() {
         return (
@@ -41,11 +22,10 @@ class NewlyLunched extends Component {
                     </Typography>
 
                     <Grid container  justify="center" spacing={10}>
-                        {this.state.images.map(value => (
-                        <Grid key={value.title} item  >
-                            <NewlyCard title={value.title}
-                            width={value.width}
-                            img={value.url}/>
+                        {this.props.products.slice(3,6).map(product => (
+                        <Grid key={product.id} item  >
+                            <NewlyCard title={product.name}
+                            img= {product.image_1}/>
                         </Grid>
                         ))}
                     </Grid> 
@@ -58,5 +38,11 @@ class NewlyLunched extends Component {
     }
 }
 
-export default NewlyLunched;
+const mapStateToProps=state=>{
+  return{
+    products:state.product.products
+  }
+}
+
+export default connect(mapStateToProps)(NewlyLunched);
 

@@ -14,33 +14,9 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 import Quntity from '../../Quntity/Quntity';
+import {styles} from './styles';
 
 
-const styles = theme => ({
-  card: {
-    maxWidth: 400,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  actions: {
-    display: 'flex',
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: '#6f42c1',
-  },
-});
 
 class ProductCard extends React.Component {
   state = { expanded: false };
@@ -61,18 +37,17 @@ class ProductCard extends React.Component {
             </Avatar>
           }
         
-          title="اسم الموديل ورقمه "
+          title={this.props.title}
           subheader="ألابعاد 15 * 16* 22"
         />
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/paella.jpg"
+          image={this.props.image}
           title="Paella dish"
         />
         <CardContent>
           <Typography component="p">
-            This impressive paella is a perfect party dish and a fun meal to cook together with your
-            guests. Add 1 cup of frozen peas along with the mussels, if you like.
+           {this.props.details}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} >

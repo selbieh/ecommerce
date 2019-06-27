@@ -296,9 +296,9 @@ class SignUp extends Component {
 
 const mapsStateToProps=state=>{
   return{
-    backendError:state.registerBackendError,
-    showSpiner:state.showSpiner,
-    isAuthed:state.token !==null 
+    backendError:state.auth.registerBackendError,
+    showSpiner:state.auth.showSpiner,
+    isAuthed:state.auth.token !==null 
   }
 }
 

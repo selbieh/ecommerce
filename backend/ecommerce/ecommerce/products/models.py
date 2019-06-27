@@ -1,16 +1,36 @@
 from django.db import models
 from .utility import *
+from imagekit.processors import Resize
+from imagekit.models import ProcessedImageField
+
+
 
 class product (models.Model):
     name=models.CharField(max_length=15,blank=False)
     note=models.CharField(max_length=130,blank=True)
     detail=models.TextField(max_length=300,blank=True)
-    image_1=models.ImageField(upload_to=user_directory_path_1,blank=True)
-    image_2=models.ImageField(upload_to=user_directory_path_2,blank=True)
-    image_3=models.ImageField(upload_to=user_directory_path_3,blank=True)
-    image_4=models.ImageField(upload_to=user_directory_path_4,blank=True)
+    image_1=ProcessedImageField(upload_to=user_directory_path_1,blank=True,
+                                           processors=[Resize(350, 250)],
+                                           format='JPEG',
+                                           options={'quality': 100})
+    image_2=ProcessedImageField(upload_to=user_directory_path_2,blank=True,
+                                           processors=[Resize(350, 250)],
+                                           format='JPEG',
+                                           options={'quality': 100})
+    image_3=ProcessedImageField(upload_to=user_directory_path_3,blank=True,
+                                           processors=[Resize(350, 250)],
+                                           format='JPEG',
+                                           options={'quality': 100})
+    image_4= ProcessedImageField(upload_to=user_directory_path_4,blank=True,
+                                           processors=[Resize(350, 250)],
+                                           format='JPEG',
+                                           options={'quality': 100})
+
+    def __str__(self):
+        return self.name
 #now djago will auto delet the old image in case of edit & auto edit ay uploaded image to 250X350 size
-#if you have no image form will bbe accepted
+#if you have no image form will bbe accepted+
+    '''
     def save(self,*args,**kwargs):
         try:
             old_oject = product.objects.get(id=self.id)
@@ -38,5 +58,5 @@ class product (models.Model):
 
         super(product, self).save()
 
-    def __str__(self):
-        return self.name
+  
+    '''

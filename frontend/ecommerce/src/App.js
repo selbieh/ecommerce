@@ -9,20 +9,26 @@ import AllProdduct from "./components/AllProdduct/AllProdduct";
 import MainPic from "./components/HomeWithAnimate/HomeWithAnimate";
 import Login from './components/Auth/Login/Login';
 import Register from './components/Auth/Register/Register';
-import {asyncAppStart} from './store/authStore/asyncActions';
-import {connect} from 'react-redux'
-
-
+import {asyncAuthAppStart} from './store/authStore/asyncActions';
+import {connect} from 'react-redux';
+import Spinner from './components/spinner/spinner';
 import {Route,withRouter} from 'react-router-dom';
+import {asyncFetchProduct} from './store/productStore/asyncActions';
+
 
 
 class App extends Component {
 
   componentDidMount(){
     this.props.checkToken()
+    this.props.fetchProduct()
   }
 
   render() {
+
+    if(!this.props.showSpinner){
+
+    
     return (
       <React.Fragment>
               <CssBaseline />
@@ -39,13 +45,28 @@ class App extends Component {
       </React.Fragment>
       
     );
+  }else{
+    return( 
+       <React.Fragment>
+              <div align='center' style={{marginTop:'150px'}}>
+                    <Spinner  align='center' />
+              </div>
+</React.Fragment>
+     ) }
   }
 }
 
 const mapActionAsProps=dispatch=>{
   return{
-    checkToken:()=>dispatch(asyncAppStart())
+    checkToken:()=>dispatch(asyncAuthAppStart()),
+    fetchProduct:()=>dispatch(asyncFetchProduct())
   }
 }
 
-export default connect(null,mapActionAsProps) (withRouter (App));
+const mapStateAsProps=state=>{
+  return{
+    showSpinner:state.product.showSpinner
+  }
+}
+
+export default connect(mapStateAsProps,mapActionAsProps) (withRouter (App));

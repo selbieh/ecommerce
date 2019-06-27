@@ -7,19 +7,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {styles} from './styles';
 
 
-const styles = {
-  card: {
-    maxWidth: 345,
-    justify:'center'
-  },
-  media: {
-    // ⚠️ object-fit is not supported by IE 11.
-    objectFit: 'cover',
-    justify:'center'
-  },
-};
 
 function ImgMediaCard(props) {
   return (
@@ -36,11 +26,10 @@ function ImgMediaCard(props) {
           title="Contemplative Reptile"
         />
           <Typography gutterBottom variant="h5" component="h2" style={{color:'#7b1fa2'}}>
-            Lizard
+            {props.title}
           </Typography>
           <Typography component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+           {props.detail}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -53,6 +42,8 @@ function ImgMediaCard(props) {
     </Card>
   );
 }
+
+
 
 
 export default withStyles(styles)(ImgMediaCard);

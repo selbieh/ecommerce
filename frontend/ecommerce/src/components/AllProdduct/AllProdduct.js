@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './AllProdduct.module.css';
 import ProductCard from './ProductCard/ProductCard';
 import Grid from '@material-ui/core/Grid';
+import {connect} from 'react-redux'
 
 
 
@@ -10,15 +11,18 @@ class AllProdduct extends Component {
         return (
             <div className={classes.AllProdduct}>
                <Grid container className={classes.root} spacing={10} justify='center' alignItems='center'>
-                    <Grid item lg={4} >
-                        <ProductCard/>
-                    </Grid>
-                    <Grid item lg={4} >
-                        <ProductCard/>
-                    </Grid>
-                    <Grid item lg={4} >
-                        <ProductCard/>
-                    </Grid>
+
+                   {this.props.products.map(product=>{
+                       return  <Grid item lg={4}   key={product.id}>
+                                    <ProductCard 
+                                    title={product.title}
+                                    details={product.detail}
+                                    image={product.image_1}
+                                  
+                                    />
+                                 </Grid>
+                   })}
+                   
                 </Grid> 
 
 
@@ -30,4 +34,10 @@ class AllProdduct extends Component {
     }
 }
 
-export default AllProdduct;
+const mapeStateToProps=state=>{
+    return{
+      products:state.product.products
+    }
+  }
+
+export default  connect(mapeStateToProps) (AllProdduct);

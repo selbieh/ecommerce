@@ -65,7 +65,7 @@ export const asyncLougout=()=>{
 }
 
 
-export const asyncAppStart=()=>{
+export const asyncAuthAppStart=()=>{
     return dispatch=>{
         if(localStorage.getItem('tokenKey') ){
             dispatch(actions.tokenAdd(localStorage.getItem('tokenKey')))

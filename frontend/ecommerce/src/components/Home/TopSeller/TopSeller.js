@@ -2,22 +2,11 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid/Grid';
 import ImgMediaCard from './TopSellerCard/TopSellerCard';
 import Typography from '@material-ui/core/Typography';
-
-import img1 from '../TopSeller/TopSellerCard/1.jpg';
-import img2 from '../TopSeller/TopSellerCard/2.jpg';
-import img3 from '../TopSeller/TopSellerCard/3.jpg';
-
-
-
-
+import { connect} from 'react-redux';
 
 
 
 class TopSeller extends Component {
-
-   imgs=[img1,img2,img3];
-
-        
 
 
     
@@ -32,9 +21,13 @@ class TopSeller extends Component {
                        
 
                     <Grid container spacing={10} justify='center'  >
-                        {this.imgs.map(value => (
-                        <Grid key={value} item >
-                            <ImgMediaCard image={value} xs={3}/>
+                        {this.props.products.slice(0,3).map(product => (
+                        <Grid key={product.id} item >
+                            <ImgMediaCard image={product.image_1} xs={3}
+                            title={product.name}
+                            detail={product.detail}
+                            
+                            />
                         </Grid>
                         ))}
                     </Grid>
@@ -49,4 +42,11 @@ class TopSeller extends Component {
     }
 }
 
-export default TopSeller;
+const mapeStateToProps=state=>{
+    return{
+        products:state.product.products
+    }
+}
+
+
+export default connect (mapeStateToProps,null)( TopSeller);

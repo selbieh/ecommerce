@@ -253,9 +253,9 @@ class Login extends Component {
 
 const mapeStateToProps=state=>{
   return{
-    showSpiner:state.showSpiner,
-    isAuthed:state.token !==null ,
-    loginBackendError:state.loginBackendError,
+    showSpiner:state.auth.showSpiner,
+    isAuthed:state.auth.token !==null ,
+    loginBackendError:state.auth.loginBackendError,
   }
 }
 

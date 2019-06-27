@@ -1,10 +1,12 @@
 import shutil
 from django.conf import settings
+'''
 
 from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
+'''
 # upload to path functions
 def user_directory_path_1(instance, filename):
     try:
@@ -33,7 +35,10 @@ def user_directory_path_4(instance, filename):
     return 'offices/office_{0}/4/{1}/'.format(instance.name,filename.replace(" ", ""))
 
 #editing image
+'''
 def image_edit(image):
+
+
     im = Image.open(image)
     if im.mode in ('RGBA', "LA"):
         fill_color = 'RED'
@@ -53,3 +58,4 @@ def image_edit(image):
         # change the imagefield value to be the newley modifed image value
     return InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % image.name.split('.')[0], 'image/jpeg',
                                         sys.getsizeof(output), None)
+'''

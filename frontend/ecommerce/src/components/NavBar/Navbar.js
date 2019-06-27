@@ -159,7 +159,7 @@ class PrimarySearchAppBar extends React.Component {
 
 const mapStateToProps=state=>{
   return{
-    isAuthed:state.token !==null 
+    isAuthed:state.auth.token !==null 
   }
 }
 
