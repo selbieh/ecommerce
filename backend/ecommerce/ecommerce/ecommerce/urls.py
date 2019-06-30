@@ -33,6 +33,7 @@ urlpatterns = [
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^account-confirm-email/(?P<key>[-:\w]+)/$', views.activate_account,
         name='account_confirm_email'),
+    path('rest-auth/password/reset/<uid>/<token>/', views.password_reset_confirm, name='password_reset_confirm'),
 
 ]
 if settings.DEBUG:

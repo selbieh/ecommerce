@@ -15,7 +15,9 @@ export const asyncRegister=(data)=>{
             localStorage.setItem('tokenKey',res.data.key);
 
         }).catch(err=>{
-            if (err.response){
+            console.log(err.response.data)
+            if (err.response.data){
+                
                 const registerBackendError=err.response.data;
                 const errors={}
                 Object.keys(registerBackendError).map(obj=>{
@@ -39,7 +41,6 @@ export const asyncLogin=(data)=>{
 
         axios.post('http://127.0.0.1:8000/rest-auth/login/',data)
         .then(res=>{
-
             dispatch(actions.login(res.data.key));
             dispatch(actions.loginEnd()) ; 
             localStorage.setItem('tokenKey',res.data.key);

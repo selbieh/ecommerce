@@ -45,8 +45,8 @@ class SignUp extends Component {
    
     submitHandler=(event)=>{
       event.preventDefault();
-      const data=this.state.value
-      this.props.register(data)
+      
+      this.props.register(this.state.value)
      
          }
 
@@ -141,8 +141,8 @@ class SignUp extends Component {
   }
 
   let redirect=null;
-  if (this.props.isAuthed && !this.props.backendError){
-    redirect=<Redirect to = '/'/>
+  if (this.props.showSpiner && !this.props.backendError && this.props.isAuthed){
+    redirect=<Redirect to = '/check-mail-toActivate'/>
   }
 
   if (!this.props.showSpiner){
@@ -152,9 +152,9 @@ class SignUp extends Component {
   
       <Container component="main" maxWidth="xs">
 
-      <Typography align="right" >
-          <Close color="inherit" onClick={this.cancelFormHandler}/>
-    </Typography>
+          <Typography align="right" >
+              <Close color="inherit" onClick={this.cancelFormHandler}/>
+        </Typography>
 
         <CssBaseline />
         <div className={classes.paper}>
@@ -183,7 +183,7 @@ class SignUp extends Component {
               </Grid>
               
               { this.props.backendError? <Box color={red}>
-                  {this.props.backendError.username}
+                {this.props.backendError.username}
               </Box> :null}
 
               <Box color={red}>
@@ -261,7 +261,7 @@ class SignUp extends Component {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   لديك حساب بالفعل ؟ سجل دخول
                 </Link>
               </Grid>

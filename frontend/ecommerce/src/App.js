@@ -14,7 +14,11 @@ import {connect} from 'react-redux';
 import Spinner from './components/spinner/spinner';
 import {Route,withRouter} from 'react-router-dom';
 import {asyncFetchProduct} from './store/productStore/asyncActions';
-
+//import axios from 'axios';
+//import RegisterConfirmMail from './components/Auth/RegisterConfirmMail/RegisterConfirmMail';
+import AccountActivated from './components/Auth/acountActivated/accountAtivated';
+import CheckMailToActivate from './components/Auth/checkMailToActivate/checkMailToActivate';
+import ChangePassword from './components/Auth/ChangePassword/ChangePassword';
 
 
 class App extends Component {
@@ -22,6 +26,7 @@ class App extends Component {
   componentDidMount(){
     this.props.checkToken()
     this.props.fetchProduct()
+    
   }
 
   render() {
@@ -40,6 +45,11 @@ class App extends Component {
                 <Route path='/' exact component={Home}/>
                 <Route path='/login' exact component={Login} {...this.props}/>
                 <Route path='/register' exact component={Register}  {...this.props}/>
+                <Route path='/acount-activated' exact component={AccountActivated} {...this.props}/>
+                <Route path='/check-mail-toActivate' exact component={CheckMailToActivate} {...this.props}/>
+                <Route path='/change-password' exact component={ChangePassword} {...this.props}/>
+
+
                 <Footer/>
               </div>
       </React.Fragment>

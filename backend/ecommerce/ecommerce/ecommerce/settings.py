@@ -194,3 +194,5 @@ EMAIL_HOST_USER = 'sayed.freelancer.web@gmail.com'
 EMAIL_HOST_PASSWORD = 'freelancerdjango'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+#rest auth setting
+OLD_PASSWORD_FIELD_ENABLED = True
