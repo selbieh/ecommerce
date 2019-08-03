@@ -4,8 +4,8 @@ from products.models import product
 from django.db.models.signals import post_save
 
 class shopCart(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    shopCartProduct=models.ManyToManyField(product,null=True)
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    shopCartProduct=models.ManyToManyField(product,blank=True)
     def __str__(self):
         return self.user.username
 

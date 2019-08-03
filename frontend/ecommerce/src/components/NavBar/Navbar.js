@@ -15,6 +15,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import {styles} from './NavBarStyle';
 import {connect} from 'react-redux';
 import * as asynAction from '../../store/authStore/asyncActions';
+import * as actions from '../../store/uiReducer/asyncActions';
+
 
 class PrimarySearchAppBar extends React.Component {
   state = {
@@ -51,12 +53,17 @@ class PrimarySearchAppBar extends React.Component {
 
    handelCartRedirect=()=>{
     this.props.history.push('/cart')
-    this.handleMobileMenuClose(); 
+    this.handleMobileMenuClose();
+    this.props.hideMainNow() 
    }
 
    logoutHandler=()=>{
      this.props.logout()
    }
+
+   changePassword=()=>{
+    this.props.history.push('/change-password')
+  }
 
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
@@ -76,7 +83,9 @@ class PrimarySearchAppBar extends React.Component {
         <div>
         <MenuItem onClick={this.handelLogInRedirect}>تسجيل دخول</MenuItem>
         <MenuItem onClick={this.handelRegisterRedirect} >حساب جديد</MenuItem>
-        </div>:<MenuItem onClick={this.logoutHandler} > تسجيل خروج</MenuItem>}
+        </div>:<div>
+        <MenuItem onClick={this.logoutHandler} > تسجيل خروج</MenuItem>
+        <MenuItem onClick={this.changePassword} >  تغيير كلمه السر </MenuItem></div>}
       </Menu>
     );
 
@@ -91,7 +100,7 @@ class PrimarySearchAppBar extends React.Component {
         
         <MenuItem onClick={this.handelCartRedirect} >
           <IconButton color="inherit" >
-            <Badge badgeContent={11} color="secondary">
+            <Badge badgeContent={this.props.shopCartLen} color="secondary">
               <ShoppingCart />
             </Badge>
           </IconButton>
@@ -130,7 +139,7 @@ class PrimarySearchAppBar extends React.Component {
             <div className={classes.sectionDesktop}>
               
               <IconButton color="inherit" onClick={this.handelCartRedirect}>
-                <Badge badgeContent={17} color="secondary">
+                <Badge badgeContent={this.props.shopCartLen} color="secondary">
                   <ShoppingCart />
                 </Badge>
               </IconButton>
@@ -159,13 +168,18 @@ class PrimarySearchAppBar extends React.Component {
 
 const mapStateToProps=state=>{
   return{
-    isAuthed:state.auth.token !==null 
+    isAuthed:state.auth.token !==null,
+    showMain:state.UI.showMain,
+    shopCartLen:state.shopCart.shopCartItems.length
+
   }
 }
 
 const mapActionsToProps=dispatch=>{
   return{
-    logout:()=>dispatch(asynAction.asyncLougout())
+    logout:()=>dispatch(asynAction.asyncLougout()),
+    hideMainNow:()=>dispatch(actions.hideMain())
+
   }
 }
 

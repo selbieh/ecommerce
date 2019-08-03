@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 # Create your models here.
 class order(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    orderProduct=models.ManyToManyField(product,blank=True)
+    orderProduct=models.ManyToManyField(product)
     name=models.CharField(max_length=23,blank=True)
     mobiel=models.CharField(max_length=11,blank=True)
     city=models.CharField(max_length=10,blank=True)

@@ -6,98 +6,123 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {styles} from './ShopCartStyles';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import {connect} from 'react-redux';
+import {fetchShopCartFromServer,changeProductInCart} from '../../store/shopCartStore/asyncAction';
+import {Redirect} from 'react-router';
 
-const TAX_RATE = 0.07;
 
-const styles = theme => ({
-  root: {
-    width: '80%',
-    margin:'auto',
-    marginTop: theme.spacing (15),
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 700,
-  },
-});
+const TAX_RATE = 500;
+
+
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
 }
 
-function priceRow(qty, unit) {
-  return qty * unit;
-}
-
-function createRow(id, desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { id, desc, qty, unit, price };
-}
-
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-const rows = [
-  ['Paperclips (Box)', 100, 1.15],
-  ['Paper (Case)', 10, 45.99],
-  ['Waste Basket', 2, 17.99],
-].map((row, id) => createRow(id, ...row));
-
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
 class ShopCart extends Component{
+    
 
-    state={
-        rows:[]
+    
+
+    deletProduct=(id)=>{
+        const filtered =this.props.ShopCartItems.filter(e=>e.id !== id)
+        const filterId=filtered.map(e=>e.id)
+        this.props.changeProductList(filterId,this.props.token,this.props.shopCartId,this.props.userId)
+
     }
     render(){
         const { classes } = this.props;
+        let productPriceRow=[]
+        this.props.ShopCartItems.map(item=>{
+        return productPriceRow.push(item.price)
+        })
+       
+        
+      const totalPriceValue= productPriceRow.reduce((a,b)=>{
+         return a+b
+       },0)
 
+
+       if(!this.props.isAuthed && !localStorage.getItem('tokenKey')){
+
+        return <Redirect to='/login'/>
+
+       }else{
         return(
-        <Paper className={classes.root}>
-            <Table className={classes.table}>
-                <TableHead>
-                <TableRow>
-                    <TableCell>Desc</TableCell>
-                    <TableCell align="right">Qty.</TableCell>
-                    <TableCell align="right">Delete</TableCell>
-                    <TableCell align="right">Price</TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                {rows.map(row => (
-                    <TableRow key={row.id}>
-                    <TableCell>{row.desc}</TableCell>
-                    <TableCell align="right">{row.qty}</TableCell>
-                    <TableCell align="right">{row.unit}</TableCell>
-                    <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+            <Paper className={classes.root}>
+                <Table className={classes.table}>
+                    <TableHead>
+                    <TableRow>
+                        <TableCell>PIC</TableCell>
+                        <TableCell align="right">Name</TableCell>
+                        <TableCell align="right">Price</TableCell>
+                        <TableCell align="right">Delete</TableCell>
+    
                     </TableRow>
-                ))}
-                <TableRow>
-                    <TableCell rowSpan={3} />
-                    <TableCell colSpan={2}>Subtotal</TableCell>
-                    <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell>Tax</TableCell>
-                    <TableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
-                    <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell colSpan={2}>Total</TableCell>
-                    <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-                </TableRow>
-                </TableBody>
-            </Table>
-         </Paper>
+                    </TableHead>
+                    <TableBody>
+                    {this.props.ShopCartItems.map(row => (
+                        <TableRow key={row.id}>
+                        <TableCell>
+                        <img src={(`${row.image_1}`)} alt={row.name} style={{width:'120px',height:'auto'}}/>
+                        
+                        
+                        </TableCell>
+                        <TableCell align="right">{row.name}</TableCell>
+                        <TableCell align="right">{row.price.toFixed(0)}</TableCell>
+                        <TableCell align="right">
+                              <IconButton  aria-label="Delete" onClick={()=>this.deletProduct(row.id)}>
+                                  <DeleteIcon style={{color:'secondary'}} />
+                              </IconButton>
+                        </TableCell>
+                        </TableRow>
+                    ))}
+                    <TableRow>
+                        <TableCell rowSpan={3} />
+                        <TableCell colSpan={2}>Subtotal</TableCell>
+                        <TableCell align="right">{ccyFormat(totalPriceValue)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Tax</TableCell>
+                        <TableCell align="right">{`${TAX_RATE.toFixed(0)}`}</TableCell>
+                        <TableCell align="right">{ccyFormat(TAX_RATE)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell colSpan={2}>Total</TableCell>
+                        <TableCell align="right">{ccyFormat(TAX_RATE+totalPriceValue)}</TableCell>
+                    </TableRow>
+                    </TableBody>
+                </Table>
+             </Paper>
+    
+            )
 
-        )
+       }
+
+        
     }
 
 }
 
+const mapeStateToProps=state=>{
+  return{
+    ShopCartItems:state.shopCart.shopCartItems,
+    token:state.auth.token,
+    isAuthed:state.auth.token!==null,
+    shopCartId:state.shopCart.shopCartId,
+    userId:state.shopCart.userId
+  }
+}
 
-export default withStyles(styles)(ShopCart);
+
+const mapActionsToProps=dispatch=>{
+    return{
+        fetchShopCart:(token)=>dispatch(fetchShopCartFromServer(token)),
+        changeProductList:(productId,token,shopCartId,userId)=>dispatch(changeProductInCart(productId,token,shopCartId,userId))
+    }
+}
+export default connect(mapeStateToProps,mapActionsToProps)(withStyles(styles)(ShopCart));

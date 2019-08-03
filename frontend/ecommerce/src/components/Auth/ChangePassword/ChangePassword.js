@@ -14,7 +14,7 @@ import { red } from '@material-ui/core/colors';
 import joi from '@hapi/joi';
 import Close from '@material-ui/icons/Close';
 import {connect} from 'react-redux';
-//import * as asyncActions from '../../../store/authStore/asyncActions';
+import * as asyncActions from '../../../store/authStore/asyncActions';
 import Spinner from '../../spinner/spinner';
 import {Redirect} from 'react-router';
 
@@ -100,7 +100,7 @@ class ChangePassword extends Component {
  
    submitHandler=(event)=>{
     event.preventDefault();
-    //this.props.login(this.state.value)
+    this.props.sumitNewPassword(this.state.value,this.props.token)
 
        }
 
@@ -139,8 +139,9 @@ class ChangePassword extends Component {
   }
 
  let redirect=null;
-  if (this.props.isAuthed && this.props.loginBackendError ===null){
-    redirect=<Redirect to = '/password-changed'/>
+  if ( this.props.passwordChanged)
+    {
+    redirect=<Redirect to = '/change-password-done'/>
   }
 
   if (!this.props.showSpiner ){
@@ -159,9 +160,7 @@ class ChangePassword extends Component {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-        <Box color={red}> 
-            {this.props.ChangePasswordBackendErro}
-      </Box>
+     
 
           <Typography component="h1" variant="h5">
                     تغيير كلمه السر
@@ -181,6 +180,10 @@ class ChangePassword extends Component {
 
               
             />
+              { this.props.changePasswordError? <Box color={red}>
+                'كلمه السر غير صحيحه'
+              </Box> :null}
+
 
             <Box color={red}>
               {this.state.error.old_password}
@@ -201,7 +204,7 @@ class ChangePassword extends Component {
 
               
             />
-
+             
             <Box color={red}>
               {this.state.error.new_password1}
            </Box>
@@ -270,13 +273,18 @@ const mapeStateToProps=state=>{
   return{
     showSpiner:state.auth.showSpiner,
     isAuthed:state.auth.token !==null ,
-    loginBackendError:state.auth.loginBackendError,
+    changePasswordError:state.auth.changePasswordError,
+    token:state.auth.token,
+    passwordChanged:state.auth.passwordChanged
   }
 }
 
+
+
+
 const mapActionToProps=dispatch=>{
   return{
-   // login:(data)=>dispatch(asyncActions.asyncLogin(data))
+   sumitNewPassword:(data,token)=>dispatch(asyncActions.asynChangePassword(data,token))
   }
 }
 

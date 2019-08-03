@@ -9,12 +9,17 @@ import {createStore, applyMiddleware,compose,combineReducers} from 'redux'; //co
 import {Provider} from 'react-redux'
 import authReducer from './store/authStore/authReducer';
 import productReducer from './store/productStore/productReducer';
+import uiReducer from './store/uiReducer/uiReducer';
+import shopCartReducer from './store/shopCartStore/shopCartReducer';
+
 
 import thunk from 'redux-thunk';
 
 const reducer=combineReducers({
     auth:authReducer,
-    product:productReducer
+    product:productReducer,
+    UI:uiReducer,
+    shopCart:shopCartReducer
 })
 
 

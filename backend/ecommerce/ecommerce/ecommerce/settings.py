@@ -154,8 +154,14 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
 
-    )
+    ),
+'DEFAULT_PARSER_CLASSES': (
+    'rest_framework.parsers.JSONParser',
+    'rest_framework.parsers.FormParser',
+    'rest_framework.parsers.MultiPartParser',
+),
 }
 
 # Internationalization
@@ -196,3 +202,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 #rest auth setting
 OLD_PASSWORD_FIELD_ENABLED = True
+
+#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+#ACCOUNT_EMAIL_REQUIRED = True

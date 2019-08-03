@@ -9,6 +9,7 @@ class product (models.Model):
     name=models.CharField(max_length=15,blank=False)
     note=models.CharField(max_length=130,blank=True)
     detail=models.TextField(max_length=300,blank=True)
+    price=models.IntegerField()
     image_1=ProcessedImageField(upload_to=user_directory_path_1,blank=True,
                                            processors=[Resize(350, 250)],
                                            format='JPEG',

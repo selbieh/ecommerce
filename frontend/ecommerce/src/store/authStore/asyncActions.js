@@ -1,6 +1,7 @@
 import * as actions from './actions';
 //import * as actionType from './actionType';
 import axios from 'axios';
+import {fetchShopCartFromServer,addFetchedItem} from '../shopCartStore/asyncAction';
 
 export const asyncRegister=(data)=>{
     
@@ -44,6 +45,7 @@ export const asyncLogin=(data)=>{
             dispatch(actions.login(res.data.key));
             dispatch(actions.loginEnd()) ; 
             localStorage.setItem('tokenKey',res.data.key);
+            dispatch(fetchShopCartFromServer(localStorage.getItem('tokenKey')))
 
         }).catch(err=>{
             if (err.response){   
@@ -57,10 +59,21 @@ export const asyncLogin=(data)=>{
 
 export const asyncLougout=()=>{
     return dispatch=>{
-        localStorage.removeItem('tokenKey')
-        // request header should be add to delete user login token from backend
-        //https://django-rest-auth.readthedocs.io/en/latest/api_endpoints.html
-        dispatch(actions.logout());
+        const token=localStorage.getItem('tokenKey')
+        axios({
+            url:'http://127.0.0.1:8000/rest-auth/logout/',
+            method:'post',
+            Authorization:'Token '.concat(token),    
+        })
+        .then(res=>{
+            localStorage.removeItem('tokenKey')
+            dispatch(actions.logout());
+            dispatch(addFetchedItem({id:null,user:null,products:[]}))
+        }).catch(er=>{
+            console.log(er)
+        })
+       
+
     }
    
 }
@@ -69,7 +82,37 @@ export const asyncLougout=()=>{
 export const asyncAuthAppStart=()=>{
     return dispatch=>{
         if(localStorage.getItem('tokenKey') ){
-            dispatch(actions.tokenAdd(localStorage.getItem('tokenKey')))
+            dispatch(actions.tokenAdd(localStorage.getItem('tokenKey')));
+            dispatch(fetchShopCartFromServer(localStorage.getItem('tokenKey')))
+            
         }
+    }
+}
+
+
+export const asynChangePassword=(data,token)=>{
+    return dispatch=>{
+        dispatch(actions.changePasswordStart())
+
+        axios({
+            method: 'post',
+            data:data,
+            url: 'http://127.0.0.1:8000/rest-auth/password/change/',
+            headers: {
+                Authorization:'Token '.concat(token),
+            
+            }
+          
+        })
+        .then(res=>{
+            dispatch(actions.changePassword())
+            dispatch(actions.changePasswordEnd())
+        })
+        .catch(err=>{
+            console.log(err.response.data)
+            dispatch(actions.changePasswordFail(err.response.data))
+        })
+            
+
     }
 }

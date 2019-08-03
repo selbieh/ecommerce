@@ -6,6 +6,8 @@ const initialState={
     showSpiner:false,
     registerBackendError:null,
     loginBackendError:null,
+    changePasswordError:null,
+    passwordChanged:false,
     
 }
 
@@ -49,10 +51,28 @@ const initialState={
             newState.loginBackendError=null;
             break;
 
-        //logout
+        //logout procese
         case actionType.logout:
             newState.token=null;
             break;
+        //change password processe 
+            case actionType.changePasswordEnd:
+                newState.showSpiner=false;
+                break;
+    
+            case actionType.changePassword:
+                newState.passwordChanged=true;
+                break;
+            case actionType.changePasswordFail:
+                newState.showSpiner=false;
+                newState.changePasswordError=action.error
+                break;
+            case actionType.changePasswordStart:
+                newState.showSpiner=true;
+                newState.passwordChanged=false;
+                //newState.token=null;
+                newState.changePasswordError=null;
+                break;
         //app Start auth ckeck 
             case actionType.tokenAdd:
                 newState.token=action.token;

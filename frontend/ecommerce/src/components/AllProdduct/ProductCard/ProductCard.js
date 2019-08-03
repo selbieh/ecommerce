@@ -13,8 +13,10 @@ import Typography from '@material-ui/core/Typography';
 //import red from '@material-ui/core/colors/red';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
-import Quntity from '../../Quntity/Quntity';
+import RemoveShoppingCart from '@material-ui/icons/RemoveShoppingCart';
 import {styles} from './styles';
+import {connect} from "react-redux";
+
 
 
 
@@ -27,7 +29,35 @@ class ProductCard extends React.Component {
 
   render() {
     const { classes } = this.props;
+    let addOrRemoveItem=<CardContent>           
+                  <Typography paragraph align='center' >
+                        <IconButton onClick={this.props.addItem}>
+                          <AddShoppingCart style={{color:'blue'}}  />
+                        </IconButton>
+                  </Typography>
+                    <Typography paragraph align='center'>
+                   
+                        اضف الي عربه التسوق
+                    </Typography>
+                </CardContent>           
 
+    if (this.props.shopCartIdList.includes(this.props.id)){
+
+      addOrRemoveItem=
+      <CardContent> 
+         <Typography paragraph align='center' >
+                          <IconButton onClick={this.props.removeItem}>
+                            <RemoveShoppingCart style={{color:'red'}}  />
+                          </IconButton>
+          </Typography>          
+              <Typography paragraph align='center' >
+                حذف من عربه التسوق ؟ 
+              </Typography>
+      </CardContent>           
+
+
+    }
+  
     return (
       <Card className={classes.card}>
         <CardHeader
@@ -64,24 +94,7 @@ class ProductCard extends React.Component {
           </IconButton>
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>عربه التسوق:</Typography>
-            <Typography paragraph>
-                <Quntity/>
-            </Typography>
-            <Typography paragraph align='center' >
-                <IconButton >
-                   <AddShoppingCart style={{color:'red'}}  />
-                </IconButton>
-            </Typography>
-            <Typography paragraph align='center'>
-                اضف الي عربه التسوق
-            </Typography>
-            
-            <Typography align='center'>
-              تم اضافه 0 مكتب بسعر 0 جنيه الي عربه التسوق 
-            </Typography>
-          </CardContent>
+            {addOrRemoveItem}  
         </Collapse>
       </Card>
     );
@@ -89,5 +102,11 @@ class ProductCard extends React.Component {
 }
 
 
+const mapStateToProps=state=>{
+  return{
+    shopCartIdList:state.shopCart.shopCartItems.map(e=>e.id)
+  }
+}
 
-export default withStyles(styles)(ProductCard);
+
+export default connect(mapStateToProps) (withStyles(styles)(ProductCard));

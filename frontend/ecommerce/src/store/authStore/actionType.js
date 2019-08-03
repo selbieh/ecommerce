@@ -20,3 +20,10 @@ export const logout ='LOGOUT'
 // app start actions 
 
 export const tokenAdd="TOKEN_ADD";
+
+//change password
+
+export const changePassword='CHANGE_PASSWORD';
+export const changePasswordStart='CHANGE_PASSWORD_START';
+export const changePasswordEnd='CHANGE_PASSWORD_END';
+export const changePasswordFail='CHANGE_PASSWORD_FAIL';

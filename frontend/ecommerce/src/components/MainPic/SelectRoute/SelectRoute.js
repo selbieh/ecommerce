@@ -3,6 +3,10 @@ import {NavLink} from 'react-router-dom';
 import Classes from './SelectRoute.module.css';
 import Home from '@material-ui/icons/Home';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import Badge from '@material-ui/core/Badge';
+import {connect} from 'react-redux';
+
+
 
 
 
@@ -18,13 +22,23 @@ class SelectRoute extends Component {
           <NavLink className={allClasses} to='/products' activeStyle={{backgroundColor:'#7b1fa2'}} onClick={this.props.redirectToggel}>
           عرض المنتجات</NavLink>
           <NavLink className={allClasses} to='/cart' activeStyle={{backgroundColor:'#7b1fa2'}} onClick={this.props.redirectToggel}>
-          <ShoppingCart/>      
-
+            <Badge badgeContent={this.props.shopCartLen} color="secondary">
+              <ShoppingCart />
+            </Badge>
           عربه التسوق</NavLink>
       </div>
     );
   }
 }
 
-export default SelectRoute;
+
+
+const mapStateToProps=state=>{
+  return{
+    shopCartLen:state.shopCart.shopCartItems.length
+
+  }
+}
+
+export default connect(mapStateToProps)(SelectRoute);
 

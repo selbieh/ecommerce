@@ -6,7 +6,7 @@ import Home from './components/Home/Home';
 import Footer from './components/Footer/Footer';
 import ShopCart from './components/ShopCart/ShopCart';
 import AllProdduct from "./components/AllProdduct/AllProdduct";
-import MainPic from "./components/HomeWithAnimate/HomeWithAnimate";
+import HomeWithAnimate from "./components/HomeWithAnimate/HomeWithAnimate";
 import Login from './components/Auth/Login/Login';
 import Register from './components/Auth/Register/Register';
 import {asyncAuthAppStart} from './store/authStore/asyncActions';
@@ -14,11 +14,14 @@ import {connect} from 'react-redux';
 import Spinner from './components/spinner/spinner';
 import {Route,withRouter} from 'react-router-dom';
 import {asyncFetchProduct} from './store/productStore/asyncActions';
-//import axios from 'axios';
-//import RegisterConfirmMail from './components/Auth/RegisterConfirmMail/RegisterConfirmMail';
+import RegisterConfirmMail from './components/Auth/RegisterConfirmMail/RegisterConfirmMail';
 import AccountActivated from './components/Auth/acountActivated/accountAtivated';
 import CheckMailToActivate from './components/Auth/checkMailToActivate/checkMailToActivate';
 import ChangePassword from './components/Auth/ChangePassword/ChangePassword';
+import ChangePasswordDone from './components/Auth/ChangePasswordDone/ChangePasswordDone';
+import productDetails from './components/productDetails/productDetails';
+
+
 
 
 class App extends Component {
@@ -26,6 +29,7 @@ class App extends Component {
   componentDidMount(){
     this.props.checkToken()
     this.props.fetchProduct()
+    
     
   }
 
@@ -39,7 +43,7 @@ class App extends Component {
               <CssBaseline />
               <div className="App">
                 <Navbar {...this.props}/>
-                <MainPic {...this.props}/>
+                <HomeWithAnimate {...this.props}/>
                 <Route path='/products' component={AllProdduct}/>
                 <Route path='/cart'  component={ShopCart}/>
                 <Route path='/' exact component={Home}/>
@@ -48,6 +52,9 @@ class App extends Component {
                 <Route path='/acount-activated' exact component={AccountActivated} {...this.props}/>
                 <Route path='/check-mail-toActivate' exact component={CheckMailToActivate} {...this.props}/>
                 <Route path='/change-password' exact component={ChangePassword} {...this.props}/>
+                <Route path='/change-password-done' exact component={ChangePasswordDone} {...this.props}/>
+                <Route path='/registration-confirm-mail/:token/' exact component={RegisterConfirmMail} {...this.props}/>
+                <Route path='/product-details' exact component={productDetails}/>
 
 
                 <Footer/>
@@ -69,13 +76,15 @@ class App extends Component {
 const mapActionAsProps=dispatch=>{
   return{
     checkToken:()=>dispatch(asyncAuthAppStart()),
-    fetchProduct:()=>dispatch(asyncFetchProduct())
+    fetchProduct:()=>dispatch(asyncFetchProduct()),
+
   }
 }
 
 const mapStateAsProps=state=>{
   return{
-    showSpinner:state.product.showSpinner
+    showSpinner:state.product.showSpinner,
+    token:state.auth.token,
   }
 }
 

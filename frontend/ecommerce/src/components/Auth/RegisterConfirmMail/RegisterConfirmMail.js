@@ -1,45 +1,61 @@
 import React,{Component} from 'react';
-import {Redirect} from 'react-router-dom'
 import axios from 'axios';
 import Spinner from '../../spinner/spinner';
 import Modal from '../../Modal/Modal';
 import Container from '@material-ui/core/Container';
+import {Redirect} from 'react-router'
 
 
  
 
 class RegisterConfirmMail extends Component {
-    state = { 
-        redirectNow:false
-     }
+
+    state={
+        showSpinner:true
+    }
+
     componentDidMount(){
-        const id=this.props.match.params.id
         const token =this.props.match.params.token
-        axios.post('http://127.0.0.1:8000/auth/users/activate/',{uid:id,token:token})
+        axios.post('http://127.0.0.1:8000/rest-auth/registration/verify-email/',{key:token })
+         
         .then(res=>{
-           this.setState((prev)=>{
-               return {redirectNow:!prev.redirectNow}
-           })
+            //condetional setState to prevent infint loop warning and memory los 
+            if(this.state.showSpinner){
+                this.setState((prev)=>{
+                    return ({showSpinner:!prev.showSpinner})
+                })
+            }
+           
+
+          
+        })
+    }
+    componentWillMount(){
+        //to clear setState prefix
+        this.setState((prev)=>{
+            return ({showSpinner:!prev.showSpinner})
         })
     }
 
-
     render() {
            
-       let redirectComponent=  <Modal {...this.props}>
-                                    <Container component="main" maxWidth="xs" >
-                                        <div align='center' >
-                                                <Spinner  align='center' />
-                                        </div>
-                                    </Container>
-                                </Modal>;
-       if(!this.state.redirectNow){
-            redirectComponent=<Redirect to='/'/>
-       }
+                  
+                  
+      if (!this.state.showSpinner){
+        return <Redirect to='/acount-activated'/>
+      }else{
+              
     return (
-          
-            <p>{redirectComponent}</p>
-        );
+        <Modal >
+        <Container component="main" maxWidth="xs" >
+                <div align='center' >
+                    <Spinner  align='center' />
+                    </div>
+            </Container>
+     </Modal>
+         );
+      }
+   
     }
 }
 

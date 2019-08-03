@@ -4,21 +4,11 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import {styles} from './MainPicStyle';
 
 
 
 
-const styles = theme => ({
-  root: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing (2),
-    paddingBottom: theme.spacing (2),
-    opacity:'0.75'
-  },
-  SelectRouteContaier:{
-
-  }
-});
 
 
 
