@@ -26,8 +26,12 @@ class ProductCard extends React.Component {
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
+  prdoductDetailsRedirect=(product)=>{
+    this.props.history.push('/product-details',product)
+  }
 
   render() {
+    //console.log(this.props.product)
     const { classes } = this.props;
     let addOrRemoveItem=<CardContent>           
                   <Typography paragraph align='center' >
@@ -44,16 +48,16 @@ class ProductCard extends React.Component {
     if (this.props.shopCartIdList.includes(this.props.id)){
 
       addOrRemoveItem=
-      <CardContent> 
-         <Typography paragraph align='center' >
-                          <IconButton onClick={this.props.removeItem}>
-                            <RemoveShoppingCart style={{color:'red'}}  />
-                          </IconButton>
-          </Typography>          
-              <Typography paragraph align='center' >
-                حذف من عربه التسوق ؟ 
-              </Typography>
-      </CardContent>           
+                <CardContent> 
+                  <Typography paragraph align='center' >
+                                    <IconButton onClick={this.props.removeItem}>
+                                      <RemoveShoppingCart style={{color:'red'}}  />
+                                    </IconButton>
+                    </Typography>          
+                        <Typography paragraph align='center' >
+                          حذف من عربه التسوق ؟ 
+                        </Typography>
+                </CardContent>           
 
 
     }
@@ -71,6 +75,7 @@ class ProductCard extends React.Component {
           subheader="ألابعاد 15 * 16* 22"
         />
         <CardMedia
+         onClick={()=>this.prdoductDetailsRedirect(this.props.product)}
           className={classes.media}
           image={this.props.image}
           title="Paella dish"
@@ -104,7 +109,9 @@ class ProductCard extends React.Component {
 
 const mapStateToProps=state=>{
   return{
-    shopCartIdList:state.shopCart.shopCartItems.map(e=>e.id)
+    shopCartIdList:state.shopCart.shopCartItems.map(e=>e.id),
+    
+
   }
 }
 

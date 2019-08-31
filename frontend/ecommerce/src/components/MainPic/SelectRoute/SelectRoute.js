@@ -3,9 +3,10 @@ import {NavLink} from 'react-router-dom';
 import Classes from './SelectRoute.module.css';
 import Home from '@material-ui/icons/Home';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import ContactMail from '@material-ui/icons/ContactMail';
+
 import Badge from '@material-ui/core/Badge';
 import {connect} from 'react-redux';
-
 
 
 
@@ -26,6 +27,11 @@ class SelectRoute extends Component {
               <ShoppingCart />
             </Badge>
           عربه التسوق</NavLink>
+
+          <NavLink className={allClasses}  to='/contact-us' activeStyle={{backgroundColor:'#7b1fa2'}} exact onClick={this.props.redirectToggel}>
+          <ContactMail/>
+             ..تواصل معنا
+             </NavLink>
       </div>
     );
   }

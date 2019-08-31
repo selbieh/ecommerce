@@ -65,7 +65,8 @@ INSTALLED_APPS = [
     #django header Cores
     'corsheaders',
     #imagekit
-    'imagekit'
+    'imagekit',
+    'contact_us'
 
 
 ]
@@ -146,7 +147,7 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 9,
+    'PAGE_SIZE': 6,
     'DEFAULT_PERMISSION_CLASSES': [
 
         #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'

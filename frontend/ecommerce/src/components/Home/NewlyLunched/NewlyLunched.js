@@ -4,12 +4,19 @@ import React, { Component } from 'react';
 import NewlyCard from './NewlyCard/NewlyCard';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import {connect} from 'react-redux'; 
+import {connect} from 'react-redux';
+import {hideMain} from '../../../store/uiReducer/asyncActions' 
 
 
 
 
 class NewlyLunched extends Component {
+    prdoductDetailsRedirect=(product)=>{
+        this.props.hideMain()
+        this.props.history.push('/product-details',product)
+        //console.log(product)
+      }
+
 
     
     render() {
@@ -22,8 +29,9 @@ class NewlyLunched extends Component {
                     </Typography>
 
                     <Grid container  justify="center" spacing={10}>
-                        {this.props.products.slice(3,6).map(product => (
-                        <Grid key={product.id} item  >
+                        {this.props.products.map(product => (
+                        <Grid key={product.id} item 
+                        onClick={()=>this.prdoductDetailsRedirect(product)}  >
                             <NewlyCard title={product.name}
                             img= {product.image_1}/>
                         </Grid>
@@ -40,9 +48,17 @@ class NewlyLunched extends Component {
 
 const mapStateToProps=state=>{
   return{
-    products:state.product.products
+    products:state.product.newlyLunched
   }
 }
 
-export default connect(mapStateToProps)(NewlyLunched);
+
+
+const mapActionToProps=(dispatch)=>{
+  return{
+    hideMain:()=>dispatch(hideMain())
+  }
+
+}
+export default connect(mapStateToProps,mapActionToProps)(NewlyLunched);
 

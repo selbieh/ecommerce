@@ -10,8 +10,8 @@ class Home extends Component {
 
         return (
             <React.Fragment>
-                <TopSeller />
-                <NewlyLunched />
+                <TopSeller {...this.props}/>
+                <NewlyLunched  {...this.props}/>
             </React.Fragment>
             
          

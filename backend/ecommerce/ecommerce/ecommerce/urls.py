@@ -34,7 +34,8 @@ urlpatterns = [
     url(r'^account-confirm-email/(?P<key>[-:\w]+)/$', views.activate_account,
         name='account_confirm_email'),
     path('rest-auth/password/reset/<uidb64>/<token>/', views.password_reset_confirm, name='password_reset_confirm'),
-    path('shopcart/',include("shopcart.urls"))
+    path('shopcart/',include("shopcart.urls")),
+    path("contact-us/", include("contact_us.urls")),
 
 ]
 if settings.DEBUG:

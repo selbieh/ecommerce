@@ -4,11 +4,18 @@ import ProductCard from './ProductCard/ProductCard';
 import Grid from '@material-ui/core/Grid';
 import {connect} from 'react-redux';
 import {changeProductInCart} from '../../store/shopCartStore/asyncAction';
+import Button from '@material-ui/core/Button';
+import {asyncFetchPaginate} from '../../store/productStore/asyncActions'
+
 
 
 
 class AllProdduct extends Component {
 
+
+    paginate=(url)=>{
+      this.props.paginate(url)
+    }
     
     addItem=(product)=>{
         const shopCartList=this.props.ShopCartItems
@@ -26,6 +33,7 @@ class AllProdduct extends Component {
 
 
     render() {
+      console.log(this.props.prevPage)
         return (
             <div className={classes.AllProdduct}>
                <Grid container className={classes.root} spacing={10} justify='center' alignItems='center'>
@@ -39,16 +47,28 @@ class AllProdduct extends Component {
                                     addItem={()=>this.addItem(product)}
                                     id={product.id}
                                     removeItem={()=>this.removeItem(product.id)}
-                                  
+                                    product={product} 
+                                    {...this.props}                             
                                     />
                                  </Grid>
                    })}
                    
                 </Grid> 
+                <Button variant="contained" color="primary" style={{margin:'15px'}} onClick={()=>this.paginate(this.props.nextPage)} disabled={this.props.nextPage===null} >
+                  التالي
+                </Button>
+            
+              
+
+
+                <Button variant="contained" color="primary" style={{margin:'15px'}} onClick={()=>this.paginate(this.props.prevPage)} disabled={this.props.prevPage===null} >
+                  السابق
+                </Button>
+
 
 
             </div>
-           
+            
 
 
         );
@@ -63,6 +83,8 @@ const mapeStateToProps=state=>{
       shopCartId:state.shopCart.shopCartId,
       userId:state.shopCart.userId,
       ShopCartItems:state.shopCart.shopCartItems,
+      nextPage:state.product.nextPage,
+      prevPage:state.product.prevPage,
 
     }
   }
@@ -70,7 +92,8 @@ const mapeStateToProps=state=>{
 
   const mapActionTpProps=dispatch=>{
     return{
-      changeProductList:(productId,token,shopCartId,userId)=>dispatch(changeProductInCart(productId,token,shopCartId,userId))
+      changeProductList:(productId,token,shopCartId,userId)=>dispatch(changeProductInCart(productId,token,shopCartId,userId)),
+      paginate:(url)=>dispatch(asyncFetchPaginate(url))
   
     }
   }

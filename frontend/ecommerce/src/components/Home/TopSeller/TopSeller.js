@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid/Grid';
-import ImgMediaCard from './TopSellerCard/TopSellerCard';
+import TopSellerCard from './TopSellerCard/TopSellerCard';
 import Typography from '@material-ui/core/Typography';
 import { connect} from 'react-redux';
+import {hideMain} from '../../../store/uiReducer/asyncActions' 
 
 
 
 class TopSeller extends Component {
+
+    prdoductDetailsRedirect=(product)=>{
+        this.props.hideMain()
+        this.props.history.push('/product-details',product)
+        //console.log(product)
+      }
 
 
     
@@ -21,9 +28,10 @@ class TopSeller extends Component {
                        
 
                     <Grid container spacing={10} justify='center'  >
-                        {this.props.products.slice(0,3).map(product => (
-                        <Grid key={product.id} item >
-                            <ImgMediaCard image={product.image_1} xs={3}
+                        {this.props.products.map(product => (
+                        <Grid key={product.id} item
+                        onClick={()=>this.prdoductDetailsRedirect(product)} >
+                            <TopSellerCard image={product.image_1} xs={3}
                             title={product.name}
                             detail={product.detail}
                             
@@ -44,9 +52,15 @@ class TopSeller extends Component {
 
 const mapeStateToProps=state=>{
     return{
-        products:state.product.products
+        products:state.product.bestSeller
     }
 }
 
+const mapActionToProps=(dispatch)=>{
+    return{
+      hideMain:()=>dispatch(hideMain())
+    }
+  
+  }
 
-export default connect (mapeStateToProps,null)( TopSeller);
+export default connect (mapeStateToProps,mapActionToProps)( TopSeller);

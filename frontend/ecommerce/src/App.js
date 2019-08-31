@@ -20,6 +20,7 @@ import CheckMailToActivate from './components/Auth/checkMailToActivate/checkMail
 import ChangePassword from './components/Auth/ChangePassword/ChangePassword';
 import ChangePasswordDone from './components/Auth/ChangePasswordDone/ChangePasswordDone';
 import productDetails from './components/productDetails/productDetails';
+import ContatactUs from './components/contactUs/contatctUs'
 
 
 
@@ -44,9 +45,9 @@ class App extends Component {
               <div className="App">
                 <Navbar {...this.props}/>
                 <HomeWithAnimate {...this.props}/>
-                <Route path='/products' component={AllProdduct}/>
+                <Route path='/products' component={AllProdduct} {...this.props}/>
                 <Route path='/cart'  component={ShopCart}/>
-                <Route path='/' exact component={Home}/>
+                <Route path='/' exact component={Home} {...this.props}/>
                 <Route path='/login' exact component={Login} {...this.props}/>
                 <Route path='/register' exact component={Register}  {...this.props}/>
                 <Route path='/acount-activated' exact component={AccountActivated} {...this.props}/>
@@ -55,6 +56,8 @@ class App extends Component {
                 <Route path='/change-password-done' exact component={ChangePasswordDone} {...this.props}/>
                 <Route path='/registration-confirm-mail/:token/' exact component={RegisterConfirmMail} {...this.props}/>
                 <Route path='/product-details' exact component={productDetails}/>
+                <Route path='/contact-us' exact component={ContatactUs}/>
+
 
 
                 <Footer/>

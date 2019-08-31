@@ -26,3 +26,11 @@ export const getProduct=(data)=>{
         data:data
     }
 }
+
+
+export const paginate=(data)=>{
+    return {
+        type:actionType.paginate,
+        data:data
+    }
+}

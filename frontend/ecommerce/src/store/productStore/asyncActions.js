@@ -14,3 +14,16 @@ export const asyncFetchProduct=()=>{
         })
     }
 }
+
+
+export const asyncFetchPaginate=(url)=>{
+    return dispatch=>{
+        dispatch(actions.getProductStart());
+        axios.get(url)
+        .then(re=>{
+            console.log(re.data)
+            dispatch(actions.paginate(re.data))
+            dispatch(actions.getProductEnd())
+        })
+    }
+}

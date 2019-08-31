@@ -22,11 +22,10 @@ class product (models.Model):
                                            processors=[Resize(350, 250)],
                                            format='JPEG',
                                            options={'quality': 100})
-    image_4= ProcessedImageField(upload_to=user_directory_path_4,blank=True,
-                                           processors=[Resize(350, 250)],
-                                           format='JPEG',
-                                           options={'quality': 100})
-
+    image_4 = ProcessedImageField(upload_to=user_directory_path_4, blank=True,
+                                  processors=[Resize(350, 250)],
+                                  format='JPEG',
+                                  options={'quality': 100})
     def __str__(self):
         return self.name
 #now djago will auto delet the old image in case of edit & auto edit ay uploaded image to 250X350 size
