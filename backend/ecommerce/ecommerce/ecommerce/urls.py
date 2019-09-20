@@ -36,6 +36,7 @@ urlpatterns = [
     path('rest-auth/password/reset/<uidb64>/<token>/', views.password_reset_confirm, name='password_reset_confirm'),
     path('shopcart/',include("shopcart.urls")),
     path("contact-us/", include("contact_us.urls")),
+    path('orders/', include("orders.urls")),
 
 ]
 if settings.DEBUG:

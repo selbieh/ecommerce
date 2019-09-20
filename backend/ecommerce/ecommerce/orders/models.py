@@ -7,17 +7,10 @@ from django.db.models.signals import post_save
 class order(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     orderProduct=models.ManyToManyField(product)
-    name=models.CharField(max_length=23,blank=True)
+    fullAdresse=models.CharField(max_length=255,blank=False)
     mobiel=models.CharField(max_length=11,blank=True)
-    city=models.CharField(max_length=10,blank=True)
-    area=models.CharField(max_length=10,blank=True)
-    streetName=models.CharField(max_length=10,blank=True)
-    nubmerOfBuliding=models.CharField(max_length=5,blank=True)
-    adressSing=models.CharField(max_length=25,blank=True)
+    orderDate=models.DateField(auto_now=True)
+
     def __str__(self):
         return self.user.username
 
-def create_shopCart(sender,**kwargs):
-    if kwargs["created"]:
-        order.objects.create(user=kwargs["instance"])
-post_save.connect(create_shopCart,sender=User)

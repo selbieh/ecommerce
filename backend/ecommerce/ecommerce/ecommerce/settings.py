@@ -66,7 +66,8 @@ INSTALLED_APPS = [
     'corsheaders',
     #imagekit
     'imagekit',
-    'contact_us'
+    'contact_us',
+    #'drf-rw-serializers'
 
 
 ]
