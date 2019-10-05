@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import { useHistory } from "react-router"
+
 
 
   function getModalStyle() {
@@ -33,11 +35,17 @@ import Modal from '@material-ui/core/Modal';
     const [modalStyle] = React.useState(getModalStyle);
   
     
-  
+    let history = useHistory()
+
     const handleClose = () => {
       setOpen(false);
+
       //console.log(props.children._self.props.history.push)
-      props.children._self.props.history.push('/')
+      //props.children._self.props.history.push('/')
+      history.push('/')
+    
+    
+ 
     };
 
    

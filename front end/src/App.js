@@ -60,11 +60,11 @@ class App extends Component {
 
   
     {this.props.logedIn ?<Switch> 
-        <Route path='/products' component={AllProdduct} {...this.props}/>
+        <Route path='/allproducts' component={AllProdduct} {...this.props}/>
         <Route path='/cart'  component={ShopCart}/>
         <Route path='/message' component={Message} exact />
         <Route path='/product-details' exact component={productDetails}/>
-        <Route path='/contact-us' exact component={ContatactUs}/>
+        <Route path='/contactus' exact component={ContatactUs}/>
         <Route path='/about-us' component={AboutUS} exact />
         <Route path='/my-orders' exact component={MyOrders} {...this.props}/>
         <Route path='/login' exact component={Login} {...this.props}/>
@@ -82,11 +82,11 @@ class App extends Component {
        <Route  component={Error404}  />
 
     </Switch> :<Switch>
-        <Route path='/products' component={AllProdduct} {...this.props}/>
+        <Route path='/allproducts' component={AllProdduct} {...this.props}/>
         <Route path='/cart'  component={ShopCart}/>
         <Route path='/message' component={Message} exact />
         <Route path='/product-details' exact component={productDetails}/>
-        <Route path='/contact-us' exact component={ContatactUs}/>
+        <Route path='/contactus' exact component={ContatactUs}/>
         <Route path='/about-us' component={AboutUS} exact />
         <Route path='/my-orders' exact component={MyOrders} {...this.props}/>
 

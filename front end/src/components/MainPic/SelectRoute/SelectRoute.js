@@ -22,7 +22,7 @@ class SelectRoute extends Component {
           <NavLink className={allClasses}  to='/' activeStyle={{backgroundColor:'#7b1fa2'}} exact >
           <Home/>
           الرئيسيه</NavLink>
-          <NavLink className={allClasses} to='/products' activeStyle={{backgroundColor:'#7b1fa2'}} >
+          <NavLink className={allClasses} to='/allproducts' activeStyle={{backgroundColor:'#7b1fa2'}} >
           عرض المنتجات</NavLink>
           <NavLink className={allClasses} to='/cart' activeStyle={{backgroundColor:'#7b1fa2'}} >
             <Badge badgeContent={this.props.shopCartLen} color="secondary">
@@ -35,7 +35,7 @@ class SelectRoute extends Component {
             طلبات سابقه
              </NavLink>
 
-          <NavLink className={allClasses}  to='/contact-us' activeStyle={{backgroundColor:'#7b1fa2'}} exact >
+          <NavLink className={allClasses}  to='/contactus' activeStyle={{backgroundColor:'#7b1fa2'}} exact >
           <ContactMail/>
              ..تواصل معنا
              </NavLink>
