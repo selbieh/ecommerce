@@ -1,6 +1,6 @@
 import * as actions from './actions';
 //import * as actionType from './actionType';
-import axios from 'axios';
+import axios from "../../components/Axios/axios";
 import {fetchShopCartFromServer,addFetchedItem} from '../shopCartStore/asyncAction';
 
 export const asyncRegister=(data)=>{
@@ -8,7 +8,7 @@ export const asyncRegister=(data)=>{
     return dispatch=>{
         dispatch(actions.registerStart());
 
-        axios.post('http://127.0.0.1:8000/rest-auth/registration/',data)
+        axios.post('/rest-auth/registration/',data)
         .then(res=>{
 
             dispatch(actions.register(res.data.key));
@@ -40,7 +40,7 @@ export const asyncLogin=(data)=>{
     return dispatch=>{
         dispatch(actions.loginStart());
 
-        axios.post('http://127.0.0.1:8000/rest-auth/login/',data)
+        axios.post('/rest-auth/login/',data)
         .then(res=>{
             dispatch(actions.login(res.data.key));
             dispatch(actions.loginEnd()) ; 
@@ -61,7 +61,7 @@ export const asyncLougout=()=>{
     return dispatch=>{
         const token=localStorage.getItem('tokenKey')
         axios({
-            url:'http://127.0.0.1:8000/rest-auth/logout/',
+            url:'/rest-auth/logout/',
             method:'post',
             Authorization:'Token '.concat(token),    
         })
@@ -97,7 +97,7 @@ export const asynChangePassword=(data,token)=>{
         axios({
             method: 'post',
             data:data,
-            url: 'http://127.0.0.1:8000/rest-auth/password/change/',
+            url: '/rest-auth/password/change/',
             headers: {
                 Authorization:'Token '.concat(token),
             
@@ -114,5 +114,25 @@ export const asynChangePassword=(data,token)=>{
         })
             
 
+    }
+}
+
+
+
+
+
+export const asynChangePasswordWithUID=(data)=>{
+    return dispatch=>{
+        dispatch(actions.changePasswordStart())
+        axios.post('rest-auth/password/reset/confirm/',data)
+        .then(res=>{
+            dispatch(actions.changePassword())
+            dispatch(actions.changePasswordEnd())
+        })
+
+        .catch(err=>{
+            dispatch(actions.changePasswordFail(err.response.data))
+
+        })
     }
 }

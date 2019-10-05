@@ -4,7 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Table from '@material-ui/core/Table';
-import axios from 'axios';
+import axios from "../Axios/axios";
 import { Typography } from '@material-ui/core';
 import {Zoom} from '@material-ui/core'
 
@@ -24,7 +24,7 @@ class MyOrders extends Component {
 
         axios({
             method:'get',
-            url:'http://127.0.0.1:8000/orders/',
+            url:'/orders/',
             headers:{
                 Authorization:'Token '.concat(token)
 
@@ -59,7 +59,7 @@ class MyOrders extends Component {
 
         axios({
             method:'get',
-            url:`http://127.0.0.1:8000/orders/${el}/`,
+            url:`/orders/${el}/`,
             headers:{
                 Authorization:'Token '.concat(token)
             }
@@ -69,7 +69,7 @@ class MyOrders extends Component {
         })
     }
     render() {
-        if(localStorage.getItem('tokenKey')){
+        if(localStorage.getItem('tokenKey') && this.state.orders.length > 0){
         return (
            <Paper style={{marginTop:'56px'}} >
                <Table >
@@ -98,7 +98,7 @@ class MyOrders extends Component {
                 </Table>
            </Paper>
         );
-            }else{
+            }else if (! localStorage.getItem('tokenKey')){
             return <Zoom in timeout={2000}>
                         <Paper align='center' style={{marginTop:'65px'}}>
                                 <Typography align='center' color='secondary'>
@@ -107,6 +107,15 @@ class MyOrders extends Component {
                         </Paper>
             </Zoom>
              
+        }else{
+            return <Zoom in timeout={2000}>
+                        <Paper align='center' style={{marginTop:'65px'}}>
+                                <Typography align='center' color='secondary'>
+                                    لا يوجد طلبات سابقه
+                                </Typography>
+                                </Paper>
+                        </Zoom>
+            
         }
 
     }

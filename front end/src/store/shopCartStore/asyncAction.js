@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "../../components/Axios/axios";
 
 export const addFetchedItem=(data)=>{
     return{
@@ -19,7 +19,7 @@ export const fetchShopCartFromServer=(token)=>{
     return dispatch=>{
         axios({
             method:'get',
-            url:'http://127.0.0.1:8000/shopcart/',
+            url:'/shopcart/',
             headers: {
                 Authorization:'Token '.concat(token),
             }
@@ -37,7 +37,7 @@ export const fetchShopCartFromServer=(token)=>{
 export const changeProductInCart=(productId,token,shopCartId,userId)=>{
   return dispatch=>{
       axios({
-          url:`http://127.0.0.1:8000/shopcart/${shopCartId}/`,
+          url:`/shopcart/${shopCartId}/`,
           method:'put',
           headers:{
               Authorization:'Token '.concat(token)

@@ -22,6 +22,8 @@ import * as asyncActions from '../../../store/authStore/asyncActions';
 import Spinner from '../../spinner/spinner';
 import {Redirect} from 'react-router';
 import Zoom from '@material-ui/core/Zoom';
+import { Link as RouterLink } from 'react-router-dom';
+
 
 
 
@@ -45,6 +47,7 @@ class Login extends Component {
     }
    }
 
+    Link1 = React.forwardRef((props, ref) => <RouterLink innerRef={ref} {...props} />);
 
    //joi schema
    schema={
@@ -80,6 +83,11 @@ class Login extends Component {
       }    
   }
 
+    componentDidMount(){
+      if (localStorage.getItem("tokenKey")){
+        this.props.history.push("/")
+      }
+    }
 //form validate due to input chages
 
    componentDidUpdate(_, prevState){
@@ -134,7 +142,7 @@ class Login extends Component {
   }
 
  let redirect=null;
-  if (this.props.isAuthed && this.props.loginBackendError ===null){
+  if (this.props.isAuthed && this.props.loginBackendError ===null ){
     redirect=<Redirect to = '/'/>
   }
 
@@ -168,6 +176,8 @@ class Login extends Component {
               margin="normal"
               required
               fullWidth
+              value={this.state.value.username}
+
               id="email"
               label="رقم المحمول"
               name="username"
@@ -188,6 +198,8 @@ class Login extends Component {
               fullWidth
               name="password"
               label="كلمه السر"
+              value={this.state.value.password}
+
               type="password"
               id="password"
               autoComplete="current-password"
@@ -216,12 +228,12 @@ class Login extends Component {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link  to='/forget-password' component={this.Link1} variant="body2">
                   نسيت كلمه السر؟
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/register" variant="body2">
+                <Link  to='/register' component={this.Link1} variant="body2">
                   {"ليس لديك حساب ؟ للتسجيل "}
                 </Link>
               </Grid>

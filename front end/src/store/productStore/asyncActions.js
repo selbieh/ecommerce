@@ -1,13 +1,12 @@
 import * as actions from './actions';
-import axios from 'axios';
+import axios from "../../components/Axios/axios";
 
 
 export const asyncFetchProduct=()=>{
     return dispatch=>{
         dispatch(actions.getProductStart());
-        axios.get('http://127.0.0.1:8000/products/')
+        axios.get('/products/')
         .then(re=>{
-            console.log(re.data)
             dispatch(actions.getProduct(re.data))
             dispatch(actions.getProductEnd())
         })

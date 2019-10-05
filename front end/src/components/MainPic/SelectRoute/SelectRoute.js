@@ -19,23 +19,23 @@ class SelectRoute extends Component {
     const allClasses=['btn btn-secondary',Classes.CustomNavi].join(' ')
     return (
       <div className="btn-group"  role="group" aria-label="Basic example" >
-          <NavLink className={allClasses}  to='/' activeStyle={{backgroundColor:'#7b1fa2'}} exact onClick={this.props.homeToggel}>
+          <NavLink className={allClasses}  to='/' activeStyle={{backgroundColor:'#7b1fa2'}} exact >
           <Home/>
           الرئيسيه</NavLink>
-          <NavLink className={allClasses} to='/products' activeStyle={{backgroundColor:'#7b1fa2'}} onClick={this.props.redirectToggel}>
+          <NavLink className={allClasses} to='/products' activeStyle={{backgroundColor:'#7b1fa2'}} >
           عرض المنتجات</NavLink>
-          <NavLink className={allClasses} to='/cart' activeStyle={{backgroundColor:'#7b1fa2'}} onClick={this.props.redirectToggel}>
+          <NavLink className={allClasses} to='/cart' activeStyle={{backgroundColor:'#7b1fa2'}} >
             <Badge badgeContent={this.props.shopCartLen} color="secondary">
               <ShoppingCart />
             </Badge>
           عربه التسوق</NavLink>
 
-          <NavLink className={allClasses}  to='/my-orders' activeStyle={{backgroundColor:'#7b1fa2'}} exact onClick={this.props.redirectToggel}>
+          <NavLink className={allClasses}  to='/my-orders' activeStyle={{backgroundColor:'#7b1fa2'}} exact >
             <List/>
             طلبات سابقه
              </NavLink>
 
-          <NavLink className={allClasses}  to='/contact-us' activeStyle={{backgroundColor:'#7b1fa2'}} exact onClick={this.props.redirectToggel}>
+          <NavLink className={allClasses}  to='/contact-us' activeStyle={{backgroundColor:'#7b1fa2'}} exact >
           <ContactMail/>
              ..تواصل معنا
              </NavLink>

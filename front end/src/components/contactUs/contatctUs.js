@@ -12,8 +12,10 @@ import {styles} from './styles';
 import { withStyles } from '@material-ui/core/styles';
 import ContactMail from '@material-ui/icons/ContactMail';
 import joi from '@hapi/joi';
-import axios from "axios";
+import axios from "../Axios/axios";
 import Spinner from '../spinner/spinner';
+
+
 
 
 
@@ -82,6 +84,9 @@ class contatctUs extends Component {
               }
             }    
 
+            
+  
+
         componentDidUpdate(_, prevState){
   
           if (prevState.value.username !==  this.state.value.username ||
@@ -97,7 +102,7 @@ class contatctUs extends Component {
         submitHandler=(event)=>{
           event.preventDefault();
           this.setState({showSpinner:true})
-          axios.post('http://127.0.0.1:8000/contact-us/',this.state.value)
+          axios.post('/contact-us/',this.state.value)
           .then(res=>{
             this.setState({showSpinner:false,submited:true})
           })
@@ -255,5 +260,8 @@ class contatctUs extends Component {
         );
     }
 }
+
+
+
 
 export default withStyles(styles)(contatctUs);

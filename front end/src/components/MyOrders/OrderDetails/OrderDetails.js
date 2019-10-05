@@ -37,6 +37,7 @@ function ccyFormat(num) {
   
       }
       productDetails=(row)=>{
+          row['hideTab']=true       
           this.props.history.push('/product-details',row)
       }
      

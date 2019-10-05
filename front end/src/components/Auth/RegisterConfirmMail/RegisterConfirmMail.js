@@ -42,7 +42,11 @@ class RegisterConfirmMail extends Component {
                   
                   
       if (!this.state.showSpinner){
-        return <Redirect to='/acount-activated'/>
+        return <Redirect to={{
+            pathname: '/message',
+            state: { message: 'تم تفعيل بريدك  حسابك' }
+        }}
+/>
       }else{
               
     return (

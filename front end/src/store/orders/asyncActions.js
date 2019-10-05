@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "../../components/Axios/axios";
 import {fetchShopCartFromServer} from '../../store/shopCartStore/asyncAction'
 
 export const asyncOrdernow =(data,token)=>{
     return dispatch=>{
         axios({
             method:"post",
-            baseURL:'http://127.0.0.1:8000/orders/',   
+            url:'/orders/',   
             headers:{
               Authorization:'Token '.concat(token)
           },

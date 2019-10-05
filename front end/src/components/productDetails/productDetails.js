@@ -24,12 +24,20 @@ class productDetails extends Component {
         shouldRedirect:false
      }
 
+ 
+
       
     addItem=(product)=>{
-        const shopCartList=this.props.ShopCartItems
-        const updatedList=shopCartList.concat(product)
-        const updatedIdList=updatedList.map(e=>e.id)
-        this.props.changeProductList(updatedIdList,this.props.token,this.props.shopCartId,this.props.userId)
+        if (localStorage.getItem('tokenKey')){
+            const shopCartList=this.props.ShopCartItems
+            const updatedList=shopCartList.concat(product)
+            const updatedIdList=updatedList.map(e=>e.id)
+            this.props.changeProductList(updatedIdList,this.props.token,this.props.shopCartId,this.props.userId)
+            
+        }else{
+            this.props.history.push('/login')
+        }
+       
 
     }
     removeItem=(id)=>{
@@ -39,24 +47,26 @@ class productDetails extends Component {
         //console.log('fillterd',filterId)
     }
 
-
+   
 
      onChangePicHandler=(passedImage)=>{
          this.setState({image:passedImage})
+         
      }
 
      componentDidMount(){
+        // console.log(this.props)
          if (this.props.location.state){
              this.setState({image:this.props.location.state.image_1})
          }
      }
      onZoomHandler=()=>{
-        console.log('opend')
+        //console.log('opend')
 
          this.setState({showPic:true})
      }
      hideZoomHandler=()=>{
-         console.log('closed')
+         //console.log('closed')
         this.setState({showPic:false})
 
      }
@@ -68,8 +78,7 @@ class productDetails extends Component {
                                         <AddShoppingCart style={{color:'blue'}}  />
                                     </IconButton>
                                 </Typography>
-                                <Typography paragraph align='center'>
-                                
+                                <Typography paragraph align='center'>  
                                     اضف الي عربه التسوق
                                 </Typography>
                             </CardContent>           
@@ -140,8 +149,8 @@ class productDetails extends Component {
 
                 <Grid container  spacing={0} className={classes.TheGrid}>
                 {this.props.location.state.image_1 ?  <Grid item xs={3}>
-                        <div>
-                            <img src={this.props.location.state.image_1} alt='hi1' className={classes.smallImage} 
+                        <div >
+                            <img src={this.props.location.state.image_1}  alt='hi1' className={classes.smallImage} 
                             onClick={()=>this.onChangePicHandler(this.props.location.state.image_1)}/>
                         </div>
                     </Grid>:null}
@@ -167,8 +176,8 @@ class productDetails extends Component {
                         </div>
                     </Grid>:null}
                     </Grid>
-
-                    {addOrRemoveItem}  
+                        { this.props.location.state.hideTab ?null:<React.Fragment>{addOrRemoveItem}</React.Fragment>}
+                    
                 </React.Fragment>
 
         );    }

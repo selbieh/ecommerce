@@ -15,16 +15,20 @@ import Spinner from './components/spinner/spinner';
 import {Route,withRouter} from 'react-router-dom';
 import {asyncFetchProduct} from './store/productStore/asyncActions';
 import RegisterConfirmMail from './components/Auth/RegisterConfirmMail/RegisterConfirmMail';
-import AccountActivated from './components/Auth/acountActivated/accountAtivated';
-import CheckMailToActivate from './components/Auth/checkMailToActivate/checkMailToActivate';
 import ChangePassword from './components/Auth/ChangePassword/ChangePassword';
-import ChangePasswordDone from './components/Auth/ChangePasswordDone/ChangePasswordDone';
 import productDetails from './components/productDetails/productDetails';
 import ContatactUs from './components/contactUs/contatctUs';
 import CheckOut from './components/checkOut/CheckOut';
 import MyOrders from './components/MyOrders/MyOrders';
-import OrderDetails from './components/MyOrders/OrderDetails/OrderDetails'
-import AboutUS from './components/AboutUs/AboutUs'
+import OrderDetails from './components/MyOrders/OrderDetails/OrderDetails';
+import AboutUS from './components/AboutUs/AboutUs';
+import ForgetPAssword from './components/Auth/ForgetPassword/ForgetPasswrd';
+import ResetPasswordConfirme from './components/Auth/ResetPasswordConfirme/ResetPasswordConfirme';
+import Message from './components/Auth/AuthMessage/AuthMessage';
+import * as uiAsyncActions from './store/uiReducer/asyncActions';
+import Error404 from './components/404/404';
+import {Switch} from 'react-router-dom';
+
 
 
 
@@ -35,7 +39,6 @@ class App extends Component {
     this.props.checkToken()
     this.props.fetchProduct()
     
-    
   }
 
   render() {
@@ -44,37 +47,71 @@ class App extends Component {
 
     
     return (
+
+
+
+
+
       <React.Fragment>
-              <CssBaseline />
-              <div className="App">
-                <Navbar {...this.props}/>
-                <HomeWithAnimate {...this.props}/>
-                <Route path='/products' component={AllProdduct} {...this.props}/>
-                <Route path='/cart'  component={ShopCart}/>
-                <Route path='/' exact component={Home} {...this.props}/>
-                <Route path='/login' exact component={Login} {...this.props}/>
-                <Route path='/register' exact component={Register}  {...this.props}/>
-                <Route path='/acount-activated' exact component={AccountActivated} {...this.props}/>
-                <Route path='/check-mail-toActivate' exact component={CheckMailToActivate} {...this.props}/>
-                <Route path='/change-password' exact component={ChangePassword} {...this.props}/>
-                <Route path='/change-password-done' exact component={ChangePasswordDone} {...this.props}/>
-                <Route path='/registration-confirm-mail/:token/' exact component={RegisterConfirmMail} {...this.props}/>
-                <Route path='/product-details' exact component={productDetails}/>
-                <Route path='/contact-us' exact component={ContatactUs}/>
-                <Route path='/check-out' exact component={CheckOut}/>
-                <Route path='/my-orders' exact component={MyOrders} {...this.props}/>
-                <Route path='/order-detail' component={OrderDetails} exact {...this.props}/>
-                <Route path='/about-us' component={AboutUS} exact />
+         <Navbar {...this.props}/>
+         <CssBaseline />
+         <div className="App">
+        <HomeWithAnimate {...this.props}/>
 
-
-             
+  
+    {this.props.logedIn ?<Switch> 
+        <Route path='/products' component={AllProdduct} {...this.props}/>
+        <Route path='/cart'  component={ShopCart}/>
+        <Route path='/message' component={Message} exact />
+        <Route path='/product-details' exact component={productDetails}/>
+        <Route path='/contact-us' exact component={ContatactUs}/>
+        <Route path='/about-us' component={AboutUS} exact />
+        <Route path='/my-orders' exact component={MyOrders} {...this.props}/>
+        <Route path='/login' exact component={Login} {...this.props}/>
+        <Route path='/register' exact component={Register}  {...this.props}/>    
 
 
 
-                <Footer/>
-              </div>
-      </React.Fragment>
+        <Route path='/change-password' exact component={ChangePassword} {...this.props}/>
+        <Route path='/registration-confirm-mail/:token/' exact component={RegisterConfirmMail} {...this.props}/>
+        <Route path='/check-out' exact component={CheckOut}/>
+        <Route path='/order-detail' component={OrderDetails} exact {...this.props}/>
+        <Route path='/' exact component={Home} {...this.props}/>
+
+          
+       <Route  component={Error404}  />
+
+    </Switch> :<Switch>
+        <Route path='/products' component={AllProdduct} {...this.props}/>
+        <Route path='/cart'  component={ShopCart}/>
+        <Route path='/message' component={Message} exact />
+        <Route path='/product-details' exact component={productDetails}/>
+        <Route path='/contact-us' exact component={ContatactUs}/>
+        <Route path='/about-us' component={AboutUS} exact />
+        <Route path='/my-orders' exact component={MyOrders} {...this.props}/>
+
+
+        <Route path='/login' exact component={Login} {...this.props}/>
+        <Route path='/register' exact component={Register}  {...this.props}/>    
+        <Route path='/forget-password' component={ForgetPAssword} exact />
+        <Route path='/rest-auth/password/reset/:Uid/:Token' component={ResetPasswordConfirme} exact />
+        <Route path='/' exact component={Home} {...this.props}/>  
+
+          
+        <Route  component={Error404}  /> 
+
+    </Switch>  
+}
+    
+
+
+
+   
+      </div>
+      <Footer/>
+
       
+</React.Fragment>
     );
   }else{
     return( 
@@ -91,6 +128,9 @@ const mapActionAsProps=dispatch=>{
   return{
     checkToken:()=>dispatch(asyncAuthAppStart()),
     fetchProduct:()=>dispatch(asyncFetchProduct()),
+    hideMainOic:()=>dispatch(uiAsyncActions.hideMain()),
+    showMainPic:()=>dispatch(uiAsyncActions.showMain())
+
 
   }
 }
@@ -99,6 +139,8 @@ const mapStateAsProps=state=>{
   return{
     showSpinner:state.product.showSpinner,
     token:state.auth.token,
+    logedIn:state.auth.token !== null,
+
   }
 }
 

@@ -20,6 +20,8 @@ import Spinner from '../../spinner/spinner';
 import * as asyncAction from '../../../store/authStore/asyncActions';
 import {Redirect} from 'react-router';
 import Zoom from '@material-ui/core/Zoom';
+import { Link as RouterLink } from 'react-router-dom';
+
 
 
 
@@ -41,6 +43,7 @@ class SignUp extends Component {
     },
     }
 
+    Link1 = React.forwardRef((props, ref) => <RouterLink innerRef={ref} {...props} />);
 
    
    
@@ -108,6 +111,12 @@ class SignUp extends Component {
               }
             }    
 
+            componentDidMount(){
+              if (localStorage.getItem("tokenKey")){
+                this.props.history.push("/")
+              }
+            }
+
         componentDidUpdate(_, prevState){
   
           if (prevState.value.username !==  this.state.value.username ||
@@ -143,7 +152,10 @@ class SignUp extends Component {
 
   let redirect=null;
   if (this.props.showSpiner && !this.props.backendError && this.props.isAuthed){
-    redirect=<Redirect to = '/check-mail-toActivate'/>
+    redirect=<Redirect to = {{
+      pathname:'/message',
+      state:{message:"برجاء تفعيل حسابك عن طريق الرابط المرسل لبريدكم الالكتروني"}
+    }}/>
   }
 
   if (!this.props.showSpiner){
@@ -178,6 +190,7 @@ class SignUp extends Component {
                   fullWidth
                   id="firstName"
                   label="رقم المحمول"
+                  value={this.state.value.username}
                   autoFocus
                   onChange={(e)=>this.valueInputHandler(e,'username')}
 
@@ -199,6 +212,7 @@ class SignUp extends Component {
                   fullWidth
                   id="email"
                   label="بريد الكتروني"
+                  value={this.state.value.email}
                   name="email"
                   autoComplete="email"
                   onChange={(e)=>this.valueInputHandler(e,'email')}
@@ -219,6 +233,8 @@ class SignUp extends Component {
                   fullWidth
                   name="password1"
                   label="كلمه السر"
+                  value={this.state.value.password1}
+
                   type="password"
                   id="password1"
                   autoComplete="current-password"
@@ -236,6 +252,8 @@ class SignUp extends Component {
                   fullWidth
                   name="password2"
                   label="تأكيد كلمه السر"
+                  value={this.state.value.password2}
+
                   type="password"
                   id="password2"
                   autoComplete="current-password"
@@ -263,7 +281,7 @@ class SignUp extends Component {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="/register" variant="body2">
+                <Link to='/login' component={this.Link1} variant="body2">
                   لديك حساب بالفعل ؟ سجل دخول
                 </Link>
               </Grid>

@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 
 
 
+
 const TAX_RATE = 500;
 
 
@@ -27,7 +28,8 @@ function ccyFormat(num) {
 
 
 class ShopCart extends Component{
-    
+
+ 
 
     showForm=()=>{
         this.props.history.push('/check-out')
@@ -144,7 +146,12 @@ const mapeStateToProps=state=>{
 const mapActionsToProps=dispatch=>{
     return{
         fetchShopCart:(token)=>dispatch(fetchShopCartFromServer(token)),
-        changeProductList:(productId,token,shopCartId,userId)=>dispatch(changeProductInCart(productId,token,shopCartId,userId))
+        changeProductList:(productId,token,shopCartId,userId)=>dispatch(changeProductInCart(productId,token,shopCartId,userId)),
+
     }
 }
+
+
+
+
 export default connect(mapeStateToProps,mapActionsToProps)(withStyles(styles)(ShopCart));

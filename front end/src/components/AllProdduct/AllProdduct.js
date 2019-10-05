@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import {connect} from 'react-redux';
 import {changeProductInCart} from '../../store/shopCartStore/asyncAction';
 import Button from '@material-ui/core/Button';
-import {asyncFetchPaginate} from '../../store/productStore/asyncActions'
+import {asyncFetchPaginate} from '../../store/productStore/asyncActions';
 
 
 
@@ -33,7 +33,7 @@ class AllProdduct extends Component {
 
 
     render() {
-      console.log(this.props.prevPage)
+      //console.log(this.props.prevPage)
         return (
             <div className={classes.AllProdduct}>
                <Grid container className={classes.root} spacing={10} justify='center' alignItems='center'>
@@ -93,7 +93,7 @@ const mapeStateToProps=state=>{
   const mapActionTpProps=dispatch=>{
     return{
       changeProductList:(productId,token,shopCartId,userId)=>dispatch(changeProductInCart(productId,token,shopCartId,userId)),
-      paginate:(url)=>dispatch(asyncFetchPaginate(url))
+      paginate:(url)=>dispatch(asyncFetchPaginate(url)),
   
     }
   }

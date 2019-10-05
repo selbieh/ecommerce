@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import Container from '@material-ui/core/Container';
 import Modal from '../../Modal/Modal';
 import Box from '@material-ui/core/Box/Box';
+import {Redirect} from 'react-router-dom';
 
-class AccountActivated extends Component {
+class Message extends Component {
     render(){
+        if (this.props.location.state ){
+
         return(
                 <React.Fragment>
                 <Modal {...this.props} >
                   <Container component="main" maxWidth="xs" >
                       <div align='center' >
                             <Box>
-                                تم تفعيل حسابك بنجاح
+                                {this.props.location.state.message}
                             </Box>
                       </div>
                   </Container>
@@ -19,11 +22,16 @@ class AccountActivated extends Component {
                 </React.Fragment>
         
         )
+    }else{
+        return (
+            <Redirect to='/'/>
+        )
     }
+}
 }
 
     
 
 
 
-export default AccountActivated;
+export default Message;

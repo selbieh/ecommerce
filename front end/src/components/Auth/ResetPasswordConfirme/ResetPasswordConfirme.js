@@ -32,12 +32,10 @@ class ChangePassword extends Component {
     error:{
         new_password1:'',
         new_password2:'',
-        old_password:''
     },
     value:{
         new_password1:'',
         new_password2:'',
-        old_password:''
     }
    }
 
@@ -53,14 +51,9 @@ class ChangePassword extends Component {
 
     new_password2:joi.string().required().min(5).max(30).error(errors => {
       return {
-        message: "على الاقل خمس عناصر "
+        message: "لابد من تطابق كلمه السر "
       };
-    }),
-    old_password:joi.string().required().min(5).max(30).error(errors => {
-        return {
-          message: "على الاقل خمس عناصر "
-        };
-      }),
+    })
   }
 
 
@@ -87,8 +80,7 @@ class ChangePassword extends Component {
    componentDidUpdate(_, prevState){
   
     if (prevState.value.new_password1 !==  this.state.value.new_password1 ||
-       prevState.value.new_password2 !==this.state.value.new_password2 ||
-       prevState.value.old_password !==  this.state.value.old_password){
+       prevState.value.new_password2 !==this.state.value.new_password2 ){
      this.formValidate()
 
     }
@@ -100,7 +92,16 @@ class ChangePassword extends Component {
  
    submitHandler=(event)=>{
     event.preventDefault();
-    this.props.sumitNewPassword(this.state.value,this.props.token)
+    const data={
+      uid:this.props.match.params.Uid,
+      token:this.props.match.params.Token,
+      new_password1:this.state.value.new_password1,
+      new_password2:this.state.value.new_password2,
+
+
+    }
+    this.props.sumitNewPassword(data)
+
 
        }
 
@@ -130,27 +131,27 @@ class ChangePassword extends Component {
 
   let isButtuDisabled=true;
   if(!this.state.error.new_password1 && 
-    !this.state.error.old_password && 
     !this.state.error.new_password2 && 
     this.state.value.new_password1.trim().length !== 0 &&
-    this.state.value.new_password2.trim().length !== 0 &&
-    this.state.value.old_password.trim().length !== 0 ){
+    this.state.value.new_password2.trim().length !== 0 
+    ){
     isButtuDisabled=false;
   }
 
  let redirect=null;
   if ( this.props.passwordChanged)
     {
-    redirect=<Redirect to = {{
-      pathname:'/message',
-      state:{message:'تم تغيير كلمه السر بنجاح'}
-    }}/>
+    redirect=<Redirect to={{
+      pathname: '/message',
+      state: { message: 'تم استعاده كلمه السر بنجاح' }
+  }}
+/>
   }
 
   if (!this.props.showSpiner ){
     return (
 
-      <Modal  >
+      <Modal>
 
      
       <Container component="main" maxWidth="xs">
@@ -169,30 +170,7 @@ class ChangePassword extends Component {
                     تغيير كلمه السر
           </Typography>
           <form className={classes.form} noValidate onSubmit={this.submitHandler}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="old_password"
-              label="كلمه القديمه"
-              type="password"
-              id="old_password"
-              autoComplete="current-password"
-              onChange={(e)=>this.valueInputHandler(e,'old_password')}
-
-              
-            />
-              { this.props.changePasswordError? <Box color={red}>
-                'كلمه السر غير صحيحه'
-              </Box> :null}
-
-
-            <Box color={red}>
-              {this.state.error.old_password}
-           </Box>
- 
-
+            
            <TextField
               variant="outlined"
               margin="normal"
@@ -287,7 +265,7 @@ const mapeStateToProps=state=>{
 
 const mapActionToProps=dispatch=>{
   return{
-   sumitNewPassword:(data,token)=>dispatch(asyncActions.asynChangePassword(data,token))
+   sumitNewPassword:(data)=>dispatch(asyncActions.asynChangePasswordWithUID(data))
   }
 }
 
