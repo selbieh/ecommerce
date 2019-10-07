@@ -1,12 +1,20 @@
 from rest_framework.serializers import ModelSerializer
-from .models import shopCart
+from .models import shopCart,productobject
+from products.serializer import productSerializer
 class shopCartSerializer(ModelSerializer):
     class Meta:
         model=shopCart
         fields='__all__'
+class productObjectSerializer(ModelSerializer):
+    product=productSerializer()
+    class Meta:
+        model=productobject
+        fields='__all__'
 
-
-
+class productObjectEdit(ModelSerializer):
+    class Meta:
+        model=productobject
+        fields='__all__'
 
 
 

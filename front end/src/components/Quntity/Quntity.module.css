@@ -4,15 +4,20 @@
 .ico{
     background-color: #7b1fa2;
     color: aliceblue;
+
 }
 .Quntity p{
 
-    margin: 5px;
     text-align: center;
-    margin: auto;
+    width: 60%
 } 
 .ico:hover{
     background-color: aliceblue;
     color: #7b1fa2;
-    pointer-events: none
+    pointer-events: none;
+
+}
+.c{
+    cursor:pointer
+
 }

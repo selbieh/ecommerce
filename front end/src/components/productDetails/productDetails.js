@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import RemoveShoppingCart from '@material-ui/icons/RemoveShoppingCart';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 import {connect} from "react-redux";
-import {changeProductInCart} from '../../store/shopCartStore/asyncAction';
+import {addProductToShopCart, deletItem} from '../../store/shopCartStore/asyncAction';
 import Modal from './modal';
 import { withStyles } from '@material-ui/core/styles';
 import { Zoom } from '@material-ui/core';
@@ -29,10 +29,8 @@ class productDetails extends Component {
       
     addItem=(product)=>{
         if (localStorage.getItem('tokenKey')){
-            const shopCartList=this.props.ShopCartItems
-            const updatedList=shopCartList.concat(product)
-            const updatedIdList=updatedList.map(e=>e.id)
-            this.props.changeProductList(updatedIdList,this.props.token,this.props.shopCartId,this.props.userId)
+           
+            this.props.addItemToShopCart(product.id,this.props.token,this.props.shopCartId,this.props.userId)
             
         }else{
             this.props.history.push('/login')
@@ -41,10 +39,10 @@ class productDetails extends Component {
 
     }
     removeItem=(id)=>{
-        const filtered =this.props.ShopCartItems.filter(e=>e.id !== id)
-        const filterId=filtered.map(e=>e.id)
-        this.props.changeProductList(filterId,this.props.token,this.props.shopCartId,this.props.userId)
-        //console.log('fillterd',filterId)
+        const shopCartIdList=this.props.ShopCartItems
+        const theProduct=shopCartIdList.filter(e=>e.product.id===id)[0]
+        const theProductId=theProduct.id       
+        this.props.deletItemFromCart(theProductId,this.props.token)
     }
 
    
@@ -190,7 +188,7 @@ class productDetails extends Component {
 
 const mapStateToProps=state=>{
     return{
-      shopCartIdList:state.shopCart.shopCartItems.map(e=>e.id),
+      shopCartIdList:state.shopCart.shopCartItems.map(e=>e.product.id),
       ShopCartItems:state.shopCart.shopCartItems,
       shopCartId:state.shopCart.shopCartId,
       userId:state.shopCart.userId,
@@ -204,7 +202,8 @@ const mapStateToProps=state=>{
 
   const mapActionTpProps=dispatch=>{
     return{
-      changeProductList:(productId,token,shopCartId,userId)=>dispatch(changeProductInCart(productId,token,shopCartId,userId))
+      addItemToShopCart:(productId,token,shopCartId,userId)=>dispatch(addProductToShopCart(productId,token,shopCartId,userId)),
+      deletItemFromCart:(id,token)=>dispatch(deletItem(id,token))
   
     }
   }

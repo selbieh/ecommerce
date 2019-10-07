@@ -19,7 +19,7 @@ export const asyncFetchPaginate=(url)=>{
         dispatch(actions.getProductStart());
         axios.get(url)
         .then(re=>{
-            console.log(re.data)
+            //console.log(re.data)
             dispatch(actions.paginate(re.data))
             dispatch(actions.getProductEnd())
         })

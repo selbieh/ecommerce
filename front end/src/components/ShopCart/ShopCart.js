@@ -10,10 +10,11 @@ import {styles} from './ShopCartStyles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {connect} from 'react-redux';
-import {fetchShopCartFromServer,changeProductInCart} from '../../store/shopCartStore/asyncAction';
+import {fetchShopCartFromServer,deletItem} from '../../store/shopCartStore/asyncAction';
 import {Redirect} from 'react-router';
 import Button from '@material-ui/core/Button/Button';
 import Typography from '@material-ui/core/Typography';
+import Quntity from '../Quntity/Quntity'
 
 
 
@@ -36,20 +37,22 @@ class ShopCart extends Component{
     }
 
     deletProduct=(id)=>{
-        const filtered =this.props.ShopCartItems.filter(e=>e.id !== id)
-        const filterId=filtered.map(e=>e.id)
-        this.props.changeProductList(filterId,this.props.token,this.props.shopCartId,this.props.userId)
+        //const filtered =this.props.ShopCartItems.filter(e=>e.id !== id)
+        //const filterId=filtered.map(e=>e.id)
+        this.props.deletItemFromCart(id,this.props.token,this.props.userId)
 
     }
     productDetails=(row)=>{
-        this.props.history.push('/product-details',row)
+        const data=row.product
+        data['hideTab']=true
+        this.props.history.push('/product-details',data)
     }
    
     render(){
         const { classes } = this.props;
         let productPriceRow=[]
         this.props.ShopCartItems.map(item=>{
-        return productPriceRow.push(item.price)
+        return productPriceRow.push(item.product.price * item.quantity)
         })
        
         
@@ -76,7 +79,10 @@ class ShopCart extends Component{
                     <TableRow>
                         <TableCell>PIC</TableCell>
                         <TableCell align="right">ألاسم</TableCell>
-                        <TableCell align="right">السعر</TableCell>
+                        <TableCell align="center">سعر القطعه</TableCell>
+                        <TableCell align="center">الكميه</TableCell>
+                        <TableCell align="right">اجمالى</TableCell>
+
                         <TableCell align="right">حذف</TableCell>
     
                     </TableRow>
@@ -85,12 +91,16 @@ class ShopCart extends Component{
                     {this.props.ShopCartItems.map(row => (
                         <TableRow key={row.id}>
                         <TableCell>
-                        <img src={(`${row.image_1}`)} alt={row.name} style={{width:'120px',height:'auto'}} onClick={()=>this.productDetails(row)}/>
+                        <img src={(`${row.product.image_1}`)} alt={row.product.name} style={{width:'120px',height:'auto'}} onClick={()=>this.productDetails(row)}/>
                         
                         
                         </TableCell>
-                        <TableCell align="right">{row.name}</TableCell>
-                        <TableCell align="right">{row.price.toFixed(0)}</TableCell>
+                        <TableCell align="right">{row.product.name}</TableCell>
+                        <TableCell align="center">{row.product.price.toFixed(0)}</TableCell>
+                        <TableCell align="center"><Quntity objectID={row.id} q={row.quantity}/></TableCell>
+                        <TableCell align="right">{row.quantity.toFixed(0)*row.product.price.toFixed(0)}</TableCell>
+
+
                         <TableCell align="right">
                               <IconButton  aria-label="Delete" onClick={()=>this.deletProduct(row.id)}>
                                   <DeleteIcon style={{color:'secondary'}} />
@@ -146,7 +156,7 @@ const mapeStateToProps=state=>{
 const mapActionsToProps=dispatch=>{
     return{
         fetchShopCart:(token)=>dispatch(fetchShopCartFromServer(token)),
-        changeProductList:(productId,token,shopCartId,userId)=>dispatch(changeProductInCart(productId,token,shopCartId,userId)),
+        deletItemFromCart:(productObjectId,token,shopCartId,userId)=>dispatch(deletItem(productObjectId,token,shopCartId,userId)),
 
     }
 }

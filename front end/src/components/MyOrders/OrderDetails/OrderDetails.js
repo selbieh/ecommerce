@@ -21,10 +21,7 @@ function ccyFormat(num) {
   
   
   class OrderDetails extends Component{
-      componentDidMount(){
-          console.log(this.props)
-      }
-      
+   
   
       showForm=()=>{
           this.props.history.push('/check-out')
@@ -46,7 +43,7 @@ function ccyFormat(num) {
           let productPriceRow=[]
           if (this.props.location.state){
             this.props.location.state.orderProduct.map(item=>{
-                return productPriceRow.push(item.price)
+                return productPriceRow.push(item.product.price * item.quantity)
                 })
           }
          
@@ -76,22 +73,26 @@ function ccyFormat(num) {
                       <TableCell align='left'>ID</TableCell>
 
                           <TableCell>PIC</TableCell>
-                          <TableCell align="right">Name</TableCell>
-                          <TableCell align="right">Price</TableCell>
+                          <TableCell align="right">الاسم</TableCell>
+                          <TableCell align="right">سعر الوحده</TableCell>
+                          <TableCell align="right">الكميه</TableCell>
+
       
                       </TableRow>
                       </TableHead>
                       <TableBody>
                       {this.props.location.state.orderProduct.map(row => (
                           <TableRow key={row.id}>
-                         <TableCell align="left">{row.id}</TableCell>
+                         <TableCell align="left">{row.product.id}</TableCell>
                           <TableCell>
-                          <img src={(`${row.image_1}`)} alt={row.name} style={{width:'120px',height:'auto'}} onClick={()=>this.productDetails(row)}/>
+                          <img src={(`${row.product.image_1}`)} alt={row.product.name} style={{width:'120px',height:'auto'}} onClick={()=>this.productDetails(row.product)}/>
                           
                           
                           </TableCell>
-                          <TableCell align="right">{row.name}</TableCell>
-                          <TableCell align="right">{row.price.toFixed(0)}</TableCell>
+                          <TableCell align="right">{row.product.name}</TableCell>
+                          <TableCell align="right">{row.product.price.toFixed(0)}</TableCell>
+                          <TableCell align="right">{row.quantity.toFixed(0)}</TableCell>
+
                               
                           
                           </TableRow>

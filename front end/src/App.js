@@ -37,8 +37,7 @@ class App extends Component {
 
   componentDidMount(){
     this.props.checkToken()
-    this.props.fetchProduct()
-    
+    this.props.fetchProduct()   
   }
 
   render() {

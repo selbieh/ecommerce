@@ -4,7 +4,8 @@ from .models import order
 from .serializer import oderSerializer
 from rest_framework.response import Response
 from shopcart.models import shopCart
-from products.serializer import productSerializer
+from shopcart.serializer import productObjectSerializer
+
 class ordersView(ModelViewSet):
     queryset = order.objects.all()
     serializer_class = oderSerializer
@@ -29,7 +30,7 @@ class ordersView(ModelViewSet):
     def retrieve(self, request, pk=None):
         the_order=order.objects.get(pk=pk)
         productsList=the_order.orderProduct.all()
-        SerializedProductsList=productSerializer(productsList,many=True, context={"request": request})
+        SerializedProductsList=productObjectSerializer(productsList,many=True, context={"request": request})
         dicty={
             'orderProduct':SerializedProductsList.data,
             'fullAdresse':the_order.fullAdresse,

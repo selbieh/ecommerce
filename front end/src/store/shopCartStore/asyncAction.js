@@ -25,6 +25,8 @@ export const fetchShopCartFromServer=(token)=>{
             }
         })
         .then(response=>{
+            console.log(response)
+
             dispatch(addFetchedItem(response.data.result))
         })
         .catch(er=>{
@@ -34,7 +36,7 @@ export const fetchShopCartFromServer=(token)=>{
 }
 
 
-export const changeProductInCart=(productId,token,shopCartId,userId)=>{
+export const addProductToShopCart=(productId,token,shopCartId)=>{
   return dispatch=>{
       axios({
           url:`/shopcart/${shopCartId}/`,
@@ -44,8 +46,8 @@ export const changeProductInCart=(productId,token,shopCartId,userId)=>{
           },
           data:{
             //"id": shopCartId,
-            "user": userId,
-            "shopCartProduct": productId
+            //"user": userId,
+            "id": productId
         }
 
       })
@@ -53,3 +55,49 @@ export const changeProductInCart=(productId,token,shopCartId,userId)=>{
           dispatch(fetchShopCartFromServer(token)) 
       })
 }}
+
+
+
+
+export const deletItem =(id,token)=>{
+    return dispath=>{
+
+        axios({
+            method:'delete',
+            url:`/prodctObject/${id}`,
+            headers: {
+                Authorization:'Token '.concat(token),
+            },
+   
+        })  
+        .then(res=>{
+            dispath(fetchShopCartFromServer(token))
+            //console.log(res)
+        })
+        .catch(er=>{
+        })
+}
+}
+
+
+export const  incObject=(id,quantity,token)=>{
+        return dispatch=>{
+            if (quantity >= 1){
+
+            axios({
+                url:`http://127.0.0.1:8000/prodctObject/${id}/`,
+                method:'patch',
+                headers: {
+                    Authorization:'Token '.concat(token),
+                },
+                data:{quantity:quantity}
+       
+    
+            }).then(res=>{
+                dispatch(fetchShopCartFromServer(token))
+            })
+    
+        }
+}}
+    
+  

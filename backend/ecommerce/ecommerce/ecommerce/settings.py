@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS=['*']
 
 CORS_ORIGIN_WHITELIST =['https://localhost:3000']
-#CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 
 
@@ -86,9 +86,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-
-
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -150,12 +147,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 6,
     'DEFAULT_PERMISSION_CLASSES': [
-
+        'rest_framework.permissions.AllowAny'
         #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
 
     ),

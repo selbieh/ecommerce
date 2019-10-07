@@ -109,7 +109,7 @@ class ProductCard extends React.Component {
 
 const mapStateToProps=state=>{
   return{
-    shopCartIdList:state.shopCart.shopCartItems.map(e=>e.id),
+    shopCartIdList:state.shopCart.shopCartItems.map(e=>e.product.id),
     
 
   }

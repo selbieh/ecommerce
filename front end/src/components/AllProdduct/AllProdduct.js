@@ -3,7 +3,7 @@ import classes from './AllProdduct.module.css';
 import ProductCard from './ProductCard/ProductCard';
 import Grid from '@material-ui/core/Grid';
 import {connect} from 'react-redux';
-import {changeProductInCart} from '../../store/shopCartStore/asyncAction';
+import {addProductToShopCart,deletItem} from '../../store/shopCartStore/asyncAction';
 import Button from '@material-ui/core/Button';
 import {asyncFetchPaginate} from '../../store/productStore/asyncActions';
 
@@ -18,17 +18,17 @@ class AllProdduct extends Component {
     }
     
     addItem=(product)=>{
-        const shopCartList=this.props.ShopCartItems
-        const updatedList=shopCartList.concat(product)
-        const updatedIdList=updatedList.map(e=>e.id)
-        this.props.changeProductList(updatedIdList,this.props.token,this.props.shopCartId,this.props.userId)
+       
+        this.props.addProductToCart(product.id,this.props.token,this.props.shopCartId)
 
     }
     removeItem=(id)=>{
-        const filtered =this.props.ShopCartItems.filter(e=>e.id !== id)
-        const filterId=filtered.map(e=>e.id)
-        this.props.changeProductList(filterId,this.props.token,this.props.shopCartId,this.props.userId)
-        //console.log('fillterd',filterId)
+      const ShopCart=this.props.ShopCartItems
+      console.log(ShopCart)
+      const productObjct=ShopCart.filter(e=>e.product.id===id)[0]
+      console.log(productObjct)
+      
+      this.props.removeItemFromCart(productObjct.id,this.props.token)
     }
 
 
@@ -92,8 +92,9 @@ const mapeStateToProps=state=>{
 
   const mapActionTpProps=dispatch=>{
     return{
-      changeProductList:(productId,token,shopCartId,userId)=>dispatch(changeProductInCart(productId,token,shopCartId,userId)),
+      addProductToCart:(productId,token,shopCartId,userId)=>dispatch(addProductToShopCart(productId,token,shopCartId,userId)),
       paginate:(url)=>dispatch(asyncFetchPaginate(url)),
+      removeItemFromCart:(productId,token)=>dispatch(deletItem(productId,token))
   
     }
   }

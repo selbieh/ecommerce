@@ -1,4 +1,4 @@
 from django.contrib import admin
-from  .models import shopCart
-admin.site.register(shopCart)
+from  .models import shopCart,productobject
+admin.site.register([shopCart,productobject])
 # Register your models here.
