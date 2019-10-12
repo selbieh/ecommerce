@@ -9,6 +9,7 @@ import List from '@material-ui/icons/List';
 
 import Badge from '@material-ui/core/Badge';
 import {connect} from 'react-redux';
+import {trans} from '../../../store/language/LangObject';
 
 
 
@@ -18,26 +19,26 @@ class SelectRoute extends Component {
 
     const allClasses=['btn btn-secondary',Classes.CustomNavi].join(' ')
     return (
-      <div className="btn-group"  role="group" aria-label="Basic example" >
+      <div className="btn-group" role="group" aria-label="Basic example" >
           <NavLink className={allClasses}  to='/' activeStyle={{backgroundColor:'#7b1fa2'}} exact >
           <Home/>
-          الرئيسيه</NavLink>
+          {trans.home[this.props.lang]}</NavLink>
           <NavLink className={allClasses} to='/allproducts' activeStyle={{backgroundColor:'#7b1fa2'}} >
-          عرض المنتجات</NavLink>
+          {trans.showProd[this.props.lang]}</NavLink>
           <NavLink className={allClasses} to='/cart' activeStyle={{backgroundColor:'#7b1fa2'}} >
             <Badge badgeContent={this.props.shopCartLen} color="secondary">
               <ShoppingCart />
             </Badge>
-          عربه التسوق</NavLink>
+          {trans.shopCart[this.props.lang]}</NavLink>
 
           <NavLink className={allClasses}  to='/my-orders' activeStyle={{backgroundColor:'#7b1fa2'}} exact >
             <List/>
-            طلبات سابقه
+              {trans.prevOrder[this.props.lang]}
              </NavLink>
 
           <NavLink className={allClasses}  to='/contactus' activeStyle={{backgroundColor:'#7b1fa2'}} exact >
           <ContactMail/>
-             ..تواصل معنا
+             {trans.contactUs[this.props.lang]}
              </NavLink>
       </div>
     );
@@ -48,7 +49,8 @@ class SelectRoute extends Component {
 
 const mapStateToProps=state=>{
   return{
-    shopCartLen:state.shopCart.shopCartItems.length
+    shopCartLen:state.shopCart.shopCartItems.length,
+    lang:state.lang.lang
 
   }
 }

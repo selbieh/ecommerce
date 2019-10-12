@@ -21,6 +21,8 @@ import * as asyncAction from '../../../store/authStore/asyncActions';
 import {Redirect} from 'react-router';
 import Zoom from '@material-ui/core/Zoom';
 import { Link as RouterLink } from 'react-router-dom';
+import {trans} from '../../../store/language/LangObject.js';
+
 
 
 
@@ -40,8 +42,7 @@ class SignUp extends Component {
       password1:'',
       password2:''
 
-    },
-    }
+    }    }
 
     Link1 = React.forwardRef((props, ref) => <RouterLink innerRef={ref} {...props} />);
 
@@ -70,25 +71,25 @@ class SignUp extends Component {
         schema={
           username:joi.string().regex(/^[0][0-9]{10}$/).error(errors => {
             return {
-              message: "رقم المحمول غير صحيح "
+              message: `${trans.wrongPhone[this.props.lang]}`
             };
           }),
       
           password1:joi.string().required().min(5).max(30).error(errors => {
             return {
-              message: "على الاقل خمس عناصر "
+              message: `${trans.minEle[this.props.lang]}`
             };
           }),
           password2:joi.string().required().min(5).max(30).error(errors => {
             return {
-              message: "على الاقل خمس عناصر "
+              message: `${trans.minEle[this.props.lang]}`
             };
           }),
 
 
           email:joi.string().email({ minDomainSegments: 2 }).error(errors => {
             return {
-              message: " البريد الألكتروني غير صحيح "
+              message: `${trans.wrongEmail[this.props.lang]}`
             };
           })
         }
@@ -104,7 +105,7 @@ class SignUp extends Component {
             this.setState({error:errorOject}) 
       
             }else if(this.state.value.password1 !==this.state.value.password2){
-                errorOject['password2']='لابد من تطابق كلمتي السر '
+                errorOject['password2']=`${trans.samePassword[this.props.lang]}`
                 this.setState({error:errorOject}) 
            }else{
              this.setState({error:{}})
@@ -138,6 +139,8 @@ class SignUp extends Component {
     const {classes}= this.props
 
     
+
+    
   let isButtuDisabled=true;
   if(!this.state.error.username && 
     !this.state.error.password1 && 
@@ -154,7 +157,7 @@ class SignUp extends Component {
   if (this.props.showSpiner && !this.props.backendError && this.props.isAuthed){
     redirect=<Redirect to = {{
       pathname:'/message',
-      state:{message:"برجاء تفعيل حسابك عن طريق الرابط المرسل لبريدكم الالكتروني"}
+      state:{message:`${trans.activateAcountCheckMail[this.props.lang]}`}
     }}/>
   }
 
@@ -176,7 +179,7 @@ class SignUp extends Component {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            سجل الان
+           {trans.registerNow[this.props.lang]}
           </Typography>
        
           <form className={classes.form} onSubmit={this.submitHandler}>
@@ -189,7 +192,7 @@ class SignUp extends Component {
                   required
                   fullWidth
                   id="firstName"
-                  label="رقم المحمول"
+                  label={trans.Mobile[this.props.lang]}
                   value={this.state.value.username}
                   autoFocus
                   onChange={(e)=>this.valueInputHandler(e,'username')}
@@ -198,7 +201,7 @@ class SignUp extends Component {
               </Grid>
               
               { this.props.backendError? <Box color={red}>
-                {this.props.backendError.username}
+                { this.props.backendError.username? trans.userUsedBefor[this.props.lang]:null}
               </Box> :null}
 
               <Box color={red}>
@@ -211,7 +214,7 @@ class SignUp extends Component {
                   required
                   fullWidth
                   id="email"
-                  label="بريد الكتروني"
+                  label={trans.enterEmail[this.props.lang]}
                   value={this.state.value.email}
                   name="email"
                   autoComplete="email"
@@ -222,8 +225,8 @@ class SignUp extends Component {
               <Box color={red}> 
               {this.state.error.email}
             </Box>
-            { this.props.backendError? <Box color={red}>
-                  {this.props.backendError.email}
+            { this.props.backendError ? <Box color={red}>
+                  {this.props.backendError.email ? trans.mailUsedBefor[this.props.lang]:null}
               </Box> :null}
               
               <Grid item xs={12}>
@@ -232,7 +235,7 @@ class SignUp extends Component {
                   required
                   fullWidth
                   name="password1"
-                  label="كلمه السر"
+                  label={trans.password[this.props.lang]}
                   value={this.state.value.password1}
 
                   type="password"
@@ -251,7 +254,7 @@ class SignUp extends Component {
                   required
                   fullWidth
                   name="password2"
-                  label="تأكيد كلمه السر"
+                  label={trans.reWritePassword[this.props.lang]}
                   value={this.state.value.password2}
 
                   type="password"
@@ -277,12 +280,12 @@ class SignUp extends Component {
 
             >
               
-              سجل الان
+             {trans.registerNow[this.props.lang]}
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
                 <Link to='/login' component={this.Link1} variant="body2">
-                  لديك حساب بالفعل ؟ سجل دخول
+                 {trans.alreadyHaveAccount[this.props.lang]}
                 </Link>
               </Grid>
             </Grid>
@@ -319,7 +322,9 @@ const mapsStateToProps=state=>{
   return{
     backendError:state.auth.registerBackendError,
     showSpiner:state.auth.showSpiner,
-    isAuthed:state.auth.token !==null 
+    isAuthed:state.auth.token !==null,
+    lang:state.lang.lang
+
   }
 }
 

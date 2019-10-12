@@ -9,6 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import {styles} from './Stylee';
 import {Redirect} from 'react-router';
 import Typography from '@material-ui/core/Typography';
+import {connect} from 'react-redux';
+import {trans} from '../../../store/language/LangObject'
 
 
 
@@ -73,9 +75,9 @@ function ccyFormat(num) {
                       <TableCell align='left'>ID</TableCell>
 
                           <TableCell>PIC</TableCell>
-                          <TableCell align="right">الاسم</TableCell>
-                          <TableCell align="right">سعر الوحده</TableCell>
-                          <TableCell align="right">الكميه</TableCell>
+                          <TableCell align="right">{trans.name[this.props.lang]}</TableCell>
+                          <TableCell align="right">{trans.priceUnit[this.props.lang]} </TableCell>
+                          <TableCell align="right">{trans.quantity[this.props.lang]}</TableCell>
 
       
                       </TableRow>
@@ -118,10 +120,10 @@ function ccyFormat(num) {
                <br/>
                <Paper>
                     <Typography align='center' variant='h4'>
-                    <Typography color='secondary' >  العنوان كاملا :</Typography>     {this.props.location.state.fullAdresse}
+                    <Typography color='secondary' >  {trans.fullAdresse[this.props.lang]}</Typography>     {this.props.location.state.fullAdresse}
                     </Typography>
                     <Typography align='center' variant='h4'>
-                    <Typography color='secondary' > رقم الموبايل :</Typography>     {this.props.location.state.mobiel}
+                    <Typography color='secondary' > {trans.Mobile[this.props.lang]}</Typography>     {this.props.location.state.mobiel}
                     </Typography>
               </Paper>
   
@@ -135,4 +137,11 @@ function ccyFormat(num) {
   
   }
 
-  export default withStyles(styles)(OrderDetails);
+const mapStateToProps=state=>{
+    return{
+        lang:state.lang.lang
+    }
+}
+
+
+  export default connect(mapStateToProps) (withStyles(styles)(OrderDetails));

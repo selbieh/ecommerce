@@ -23,6 +23,7 @@ import Spinner from '../../spinner/spinner';
 import {Redirect} from 'react-router';
 import Zoom from '@material-ui/core/Zoom';
 import { Link as RouterLink } from 'react-router-dom';
+import {trans} from '../../../store/language/LangObject.js';
 
 
 
@@ -53,13 +54,13 @@ class Login extends Component {
    schema={
     username:joi.string().required().regex(/^[0][0-9]{10}$/).error(errors => {
       return {
-        message: "رقم المحمول غير صحيح "
+        message: `${trans.wrongPhone[this.props.lang]}`
       };
     }),
 
     password:joi.string().required().min(5).max(30).error(errors => {
       return {
-        message: "على الاقل خمس عناصر "
+        message: `${trans.minEle[this.props.lang]}`
       };
     }),
   }
@@ -164,11 +165,11 @@ class Login extends Component {
             <LockOutlinedIcon />
           </Avatar>
         <Box color={red}> 
-            {this.props.loginBackendError}
+            {this.props.loginBackendError? trans.phoneOrPasswordError[this.props.lang]:null}
       </Box>
 
           <Typography component="h1" variant="h5">
-            تسجيل دخول
+              {trans.login[this.props.lang]}
           </Typography>
           <form className={classes.form} noValidate onSubmit={this.submitHandler}>
             <TextField
@@ -179,10 +180,10 @@ class Login extends Component {
               value={this.state.value.username}
 
               id="email"
-              label="رقم المحمول"
+              label={trans.Mobile[this.props.lang]}
               name="username"
               autoFocus
-              placeholder=' 0122XXXXXXX مثال'
+              placeholder={trans.mobileExampel[this.props.lang]}
               onChange={(e)=>this.valueInputHandler(e,'username')}
             />
 
@@ -197,7 +198,7 @@ class Login extends Component {
               required
               fullWidth
               name="password"
-              label="كلمه السر"
+              label={trans.password[this.props.lang]}
               value={this.state.value.password}
 
               type="password"
@@ -214,7 +215,7 @@ class Login extends Component {
  
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="تذكرني"
+              label={trans.remember[this.props.lang]}
             />
             <Button
               type="submit"
@@ -224,17 +225,17 @@ class Login extends Component {
               className={classes.submit}
               disabled={isButtuDisabled}
             >
-              Sign In
+              {trans.login[this.props.lang]}
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link  to='/forget-password' component={this.Link1} variant="body2">
-                  نسيت كلمه السر؟
+                  {trans.forgetPassword[this.props.lang]}
                 </Link>
               </Grid>
               <Grid item>
                 <Link  to='/register' component={this.Link1} variant="body2">
-                  {"ليس لديك حساب ؟ للتسجيل "}
+                  {trans.haveNoAccount[this.props.lang]}
                 </Link>
               </Grid>
             </Grid>
@@ -273,6 +274,7 @@ const mapeStateToProps=state=>{
     showSpiner:state.auth.showSpiner,
     isAuthed:state.auth.token !==null ,
     loginBackendError:state.auth.loginBackendError,
+    lang:state.lang.lang
   }
 }
 

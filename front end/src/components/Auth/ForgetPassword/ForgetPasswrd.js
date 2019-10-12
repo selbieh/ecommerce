@@ -10,12 +10,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import axios from '../../Axios/axios';
 import joi from '@hapi/joi';
-
-
-
-
-
-
+import {connect} from 'react-redux';
+import {trans} from '../../../store/language/LangObject'
 
 
 
@@ -31,7 +27,7 @@ class ForgetPasswrd extends Component {
      schema={
         email:joi.string().email({ minDomainSegments: 2 }).error(errors => {
             return {
-              message: " البريد الألكتروني غير صحيح "
+              message: `${trans.wrongEmail[this.props.lang]}`
             };
           })
         }
@@ -72,7 +68,7 @@ class ForgetPasswrd extends Component {
          .then(res=>{
              console.log(res)
              if(res.status === 200){
-                this.props.history.push('/message',{message:'راجع بريدك الالكتروني لاستعاده كلمه السر'})
+                this.props.history.push('/message',{message:`${trans.checkMailRestPassword[this.props.lang]}`})
              }
          }
          )
@@ -102,7 +98,7 @@ class ForgetPasswrd extends Component {
        
 
                 <Typography component="h1" variant="h5">
-                        ادخل بريدك الالكتروني
+                    {trans.enterEmail[this.props.lang]}
                 </Typography>
                         <form className={classes.form} noValidate onSubmit={this.submitHandler}>
                             <TextField
@@ -114,7 +110,7 @@ class ForgetPasswrd extends Component {
                             id="email"
                             value={this.state.email}
 
-                            label="البريد الالكتروني"
+                            label={trans.enterEmail[this.props.lang]}
                             name="email"
                             autoFocus
                             autoComplete="email"
@@ -138,7 +134,7 @@ class ForgetPasswrd extends Component {
                                 color="primary"
                                 className={classes.submit}
                                 >
-                                    ارسل الان
+                                    {trans.sendNow[this.props.lang]}
                                 </Button>
 
                          </form>
@@ -147,4 +143,11 @@ class ForgetPasswrd extends Component {
     }
 }
 
-export default withStyles(styles) (ForgetPasswrd);
+
+const mapeStateToProps=state=>{
+    return{
+      lang:state.lang.lang
+    }
+  }
+
+export default connect(mapeStateToProps) (withStyles(styles) (ForgetPasswrd));

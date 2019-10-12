@@ -17,6 +17,8 @@ import {connect} from 'react-redux';
 import * as asyncActions from '../../../store/authStore/asyncActions';
 import Spinner from '../../spinner/spinner';
 import {Redirect} from 'react-router';
+import {trans} from '../../../store/language/LangObject.js';
+
 
 
 
@@ -45,13 +47,13 @@ class ChangePassword extends Component {
    
     new_password1:joi.string().required().min(5).max(30).error(errors => {
         return {
-          message: "على الاقل خمس عناصر "
+          message: `${trans.minEle[this.props.lang]}`
         };
       }),
 
     new_password2:joi.string().required().min(5).max(30).error(errors => {
       return {
-        message: "لابد من تطابق كلمه السر "
+        message: `${trans.samePassword[this.props.lang]}`
       };
     })
   }
@@ -143,7 +145,7 @@ class ChangePassword extends Component {
     {
     redirect=<Redirect to={{
       pathname: '/message',
-      state: { message: 'تم استعاده كلمه السر بنجاح' }
+      state: { message: `${trans.passwordResetSucc[this.props.lang]}` }
   }}
 />
   }
@@ -167,7 +169,7 @@ class ChangePassword extends Component {
      
 
           <Typography component="h1" variant="h5">
-                    تغيير كلمه السر
+              {trans.changePassword[this.props.lang]}
           </Typography>
           <form className={classes.form} noValidate onSubmit={this.submitHandler}>
             
@@ -177,7 +179,7 @@ class ChangePassword extends Component {
               required
               fullWidth
               name="new_password1"
-              label="كلمه السر الجديده;"
+              label={trans.newPassword[this.props.lang]}
               type="password"
               id="new_password1"
               autoComplete="current-password"
@@ -196,7 +198,7 @@ class ChangePassword extends Component {
               required
               fullWidth
               name="new_password2"
-              label="اعاد كتابه كلمه السر الجديده"
+              label={trans.reWritePassword[this.props.lang]}
               type="password"
               id="new_password2"
               autoComplete="current-password"
@@ -219,7 +221,7 @@ class ChangePassword extends Component {
               className={classes.submit}
               disabled={isButtuDisabled}
             >
-              تغيير كلمه السر 
+              {trans.changePassword[this.props.lang]}
             </Button>
             
           </form>
@@ -256,7 +258,8 @@ const mapeStateToProps=state=>{
     isAuthed:state.auth.token !==null ,
     changePasswordError:state.auth.changePasswordError,
     token:state.auth.token,
-    passwordChanged:state.auth.passwordChanged
+    passwordChanged:state.auth.passwordChanged,
+    lang:state.lang.lang
   }
 }
 

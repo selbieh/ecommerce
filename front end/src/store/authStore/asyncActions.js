@@ -49,7 +49,7 @@ export const asyncLogin=(data)=>{
 
         }).catch(err=>{
             if (err.response){   
-                dispatch(actions.loginFail('اسم المستخدم او كلمه السر غيرصحيحه'))
+                dispatch(actions.loginFail('رقم المحمول  او كلمه السر غيرصحيحه'))
             }
     
             })

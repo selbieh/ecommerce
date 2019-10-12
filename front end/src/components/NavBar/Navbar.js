@@ -16,6 +16,10 @@ import {styles} from './NavBarStyle';
 import {connect} from 'react-redux';
 import * as asynAction from '../../store/authStore/asyncActions';
 import * as actions from '../../store/uiReducer/asyncActions';
+import {trans} from '../../store/language/LangObject';
+import LanguageIcon from '@material-ui/icons/Language';
+import {asyncChangeLang} from '../../store/language/Actions'
+
 
 
 class PrimarySearchAppBar extends React.Component {
@@ -64,7 +68,9 @@ class PrimarySearchAppBar extends React.Component {
    changePassword=()=>{
     this.props.history.push('/change-password')
   }
-
+  langugeChangeHandler=()=>{
+    this.props.changeLang(this.props.lang)
+  }
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
@@ -79,13 +85,16 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
+
         {!this.props.isAuthed?
         <div>
-        <MenuItem onClick={this.handelLogInRedirect}>تسجيل دخول</MenuItem>
-        <MenuItem onClick={this.handelRegisterRedirect} >حساب جديد</MenuItem>
+        <MenuItem onClick={this.handelLogInRedirect}>{trans.login[this.props.lang]}</MenuItem>
+        <MenuItem onClick={this.handelRegisterRedirect} >{trans.registerNow[this.props.lang]}</MenuItem>
+
         </div>:<div>
-        <MenuItem onClick={this.logoutHandler} > تسجيل خروج</MenuItem>
-        <MenuItem onClick={this.changePassword} >  تغيير كلمه السر </MenuItem></div>}
+        <MenuItem onClick={this.logoutHandler} >{trans.logout[this.props.lang]}</MenuItem>
+        <MenuItem onClick={this.changePassword} >{trans.changePassword[this.props.lang]}</MenuItem>
+</div>}
       </Menu>
     );
 
@@ -104,14 +113,15 @@ class PrimarySearchAppBar extends React.Component {
               <ShoppingCart />
             </Badge>
           </IconButton>
-          <p >عربه التسوق</p>
+          <p >{trans.shopCart[this.props.lang]}</p>
         </MenuItem>
         <MenuItem onClick={this.handleProfileMenuOpen}>
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
-          <p>حسابي</p>
+          <p>{trans.myAccount[this.props.lang]}</p>
         </MenuItem>
+       
       </Menu>
     );
 
@@ -128,7 +138,7 @@ class PrimarySearchAppBar extends React.Component {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder=".....بحث"
+                placeholder={trans.search[this.props.lang]}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -143,12 +153,18 @@ class PrimarySearchAppBar extends React.Component {
                   <ShoppingCart />
                 </Badge>
               </IconButton>
+              <IconButton color="inherit" onClick={this.langugeChangeHandler}>
+              <Badge badgeContent={this.props.lang ==='ar'?'en':'ar' } color="secondary">
+                  <LanguageIcon  />
+                  </Badge>
+              </IconButton>
               <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
+                
                 <AccountCircle />
               </IconButton>
             </div>
@@ -156,9 +172,16 @@ class PrimarySearchAppBar extends React.Component {
               <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
                 <MoreIcon />
               </IconButton>
+              <IconButton color="inherit" onClick={this.langugeChangeHandler}>
+              <Badge badgeContent={this.props.lang ==='ar'?'en':'ar' } color="secondary">
+
+                  <LanguageIcon  />
+                  </Badge>
+              </IconButton>
             </div>
           </Toolbar>
         </AppBar>
+        
         {renderMenu}
         {renderMobileMenu}
       </div>
@@ -170,7 +193,8 @@ const mapStateToProps=state=>{
   return{
     isAuthed:state.auth.token !==null,
     showMain:state.UI.showMain,
-    shopCartLen:state.shopCart.shopCartItems.length
+    shopCartLen:state.shopCart.shopCartItems.length,
+    lang:state.lang.lang
 
   }
 }
@@ -178,7 +202,8 @@ const mapStateToProps=state=>{
 const mapActionsToProps=dispatch=>{
   return{
     logout:()=>dispatch(asynAction.asyncLougout()),
-    hideMainNow:()=>dispatch(actions.hideMain())
+    hideMainNow:()=>dispatch(actions.hideMain()),
+    changeLang:(lang)=>dispatch(asyncChangeLang(lang))
 
   }
 }

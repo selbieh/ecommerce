@@ -11,6 +11,8 @@ import authReducer from './store/authStore/authReducer';
 import productReducer from './store/productStore/productReducer';
 import uiReducer from './store/uiReducer/uiReducer';
 import shopCartReducer from './store/shopCartStore/shopCartReducer';
+import langReducer from './store/language/LangReducer';
+
 
 
 import thunk from 'redux-thunk';
@@ -19,7 +21,8 @@ const reducer=combineReducers({
     auth:authReducer,
     product:productReducer,
     UI:uiReducer,
-    shopCart:shopCartReducer
+    shopCart:shopCartReducer,
+    lang:langReducer
 })
 
 
@@ -30,7 +33,7 @@ const store=createStore(reducer,composeEnhancers(applyMiddleware(thunk)));
 
 
 const app=<Provider store={store}>
-            <BrowserRouter basename='/'>
+            <BrowserRouter >
                 <App/>
             </BrowserRouter>
         </Provider>

@@ -11,7 +11,8 @@ import {addProductToShopCart, deletItem} from '../../store/shopCartStore/asyncAc
 import Modal from './modal';
 import { withStyles } from '@material-ui/core/styles';
 import { Zoom } from '@material-ui/core';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import {trans} from '../../store/language/LangObject';
 
 
 
@@ -77,7 +78,7 @@ class productDetails extends Component {
                                     </IconButton>
                                 </Typography>
                                 <Typography paragraph align='center'>  
-                                    اضف الي عربه التسوق
+                                  {trans.addToCart[this.props.lang]}
                                 </Typography>
                             </CardContent>           
 
@@ -91,7 +92,7 @@ class productDetails extends Component {
                             </IconButton>
             </Typography>          
                 <Typography paragraph align='center' >
-                حذف من عربه التسوق ؟ 
+                {trans.removeFromCart[this.props.lang]}
                 </Typography>
             </CardContent>           
 
@@ -135,10 +136,10 @@ class productDetails extends Component {
                     </Grid>
                     <Grid item xs={6} >
                         <Typography variant={'h4'} color={"secondary"}>
-                            {this.props.location.state.name}
+                            {this.props.lang ==='en'? this.props.location.state.name:this.props.location.state.name_ar}
                         </Typography >
                         <Typography variant={'h5'} color={"primary"} align={'right'} style={{margin:'25px'}} display='block' >
-                            {this.props.location.state.detail}
+                            {this.props.lang ==='en'? this.props.location.state.detail:this.props.location.state.detail_ar}
                         </Typography>
                     </Grid>
 
@@ -193,6 +194,7 @@ const mapStateToProps=state=>{
       shopCartId:state.shopCart.shopCartId,
       userId:state.shopCart.userId,
       token:state.auth.token,
+      lang:state.lang.lang
 
     }
   }

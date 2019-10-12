@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import {addProductToShopCart,deletItem} from '../../store/shopCartStore/asyncAction';
 import Button from '@material-ui/core/Button';
 import {asyncFetchPaginate} from '../../store/productStore/asyncActions';
+import {trans} from '../../store/language/LangObject'
+
 
 
 
@@ -41,8 +43,8 @@ class AllProdduct extends Component {
                    {this.props.products.map(product=>{
                        return  <Grid item lg={4}   key={product.id} >
                                     <ProductCard 
-                                    title={product.title}
-                                    details={product.detail}
+                                    title={this.props.lang ==='en' ? product.title:product.title_ar}
+                                    details={this.props.lang ==='en' ? product.detail:product.detail_ar}
                                     image={product.image_1}
                                     addItem={()=>this.addItem(product)}
                                     id={product.id}
@@ -55,14 +57,14 @@ class AllProdduct extends Component {
                    
                 </Grid> 
                 <Button variant="contained" color="primary" style={{margin:'15px'}} onClick={()=>this.paginate(this.props.nextPage)} disabled={this.props.nextPage===null} >
-                  التالي
+                {trans.next[this.props.lang]}
                 </Button>
             
               
 
 
                 <Button variant="contained" color="primary" style={{margin:'15px'}} onClick={()=>this.paginate(this.props.prevPage)} disabled={this.props.prevPage===null} >
-                  السابق
+                  {trans.prev[this.props.lang]}
                 </Button>
 
 
@@ -85,6 +87,7 @@ const mapeStateToProps=state=>{
       ShopCartItems:state.shopCart.shopCartItems,
       nextPage:state.product.nextPage,
       prevPage:state.product.prevPage,
+      lang:state.lang.lang
 
     }
   }

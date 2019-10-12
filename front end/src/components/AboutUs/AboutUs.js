@@ -5,6 +5,8 @@ import {styles} from './Stylee.js';
 import Typography from '@material-ui/core/Typography/Typography';
 import AboutUsPic from './AboutUsPic/AboutUsPic';
 import Grid from '@material-ui/core/Grid';
+import {connect} from 'react-redux';
+import {trans} from '../../store/language/LangObject'
 
 
 
@@ -18,10 +20,11 @@ class AboutUs extends Component {
             <Paper className={classes.Bigpaper}>
                  <Paper className={classes.Smallpaper}>
                      <Typography variant='h5' align='center' color='primary'>
-                         عن جلاس اوفيس 
+                         {trans.aboutGlassOffice[this.props.lang]}
                      </Typography>
                      <Typography variant='h6' align='center' color='initial'>
-                            اهلا بكم في عالم جلاس اوفيس للاثاث المكتبي
+                     {trans.wellcome[this.props.lang]}
+
                      </Typography>
 
                      <br/>
@@ -33,8 +36,8 @@ class AboutUs extends Component {
                         </Grid>
                         <Grid item xs={6}>
                                         
-                            <Typography variant='h6' align='center' color='primary'>
-                            لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو لابورأس نيسي يت أليكيوب أكس أيا كوممودو كونسيكيوات . ديوا
+                            <Typography variant='h6' align='left' color='primary'>
+                                {trans.glassOfficeDefind[this.props.lang]}
                             </Typography>
                         </Grid>
 
@@ -47,4 +50,12 @@ class AboutUs extends Component {
     }
 }
 
-export default withStyles(styles)(AboutUs);
+
+const mapeStateToProps=state=>{
+    return{
+        lang:state.lang.lang
+    }
+}
+
+
+export default connect(mapeStateToProps) (withStyles(styles)(AboutUs));

@@ -25,7 +25,7 @@ export const fetchShopCartFromServer=(token)=>{
             }
         })
         .then(response=>{
-            console.log(response)
+           // console.log(response)
 
             dispatch(addFetchedItem(response.data.result))
         })

@@ -8,6 +8,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {styles} from './styles';
+import { connect } from 'react-redux';
+import {trans} from '../../../../store/language/LangObject';
 
 
 
@@ -36,14 +38,18 @@ function ImgMediaCard(props) {
       <CardActions>
         
         <Button size="small" color="primary">
-          تفاصيل
+          {trans.details[props.lang]}
         </Button>
       </CardActions>
     </Card>
   );
 }
 
+const mapStateToProps=state=>{
+  return{
+    lang:state.lang.lang
+  }
+}
 
 
-
-export default withStyles(styles)(ImgMediaCard);
+export default connect (mapStateToProps)(withStyles(styles)(ImgMediaCard));

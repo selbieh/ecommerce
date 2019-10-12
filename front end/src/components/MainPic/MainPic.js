@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import {styles} from './MainPicStyle';
 import * as actionsType from '../../store/uiReducer/asyncActions';
 import {connect} from 'react-redux';
-
+import {trans} from '../../store/language/LangObject'
 
 
 
@@ -41,11 +41,10 @@ class MainPic extends Component {
 
             <Paper className={classes.root} elevation={1}>
                 <Typography variant="h5" component="h3">
-                  .جلاس اوفيس
+                 {trans.glassOffice[this.props.lang]}
                 </Typography>
                 <Typography component="p">
-                   .دلوقتي افرش مكتبك مع جلاس اوفيس واستمتع ب 30% خصم
-                   مع ضمان استبدال لمده سنتين ضد عيوب الصناعه
+                  {trans.glassOfficeIntro[this.props.lang]}
                 </Typography>
           </Paper>
           <br></br>
@@ -54,7 +53,7 @@ class MainPic extends Component {
 
           <Button variant="outlined"  style={{backgroundColor:'#7b1fa2',color:'white'}}
           onClick={this.aboutUs}
-          > عن جلاس اوفيس </Button>
+          >{trans.aboutGlassOffice[this.props.lang]} </Button>
 
           </div>
               
@@ -63,6 +62,11 @@ class MainPic extends Component {
     }
 }
 
+const mapeStateToProps=state=>{
+  return{
+    lang:state.lang.lang
+  }
+}
 
 const mapeActionsToProps=(dispatch)=>{
   return {
@@ -70,4 +74,4 @@ const mapeActionsToProps=(dispatch)=>{
   }
 }
 
-export default connect(null,mapeActionsToProps) (withStyles(styles)(MainPic));
+export default connect(mapeStateToProps,mapeActionsToProps) (withStyles(styles)(MainPic));

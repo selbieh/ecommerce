@@ -6,6 +6,10 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Email from '@material-ui/icons/Email';
 import DirectionsIcon from '@material-ui/icons/Directions';
+import {connect} from 'react-redux';
+import {trans} from '../../../store/language/LangObject.js';
+
+
 
 const styles = {
   root: {
@@ -33,7 +37,7 @@ function suscribe (props) {
 
   return (
     <Paper className={classes.root} elevation={1}>
-      <InputBase className={classes.input} placeholder="تابع احدث منتجاتنا" />
+      <InputBase className={classes.input} placeholder={trans.suscribeNewProduct[props.lang]} />
       <IconButton className={classes.iconButton} aria-label="Email">
         <Email />
       </IconButton>
@@ -45,6 +49,12 @@ function suscribe (props) {
   );
 }
 
+const mapeStateToProps=state=>{
+  return{
+    
+    lang:state.lang.lang
+  }
+}
 
 
-export default withStyles(styles)(suscribe);
+export default connect (mapeStateToProps)(withStyles(styles)(suscribe));

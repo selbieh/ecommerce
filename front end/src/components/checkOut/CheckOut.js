@@ -12,6 +12,7 @@ import joi from '@hapi/joi';
 import {connect} from 'react-redux';
 import Link from '@material-ui/core/Link';
 import * as asyncActions from '../../store/orders/asyncActions';
+import {trans} from '../../store/language/LangObject.js';
 
 
 
@@ -35,13 +36,13 @@ class CheckOut extends Component {
    schema={
     mobiel:joi.string().required().regex(/^[0][0-9]{10}$/).error(errors => {
       return {
-        message: "رقم المحمول غير صحيح "
+        message: `${trans.wrongPhone[this.props.lang]}`
       };
     }),
 
     fullAdresse:joi.string().required().min(15).max(255).error(errors => {
       return {
-        message: "على الاقل خمس عناصر "
+        message: `${trans.minEle[this.props.lang]}`
       };
     }),
   }
@@ -139,7 +140,7 @@ class CheckOut extends Component {
       
           <Typography component="h1" variant="h5" color='secondary'
  >
-            بيانات الطلب
+           {trans.orderData[this.props.lang]}
           </Typography>
           <form className={classes.form} noValidate onSubmit={this.submitHandler}>
             <TextField
@@ -148,10 +149,10 @@ class CheckOut extends Component {
               required
               fullWidth
               id="mobiel"
-              label="رقم المحمول"
+              label={trans.Mobile[this.props.lang]}
               name="mobiel"
               autoFocus
-              placeholder=' 0122XXXXXXX مثال'
+              placeholder={trans.mobileExampel[this.props.lang]}
               onChange={(e)=>this.valueInputHandler(e,'mobiel')}
             />
 
@@ -166,7 +167,7 @@ class CheckOut extends Component {
               required
               fullWidth
               name="fullAdresse"
-              label="العنوان تفصيلا"
+              label={trans.fullAdresse[this.props.lang]}
               type="textarea"
               id="fullAdresse"
               autoComplete="current-fullAdresse"
@@ -189,7 +190,7 @@ class CheckOut extends Component {
               color='primary'
 
             >
-              اشترى الان
+              {trans.buyNow[this.props.lang]}
             </Button>
            
            
@@ -200,7 +201,7 @@ class CheckOut extends Component {
           onClick={this.cancelFormHandler}
           color='secondary'
             >
-              الغاء عمليه الشراء
+            {trans.cancelBuy[this.props.lang]}
             </Link>
         </div>
        
@@ -215,7 +216,7 @@ class CheckOut extends Component {
       <br/>
 
       <Typography variant="h3" color='textSecondary' align='center'>
-        تم عمل الطلب بنجاح وسنقوم بالاتصال بك عند الشحن 
+            {trans.orderSucs[this.props.lang]}
       </Typography>
     </React.Fragment>
    
@@ -230,7 +231,8 @@ const mapeStateToProps=state=>{
     isAuthed:state.auth.token !==null ,
     token:state.auth.token,
     orderProductIdList:state.shopCart.shopCartItems.map(e=>e.id),
-    shopCartItems:state.shopCart.shopCartItems
+    shopCartItems:state.shopCart.shopCartItems,
+    lang:state.lang.lang
   }
 }
 

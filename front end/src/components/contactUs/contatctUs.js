@@ -14,6 +14,9 @@ import ContactMail from '@material-ui/icons/ContactMail';
 import joi from '@hapi/joi';
 import axios from "../Axios/axios";
 import Spinner from '../spinner/spinner';
+import {trans} from '../../store/language/LangObject.js';
+import {connect} from 'react-redux';
+
 
 
 
@@ -47,25 +50,25 @@ class contatctUs extends Component {
         schema={
           username:joi.string().regex(/^[0][0-9]{10}$/).error(errors => {
             return {
-              message: "رقم المحمول غير صحيح "
+              message: `${trans.wrongPhone[this.props.lang]}`
             };
           }),
       
           subject:joi.string().required().min(5).max(30).error(errors => {
             return {
-              message: "على الاقل خمس عناصر "
+              message: `${trans.minEle[this.props.lang]}`
             };
           }),
           message:joi.string().required().min(15).max(255).error(errors => {
             return {
-              message: "على الاقل خمسه عشر حرف  "
+              message: `${trans.minEle15[this.props.lang]}`
             };
           }),
 
 
           email:joi.string().email({ minDomainSegments: 2 }).error(errors => {
             return {
-              message: " البريد الألكتروني غير صحيح "
+              message:`${trans.wrongEmail[this.props.lang]}`
             };
           })
         }
@@ -148,7 +151,7 @@ class contatctUs extends Component {
               required
               fullWidth
               id="firstName"
-              label="رقم المحمول"
+              label={trans.Mobile[this.props.lang]}
               autoFocus
               onChange={(e)=>this.valueInputHandler(e,'username')}
 
@@ -169,7 +172,7 @@ class contatctUs extends Component {
               required
               fullWidth
               id="email"
-              label="بريد الكتروني"
+              label={trans.enterEmail[this.props.lang]}
               name="email"
               autoComplete="email"
               onChange={(e)=>this.valueInputHandler(e,'email')}
@@ -189,7 +192,7 @@ class contatctUs extends Component {
               required
               fullWidth
               name="subject"
-              label="عنوان الرساله"
+              label={trans.messageSubject[this.props.lang]}
               type="input"
               id="subject"
               onChange={(e)=>this.valueInputHandler(e,'subject')}
@@ -204,7 +207,7 @@ class contatctUs extends Component {
               variant="outlined"
               required
               name="message"
-              label="الرساله"
+              label={trans.message[this.props.lang]}
               type="textarea"
               id="message"
               autoComplete="current-password"
@@ -228,14 +231,14 @@ class contatctUs extends Component {
           disabled={isButtuDisabled}
 
         >              
-          ارسل
+         {trans.contactUs[this.props.lang]}
         </Button>
         
       </form>
       if (this.state.showSpinner){
         form=<Spinner/>
       }else if (!this.state.showSpinner && this.state.submited){
-          form=<p>نشكركم على تواصلكم معنا وسنقوم بالرد عليك فى اسرع وقت </p>
+          form=<p> {trans.thanksForContact[this.props.lang]}</p>
       }
 
 
@@ -251,7 +254,7 @@ class contatctUs extends Component {
                 </Avatar>
                 
                 <Typography component="h1" variant="h5">
-                     اتصل بنا
+                    {trans.contactUs[this.props.lang]}
                 </Typography>
                     {form}         
           </div>
@@ -261,7 +264,12 @@ class contatctUs extends Component {
     }
 }
 
+const mapeStateToProps=state=>{
+  return{
+   
+    lang:state.lang.lang
+  }
+}
 
 
-
-export default withStyles(styles)(contatctUs);
+export default connect(mapeStateToProps) (withStyles(styles)(contatctUs));

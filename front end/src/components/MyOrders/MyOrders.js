@@ -7,6 +7,8 @@ import Table from '@material-ui/core/Table';
 import axios from "../Axios/axios";
 import { Typography } from '@material-ui/core';
 import {Zoom} from '@material-ui/core'
+import { trans } from '../../store/language/LangObject';
+import { connect } from 'react-redux';
 
 
 
@@ -102,7 +104,7 @@ class MyOrders extends Component {
             return <Zoom in timeout={2000}>
                         <Paper align='center' style={{marginTop:'65px'}}>
                                 <Typography align='center' color='secondary'>
-                                    من فضلك قم بتسجيل دخول اولا
+                                {this.props.lang === 'en'? 'please login first':'من فضلك سجل دخول اولا'}
                                 </Typography>
                         </Paper>
             </Zoom>
@@ -111,7 +113,7 @@ class MyOrders extends Component {
             return <Zoom in timeout={2000}>
                         <Paper align='center' style={{marginTop:'65px'}}>
                                 <Typography align='center' color='secondary'>
-                                    لا يوجد طلبات سابقه
+                                  {trans.noOrders[this.props.lang]}
                                 </Typography>
                                 </Paper>
                         </Zoom>
@@ -121,7 +123,11 @@ class MyOrders extends Component {
     }
 }
 
+const mapeStateToProps=state=>{
+    return{
+        lang:state.lang.lang
+    }
+}
 
 
-
-export default  MyOrders;
+export default connect(mapeStateToProps)  (MyOrders);

@@ -14,7 +14,8 @@ import {fetchShopCartFromServer,deletItem} from '../../store/shopCartStore/async
 import {Redirect} from 'react-router';
 import Button from '@material-ui/core/Button/Button';
 import Typography from '@material-ui/core/Typography';
-import Quntity from '../Quntity/Quntity'
+import Quntity from '../Quntity/Quntity';
+import {trans} from '../../store/language/LangObject'
 
 
 
@@ -78,12 +79,12 @@ class ShopCart extends Component{
                     <TableHead>
                     <TableRow>
                         <TableCell>PIC</TableCell>
-                        <TableCell align="right">ألاسم</TableCell>
-                        <TableCell align="center">سعر القطعه</TableCell>
-                        <TableCell align="center">الكميه</TableCell>
-                        <TableCell align="right">اجمالى</TableCell>
+                        <TableCell align="right">{trans.name[this.props.lang]}</TableCell>
+                        <TableCell align="center"> {trans.priceUnit[this.props.lang]}</TableCell>
+                        <TableCell align="center">{trans.quantity[this.props.lang]}</TableCell>
+                        <TableCell align="right">{trans.total[this.props.lang]}</TableCell>
 
-                        <TableCell align="right">حذف</TableCell>
+                        <TableCell align="right">{trans.delete[this.props.lang]}</TableCell>
     
                     </TableRow>
                     </TableHead>
@@ -110,16 +111,16 @@ class ShopCart extends Component{
                     ))}
                     <TableRow>
                         <TableCell rowSpan={3} />
-                        <TableCell colSpan={2}>مجموع السعر</TableCell>
+                        <TableCell colSpan={2}> {trans.totalPrice[this.props.lang]}</TableCell>
                         <TableCell align="right">{ccyFormat(totalPriceValue)}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell>شحن</TableCell>
+                        <TableCell>{trans.shipping[this.props.lang]}</TableCell>
                         <TableCell align="right">{`${TAX_RATE.toFixed(0)}`}</TableCell>
                         <TableCell align="right">{ccyFormat(TAX_RATE)}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell colSpan={2}>ألاجمالي</TableCell>
+                        <TableCell colSpan={2}>{trans.total[this.props.lan]}</TableCell>
                         <TableCell align="right">{ccyFormat(TAX_RATE+totalPriceValue)}</TableCell>
                     </TableRow>
                     </TableBody>
@@ -148,7 +149,8 @@ const mapeStateToProps=state=>{
     token:state.auth.token,
     isAuthed:state.auth.token!==null,
     shopCartId:state.shopCart.shopCartId,
-    userId:state.shopCart.userId
+    userId:state.shopCart.userId,
+    lang:state.lang.lang
   }
 }
 

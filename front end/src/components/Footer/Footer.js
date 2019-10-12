@@ -3,6 +3,8 @@ import AppBar from '@material-ui/core/AppBar/AppBar';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Subscribe from './Subscribe/subscribe';
 import Contacts from './Contacts/Contacts';
+import {connect} from 'react-redux';
+import {trans} from '../../store/language/LangObject.js';
 
 
 const style={
@@ -46,17 +48,13 @@ class Footer extends Component {
                          <Subscribe />
                    </Toolbar>
                    <Toolbar style={style.Toolbar} >
-                        <h3 style={{color:'white'}}>جهات الاتصال</h3>
+                        <h3 style={{color:'white'}}>{trans.contacts[this.props.lang]}</h3>
                    </Toolbar>             
                  
                    <Toolbar style={style.Toolbar} >
                    <Contacts/>
                    </Toolbar>
                </AppBar>
-              
-                    
-
-           
             </React.Fragment>
 
             
@@ -64,4 +62,13 @@ class Footer extends Component {
     }
 }
 
-export default Footer;
+
+const mapeStateToProps=state=>{
+    return{
+      
+      lang:state.lang.lang
+    }
+  }
+  
+
+export default connect(mapeStateToProps)(Footer) ;

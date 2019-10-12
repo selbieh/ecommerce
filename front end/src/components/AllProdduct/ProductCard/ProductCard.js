@@ -16,6 +16,8 @@ import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 import RemoveShoppingCart from '@material-ui/icons/RemoveShoppingCart';
 import {styles} from './styles';
 import {connect} from "react-redux";
+import {trans} from '../../../store/language/LangObject'
+
 
 
 
@@ -39,9 +41,8 @@ class ProductCard extends React.Component {
                           <AddShoppingCart style={{color:'blue'}}  />
                         </IconButton>
                   </Typography>
-                    <Typography paragraph align='center'>
-                   
-                        اضف الي عربه التسوق
+                    <Typography paragraph align='center' color='primary'>
+                    {trans.addToCart[this.props.lang]}
                     </Typography>
                 </CardContent>           
 
@@ -54,8 +55,8 @@ class ProductCard extends React.Component {
                                       <RemoveShoppingCart style={{color:'red'}}  />
                                     </IconButton>
                     </Typography>          
-                        <Typography paragraph align='center' >
-                          حذف من عربه التسوق ؟ 
+                        <Typography paragraph align='center' color='primary' >
+                        {trans.removeFromCart[this.props.lang]}
                         </Typography>
                 </CardContent>           
 
@@ -72,7 +73,7 @@ class ProductCard extends React.Component {
           }
         
           title={this.props.title}
-          subheader="ألابعاد 15 * 16* 22"
+          subheader= {trans.dim[this.props.lang]+" 15 * 16* 22"}
         />
         <CardMedia
          onClick={()=>this.prdoductDetailsRedirect(this.props.product)}
@@ -110,6 +111,7 @@ class ProductCard extends React.Component {
 const mapStateToProps=state=>{
   return{
     shopCartIdList:state.shopCart.shopCartItems.map(e=>e.product.id),
+    lang:state.lang.lang
     
 
   }

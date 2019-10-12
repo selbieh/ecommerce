@@ -3,7 +3,9 @@ import axios from 'axios';
 import Spinner from '../../spinner/spinner';
 import Modal from '../../Modal/Modal';
 import Container from '@material-ui/core/Container';
-import {Redirect} from 'react-router'
+import {Redirect} from 'react-router';
+import {trans} from '../../../store/language/LangObject';
+import { connect } from 'react-redux';
 
 
  
@@ -44,7 +46,7 @@ class RegisterConfirmMail extends Component {
       if (!this.state.showSpinner){
         return <Redirect to={{
             pathname: '/message',
-            state: { message: 'تم تفعيل بريدك  حسابك' }
+            state: { message: `${trans.accountActivated[this.props.lang]}` }
         }}
 />
       }else{
@@ -63,4 +65,12 @@ class RegisterConfirmMail extends Component {
     }
 }
 
-export default RegisterConfirmMail;
+const mapsStateToProps=state=>{
+    return{
+     
+      lang:state.lang.lang
+  
+    }
+  }
+
+export default connect(mapsStateToProps) (RegisterConfirmMail);
