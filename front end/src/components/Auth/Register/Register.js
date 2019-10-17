@@ -22,6 +22,8 @@ import {Redirect} from 'react-router';
 import Zoom from '@material-ui/core/Zoom';
 import { Link as RouterLink } from 'react-router-dom';
 import {trans} from '../../../store/language/LangObject.js';
+import DjangoCSRFToken from 'django-react-csrftoken';
+
 
 
 
@@ -183,6 +185,8 @@ class SignUp extends Component {
           </Typography>
        
           <form className={classes.form} onSubmit={this.submitHandler}>
+          <DjangoCSRFToken/>
+
             <Grid container spacing={2}>
               <Grid item xs={12} >
                 <TextField

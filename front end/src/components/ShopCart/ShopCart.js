@@ -67,7 +67,7 @@ class ShopCart extends Component{
         return <Redirect to='/login'/>
 
        }else if (this.props.ShopCartItems.length ===0 ){
-            return <Typography variant='h3' color='primary' align='center' gutterBottom={true} style={{marginTop:'65px'}} >عربه التسوق فارغه  </Typography>
+            return <Typography variant='h3' color='primary' align='center' gutterBottom={true} style={{marginTop:'65px'}} >{trans.emptyCart[this.props.lang]} </Typography>
        
 
        }else{

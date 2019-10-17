@@ -278,5 +278,14 @@ export const trans={
    userUsedBefor:{
        'ar':'رقم المحمول  مستخدم بالفعل',
        'en':'this mobile is already used'
+   },
+   thanksForSubscribe:{
+       'ar':'شكرا على متابعتنا',
+       'en':'Thanks for subscribtion'
+
+   },
+   emptyCart:{
+       'ar':'عربه التسوق فارغه',
+       'en':'the shop cart is empty'
    }
 }

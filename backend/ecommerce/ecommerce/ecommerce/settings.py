@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'n7kws6^_u1k*0@m56kuqu6#$y*aedeq(thtxteolr19tfz!&pb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS=['*']
@@ -39,6 +39,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Application definition
 
 INSTALLED_APPS = [
+    'jet',
+
+    #'ecommerce.apps.SuitConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +52,7 @@ INSTALLED_APPS = [
     'products',
     'shopcart',
     'orders',
+    'subscribe',
     'sorl.thumbnail',
     #DJANGO DRF
     'rest_framework',
@@ -73,6 +78,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
     # django cors header
     'corsheaders.middleware.CorsMiddleware',
@@ -162,6 +168,8 @@ REST_FRAMEWORK = {
     'rest_framework.parsers.MultiPartParser',
 ),
 }
+# Django Suit configuration example
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -189,6 +197,7 @@ STATICFILES_DIRS = [
 ]
 MEDIA_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, 'media') #will auto created inside static_cdn_test wich is outside the project folder
 MEDIA_URL = '/media/' # django-storages
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 #Rest-auth Site_ID

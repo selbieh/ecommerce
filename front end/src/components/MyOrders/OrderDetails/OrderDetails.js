@@ -118,7 +118,7 @@ function ccyFormat(num) {
                </Paper>
                </div>
                <br/>
-               <Paper>
+               <Paper style={{width:'80%',margin:'auto'}} align='center'>
                     <Typography align='center' variant='h4'>
                     <Typography color='secondary' >  {trans.fullAdresse[this.props.lang]}</Typography>     {this.props.location.state.fullAdresse}
                     </Typography>

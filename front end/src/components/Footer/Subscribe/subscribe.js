@@ -1,14 +1,14 @@
-import React from 'react';
+import React,{Component} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Email from '@material-ui/icons/Email';
-import DirectionsIcon from '@material-ui/icons/Directions';
 import {connect} from 'react-redux';
 import {trans} from '../../../store/language/LangObject.js';
-
+import axios from '../../Axios/axios'
+import { Typography } from '@material-ui/core';
 
 
 const styles = {
@@ -32,22 +32,76 @@ const styles = {
   },
 };
 
-function suscribe (props) {
-  const { classes } = props;
+class suscribe extends Component  {
 
-  return (
-    <Paper className={classes.root} elevation={1}>
-      <InputBase className={classes.input} placeholder={trans.suscribeNewProduct[props.lang]} />
-      <IconButton className={classes.iconButton} aria-label="Email">
-        <Email />
-      </IconButton>
-      <Divider className={classes.divider} />
-      <IconButton color="primary" className={classes.iconButton} aria-label="Directions">
-        <DirectionsIcon />
-      </IconButton>
-    </Paper>
-  );
-}
+  state={
+    email:'',
+    valid:false,
+    subscribed:false
+  }
+
+
+  emailSubscribe=()=>{
+    axios.post('subscribe/',{'email':this.state.email})
+    .then(res=>{
+      this.setState((prevState=>({subscribed:!prevState.subscribed})))
+    })
+    .catch(er=>{
+      this.setState((prevState=>({subscribed:!prevState.subscribed})))
+
+    })
+  }
+
+  emailHandler=(e)=>{
+    this.setState({email:e.target.value})
+  }
+
+  emailValidateHandler=(email)=>{
+    var re = /\S+@\S+\.\S+/
+    
+    if ( re.test(String(email).toLowerCase()) ){
+     this.setState((prevState)=>({valid:!prevState.valid}))
+    }
+  }
+
+  componentDidUpdate(_,prevState){
+    if (this.state.email !== prevState.email){
+      const email=this.state.email
+      this.emailValidateHandler(email)
+
+    }
+  
+    
+  }
+
+  render (){
+
+    const { classes } = this.props;
+
+    if (this.state.subscribed){
+
+      return (
+        <Typography>
+            {trans.thanksForSubscribe[this.props.lang]}
+        </Typography>
+      )
+
+    }else{
+      return(
+
+        <Paper className={classes.root} elevation={1}>
+        <InputBase className={classes.input} placeholder={trans.suscribeNewProduct[this.props.lang]} type="email" onChange={(e)=>this.emailHandler(e)}/>
+        <Divider className={classes.divider} />
+        <IconButton color="primary" className={classes.iconButton} aria-label="Directions" disabled={! this.state.valid}onClick={this.emailSubscribe}>
+          <Email />
+        </IconButton>
+      </Paper>
+      )
+
+    }
+   
+  }}
+  
 
 const mapeStateToProps=state=>{
   return{

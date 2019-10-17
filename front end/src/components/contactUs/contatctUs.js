@@ -16,6 +16,7 @@ import axios from "../Axios/axios";
 import Spinner from '../spinner/spinner';
 import {trans} from '../../store/language/LangObject.js';
 import {connect} from 'react-redux';
+import DjangoCSRFToken from 'django-react-csrftoken'
 
 
 
@@ -233,6 +234,8 @@ class contatctUs extends Component {
         >              
          {trans.contactUs[this.props.lang]}
         </Button>
+        <DjangoCSRFToken/>
+
         
       </form>
       if (this.state.showSpinner){

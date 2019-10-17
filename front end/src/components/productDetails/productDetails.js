@@ -107,15 +107,16 @@ class productDetails extends Component {
 
 
         return (
-            
+
             <React.Fragment>
 
       {this.state.showPic ? 
                     <div align='center' onClick={this.hideZoomHandler}>
 
       <Modal >
+          
             <Zoom in> 
-
+                
               <div align='center'>
                     <div >
                             <img src={this.state.image} alt='hi' className={classes.Image} />
@@ -127,57 +128,63 @@ class productDetails extends Component {
 
               </div> :null}
 
-                 <Grid container  spacing={0} className={classes.TheGrid}>
-                    <Grid item xs={6}>
+                 <Grid container  spacing={0} className={classes.TheGrid} style={{width:'80%'}}>
+                     <Grid item xs={12}>
+                        <Typography variant={'h4'} color={"primary"}>
+                            {this.props.lang ==='en'? this.props.location.state.name:this.props.location.state.name_ar}
+                        </Typography >
+                     </Grid>
+                    <Grid item xs={12} sm={6} style={{marginTop:'25px'}}>
+
                     {this.props.location.state.image_1?
                             <div>
                                 <img src={this.state.image} alt='hi'  className={classes.Image} onClick={this.onZoomHandler}/>
                             </div>:null}
+
                     </Grid>
-                    <Grid item xs={6} >
-                        <Typography variant={'h4'} color={"secondary"}>
-                            {this.props.lang ==='en'? this.props.location.state.name:this.props.location.state.name_ar}
-                        </Typography >
-                        <Typography variant={'h5'} color={"primary"} align={'right'} style={{margin:'25px'}} display='block' >
+                    <Grid item xs={12} sm={6} >
+                       
+                        <Typography variant={'h5'} color={"primary"} align={'justify'} style={{margin:'25px'}} display='block' >
                             {this.props.lang ==='en'? this.props.location.state.detail:this.props.location.state.detail_ar}
                         </Typography>
                     </Grid>
 
                     </Grid>   
-                    
+                 
+                <Grid container  item xs={12} sm={6} spacing={4} className={classes.TheGrid}>
+                {this.props.location.state.image_1 ?  <Grid item xs={3} >
+                    {this.state.image===this.props.location.state.image_1? <div className={classes.select}> <img src={this.props.location.state.image_1}  alt='hi1' className={classes.smallImage} 
+                            onClick={()=>this.onChangePicHandler(this.props.location.state.image_1)}/> </div>: <img src={this.props.location.state.image_1}  alt='hi1' className={classes.smallImage} 
+                            onClick={()=>this.onChangePicHandler(this.props.location.state.image_1)}/>}
+                           
+                   </Grid>:null}
 
-                <Grid container  spacing={0} className={classes.TheGrid}>
-                {this.props.location.state.image_1 ?  <Grid item xs={3}>
-                        <div >
-                            <img src={this.props.location.state.image_1}  alt='hi1' className={classes.smallImage} 
-                            onClick={()=>this.onChangePicHandler(this.props.location.state.image_1)}/>
-                        </div>
-                    </Grid>:null}
+
+                   {this.props.location.state.image_2 ?  <Grid item xs={3}>
+                    {this.state.image===this.props.location.state.image_2? <div className={classes.select}> <img src={this.props.location.state.image_2}  alt='hi1' className={classes.smallImage} 
+                            onClick={()=>this.onChangePicHandler(this.props.location.state.image_2)}/> </div>: <img src={this.props.location.state.image_2}  alt='hi1' className={classes.smallImage} 
+                            onClick={()=>this.onChangePicHandler(this.props.location.state.image_2)}/>}
+                           
+                   </Grid>:null}
 
 
-                    {this.props.location.state.image_2 ?  <Grid item xs={3}>
-                        <div>
-                            <img src={this.props.location.state.image_2} alt='hi2'   className={classes.smallImage}  
-                            onClick={()=>this.onChangePicHandler(this.props.location.state.image_2)}/>
-                        </div>
-                    </Grid>:null}
+                   {this.props.location.state.image_3 ?  <Grid item xs={3}>
+                    {this.state.image===this.props.location.state.image_3? <div className={classes.select}> <img src={this.props.location.state.image_3}  alt='hi1' className={classes.smallImage} 
+                            onClick={()=>this.onChangePicHandler(this.props.location.state.image_3)}/> </div>: <img src={this.props.location.state.image_3}  alt='hi1' className={classes.smallImage} 
+                            onClick={()=>this.onChangePicHandler(this.props.location.state.image_3)}/>}
+                           
+                   </Grid>:null}
+                        {this.props.location.state.image_4 ?  <Grid item xs={3}>
+                        {this.state.image===this.props.location.state.image_4? <div className={classes.select}> <img src={this.props.location.state.image_4}  alt='hi1' className={classes.smallImage} 
+                                onClick={()=>this.onChangePicHandler(this.props.location.state.image_4)}/> </div>: <img src={this.props.location.state.image_4}  alt='hi1' className={classes.smallImage} 
+                                onClick={()=>this.onChangePicHandler(this.props.location.state.image_4)}/>}
+                            
+                        </Grid>:null}
 
-                   { this.props.location.state.image_3 ?<Grid item xs={3}>
-                        <div>
-                            <img src={this.props.location.state.image_3} alt='hi3'   className={classes.smallImage} 
-                            onClick={()=>this.onChangePicHandler(this.props.location.state.image_3)}/>
-                        </div>
-                    </Grid>:null}
-                    { this.props.location.state.image_4 ?  <Grid item xs={3}>
-                        <div>
-                            <img src={this.props.location.state.image_4} alt='hi4'   className={classes.smallImage} 
-                            onClick={()=>this.onChangePicHandler(this.props.location.state.image_4)}/>
-                        </div>
-                    </Grid>:null}
                     </Grid>
                         { this.props.location.state.hideTab ?null:<React.Fragment>{addOrRemoveItem}</React.Fragment>}
-                    
                 </React.Fragment>
+
 
         );    }
 

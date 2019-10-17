@@ -73,7 +73,7 @@ class MyOrders extends Component {
     render() {
         if(localStorage.getItem('tokenKey') && this.state.orders.length > 0){
         return (
-           <Paper style={{marginTop:'56px'}} >
+           <Paper style={{margin:'auto',marginTop:'56px',maxWidth:'80%'}} align='center' >
                <Table >
                <TableBody>
                         {this.state.orders.map(el=>{

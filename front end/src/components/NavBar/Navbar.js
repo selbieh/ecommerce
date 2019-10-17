@@ -3,12 +3,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -26,6 +24,7 @@ class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null,
+    query:''
   };
 
   handleProfileMenuOpen = event => {
@@ -71,6 +70,15 @@ class PrimarySearchAppBar extends React.Component {
   langugeChangeHandler=()=>{
     this.props.changeLang(this.props.lang)
   }
+
+  searchInputHandler=(e)=>{
+    this.setState({query:e.target.value})
+  }
+
+  searchNow=()=>{
+    console.log(this.state.query)
+  }
+
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
@@ -130,21 +138,10 @@ class PrimarySearchAppBar extends React.Component {
         <AppBar position="static"  style={{backgroundColor:'#7b1fa2'}}>
           <Toolbar>
            
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+            <Typography variant="h6" color="inherit" noWrap>
               Glass-Office
             </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder={trans.search[this.props.lang]}
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-              />
-            </div>
+            
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               

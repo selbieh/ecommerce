@@ -18,6 +18,7 @@ import * as asyncActions from '../../../store/authStore/asyncActions';
 import Spinner from '../../spinner/spinner';
 import {Redirect} from 'react-router';
 import {trans} from '../../../store/language/LangObject.js';
+import DjangoCSRFToken from 'django-react-csrftoken';
 
 
 
@@ -223,6 +224,8 @@ class ChangePassword extends Component {
             >
               {trans.changePassword[this.props.lang]}
             </Button>
+            <DjangoCSRFToken/>
+
             
           </form>
         </div>

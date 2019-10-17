@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from . import views
-from django.conf.urls import url
+from django.conf.urls import url,re_path
 from django.views.generic.base import TemplateView
 
 from django.conf import settings
@@ -28,18 +28,24 @@ from django.conf.urls.static import static
 
 #from  django.views.generic import TemplateView
 
-urlpatterns = [
+urlpatterns =static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+ [
+
     path('admin/', admin.site.urls),
     path("products/",include("products.urls")),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
-    url(r'^account-confirm-email/(?P<key>[-:\w]+)/$', views.activate_account,
+    re_path(r'^account-confirm-email/(?P<key>[-:\w]+)/$', views.activate_account,
         name='account_confirm_email'),
     path('rest-auth/password/reset/<uidb64>/<token>/', views.password_reset_confirm, name='password_reset_confirm'),
+    path('', TemplateView.as_view(template_name='index.html')),
+
     path('',include("shopcart.urls")),
     path("contact-us/", include("contact_us.urls")),
     path('orders/', include("orders.urls")),
-    #url(r'^(?:.*)/?$', TemplateView.as_view(template_name='index.html'), name='home'),
+    path('subscribe/',include('subscribe.urls')),
+    re_path(r'^(?:.*)/?$', TemplateView.as_view(template_name='index.html')),
+
+    path('jet/', include('jet.urls', 'jet')),
 
 ]
 if settings.DEBUG:

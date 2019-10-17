@@ -36,7 +36,7 @@ class AboutUs extends Component {
                         </Grid>
                         <Grid item xs={6}>
                                         
-                            <Typography variant='h6' align='left' color='primary'>
+                            <Typography variant='h6' align='justify' color='primary'>
                                 {trans.glassOfficeDefind[this.props.lang]}
                             </Typography>
                         </Grid>
@@ -58,4 +58,4 @@ const mapeStateToProps=state=>{
 }
 
 
-export default connect(mapeStateToProps) (withStyles(styles)(AboutUs));
+export default connect(mapeStateToProps)(withStyles(styles)(AboutUs));

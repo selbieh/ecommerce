@@ -11,7 +11,8 @@ import Button from '@material-ui/core/Button';
 import axios from '../../Axios/axios';
 import joi from '@hapi/joi';
 import {connect} from 'react-redux';
-import {trans} from '../../../store/language/LangObject'
+import {trans} from '../../../store/language/LangObject';
+import DjangoCSRFToken from 'django-react-csrftoken';
 
 
 
@@ -136,6 +137,7 @@ class ForgetPasswrd extends Component {
                                 >
                                     {trans.sendNow[this.props.lang]}
                                 </Button>
+                                <DjangoCSRFToken/>
 
                          </form>
              </div>

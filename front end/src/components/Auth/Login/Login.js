@@ -24,6 +24,7 @@ import {Redirect} from 'react-router';
 import Zoom from '@material-ui/core/Zoom';
 import { Link as RouterLink } from 'react-router-dom';
 import {trans} from '../../../store/language/LangObject.js';
+import DjangoCSRFToken from 'django-react-csrftoken';
 
 
 
@@ -239,6 +240,8 @@ class Login extends Component {
                 </Link>
               </Grid>
             </Grid>
+            <DjangoCSRFToken/>
+
           </form>
         </div>
        

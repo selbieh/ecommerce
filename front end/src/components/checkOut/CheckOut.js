@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import Link from '@material-ui/core/Link';
 import * as asyncActions from '../../store/orders/asyncActions';
 import {trans} from '../../store/language/LangObject.js';
+import { Paper } from '@material-ui/core';
 
 
 
@@ -214,10 +215,11 @@ class CheckOut extends Component {
     <React.Fragment>
       <br/>
       <br/>
-
-      <Typography variant="h3" color='textSecondary' align='center'>
+<Paper>
+      <Typography variant="h5" color='textSecondary' align='center' style={{marginTop:'90px'}}>
             {trans.orderSucs[this.props.lang]}
       </Typography>
+      </Paper>
     </React.Fragment>
    
     )}

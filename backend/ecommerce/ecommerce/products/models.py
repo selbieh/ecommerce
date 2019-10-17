@@ -5,6 +5,7 @@ from imagekit.models import ProcessedImageField
 
 
 
+
 class product (models.Model):
     name=models.CharField(max_length=15,blank=False)
     name_ar= models.CharField(max_length=15, blank=False)
@@ -30,8 +31,18 @@ class product (models.Model):
                                   processors=[Resize(350, 250)],
                                   format='JPEG',
                                   options={'quality': 100})
+
+    GRAPPELLI_AUTOCOMPLETE_SEARCH_FIELDS = {
+        "produucts": {
+            "product": ("id__iexact", "name__icontains",)
+        }
+    }
     def __str__(self):
         return self.name
+
+
+
+
 #now djago will auto delet the old image in case of edit & auto edit ay uploaded image to 250X350 size
 #if you have no image form will bbe accepted+
     '''

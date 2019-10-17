@@ -10,6 +10,7 @@ class order(models.Model):
     fullAdresse=models.CharField(max_length=255,blank=False)
     mobiel=models.CharField(max_length=11,blank=True)
     orderDate=models.DateField(auto_now=True)
+    seen=models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

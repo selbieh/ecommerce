@@ -6,5 +6,5 @@ from products.serializer import productSerializer
 class oderSerializer(serializers.ModelSerializer):
     #orderProduct=productSerializer(many=True)
     class Meta:
-        fields='__all__'
+        exclude=('seen',)
         model=order

@@ -26,9 +26,7 @@ class AllProdduct extends Component {
     }
     removeItem=(id)=>{
       const ShopCart=this.props.ShopCartItems
-      console.log(ShopCart)
       const productObjct=ShopCart.filter(e=>e.product.id===id)[0]
-      console.log(productObjct)
       
       this.props.removeItemFromCart(productObjct.id,this.props.token)
     }
