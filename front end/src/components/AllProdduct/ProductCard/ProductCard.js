@@ -82,7 +82,8 @@ class ProductCard extends React.Component {
           title="Paella dish"
         />
         <CardContent>
-          <Typography component="p">
+
+          <Typography style={{maxHeight:'120px',minHeight:'120px',textOverflow: "ellipsis", overflow: "hidden"}}  >
            {this.props.details}
           </Typography>
         </CardContent>

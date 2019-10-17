@@ -1,6 +1,6 @@
 export const styles = theme => ({
   root: {
-    width: '80%',
+    width: '95%',
     display:'flex',
     align:'center',
     margin:'auto',

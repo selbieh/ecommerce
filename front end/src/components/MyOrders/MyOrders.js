@@ -9,6 +9,10 @@ import { Typography } from '@material-ui/core';
 import {Zoom} from '@material-ui/core'
 import { trans } from '../../store/language/LangObject';
 import { connect } from 'react-redux';
+import {styles} from './MyOrdersStyles';
+import { withStyles } from '@material-ui/core/styles';
+
+
 
 
 
@@ -71,13 +75,17 @@ class MyOrders extends Component {
         })
     }
     render() {
+
+        const {classes}=this.props
         if(localStorage.getItem('tokenKey') && this.state.orders.length > 0){
         return (
-           <Paper style={{margin:'auto',marginTop:'56px',maxWidth:'80%'}} align='center' >
-               <Table >
+            <div className={classes.root}>
+
+           <Paper  elevation={1} className={classes.paper} >
+               <Table padding='default' size='small'>
                <TableBody>
                         {this.state.orders.map(el=>{
-                           return <TableRow key={el.id} hover={true}>
+                           return <TableRow key={el.id} hover={true} component='tr'>
                                              <TableCell >
                                                  <Typography color='primary' style={{cursor:'pointer'}}  onClick={()=>this.orderDetails(el.id)}>
                                                  { el.orderDate}
@@ -99,6 +107,8 @@ class MyOrders extends Component {
                 </TableBody> 
                 </Table>
            </Paper>
+           </div>
+
         );
             }else if (! localStorage.getItem('tokenKey')){
             return <Zoom in timeout={2000}>
@@ -130,4 +140,4 @@ const mapeStateToProps=state=>{
 }
 
 
-export default connect(mapeStateToProps)  (MyOrders);
+export default connect(mapeStateToProps) (withStyles(styles) (MyOrders));

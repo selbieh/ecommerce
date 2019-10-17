@@ -212,8 +212,8 @@ export const trans={
        'en':'shop cart'
    },
    showProd:{
-       'ar':'عرض المنتجات',
-       'en':'show products'
+       'ar':'المنتجات',
+       'en':'products'
    },
    home:{
        'ar':'الرئيسيه',

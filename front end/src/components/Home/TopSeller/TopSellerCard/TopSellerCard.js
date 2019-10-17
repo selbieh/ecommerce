@@ -30,7 +30,7 @@ function ImgMediaCard(props) {
           <Typography gutterBottom variant="h5" component="h2" style={{color:'#7b1fa2'}}>
             {props.title}
           </Typography>
-          <Typography component="p">
+          <Typography component="p" style={{maxHeight:'120px',minHeight:'120px',textOverflow: "ellipsis", overflow: "hidden"}} >
            {props.detail}
           </Typography>
         </CardContent>

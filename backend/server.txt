@@ -1,5 +1,5 @@
 cd /
-cd C:\Users\youssef\Desktop\ecommerce\backend\EC\Scripts
+cd C:\Users\youssef\Desktop\ecommerce\backend\venv\Scripts
 activate
 cd /
 cd C:\Users\youssef\Desktop\ecommerce\backend\ecommerce\ecommerce
