@@ -13,24 +13,22 @@ const style={
         backgroundColor:'#7b1fa2',
         marginTop:'160px',
         textAlign:'center',
-        align:'center'
+        align:'center',
+        width:'auto'
 
     },
     Toolbar:{
-
         align:'center',
         height:'auto',
         textAlign:'center',
         margin:'auto',
+        
 
     },
-    line:{
-        width:'100%',
-        height:'1px',
-        backgroundColor:'white',
-        color:'white',
-        zIndex:'300'
+    Subscribe:{
+        margin:'auto'
     }
+    
 }
 
 class Footer extends Component {
@@ -44,7 +42,7 @@ class Footer extends Component {
 
            <React.Fragment>
                <AppBar position='static' style={style.containerUper}>
-                   <Toolbar style={style.Toolbar} >
+                   <Toolbar style={style.Subscribe} >
                          <Subscribe />
                    </Toolbar>
                    <Toolbar style={style.Toolbar} >

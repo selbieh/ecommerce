@@ -185,7 +185,6 @@ class SignUp extends Component {
           </Typography>
        
           <form className={classes.form} onSubmit={this.submitHandler}>
-          <DjangoCSRFToken/>
 
             <Grid container spacing={2}>
               <Grid item xs={12} >
@@ -293,6 +292,8 @@ class SignUp extends Component {
                 </Link>
               </Grid>
             </Grid>
+            <DjangoCSRFToken/>
+
           </form>
         </div>
         

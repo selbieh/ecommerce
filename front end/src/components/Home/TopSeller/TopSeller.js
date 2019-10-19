@@ -22,8 +22,10 @@ class TopSeller extends Component {
     
         return (
             <div >
+                 <Grid container  spacing={10} justify="center">
+                <Grid item xs={10} ></Grid>
                  <Typography component="h2" variant="h3" align='center' style={{margin:'120px',color:'gray'}} gutterBottom>
-                      {this.props.lang ==='en'? <React.Fragment>.  Top  <span style={{color:"#7b1fa2"}}>seller</span> this month </React.Fragment> :<React.Fragment>.  ألأكثر <span style={{color:"#7b1fa2"}}>مبيعات</span> خلال الشهر</React.Fragment> } 
+                      {this.props.lang ==='en'? <React.Fragment>  Top  <span style={{color:"#7b1fa2"}}>seller</span> this month </React.Fragment> :<React.Fragment>.  ألأكثر <span style={{color:"#7b1fa2"}}>مبيعات</span> خلال الشهر</React.Fragment> } 
                         </Typography>
                        
 
@@ -39,6 +41,9 @@ class TopSeller extends Component {
                         </Grid>
                         ))}
                     </Grid>
+                    </Grid> 
+
+            
                     
 
                     

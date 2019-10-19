@@ -49,12 +49,12 @@ class App extends Component {
 
 
 
+      <div className="App">
 
 
-      <React.Fragment>
-         <Navbar {...this.props}/>
+      <React.Fragment >
+         <Navbar {...this.props} />
          <CssBaseline />
-         <div className="App">
         <HomeWithAnimate {...this.props}/>
 
   
@@ -88,6 +88,8 @@ class App extends Component {
         <Route path='/contactus' exact component={ContatactUs}/>
         <Route path='/about-us' component={AboutUS} exact />
         <Route path='/my-orders' exact component={MyOrders} {...this.props}/>
+        <Route path='/registration-confirm-mail/:token/' exact component={RegisterConfirmMail} {...this.props}/>
+
 
 
         <Route path='/login' exact component={Login} {...this.props}/>
@@ -106,11 +108,12 @@ class App extends Component {
 
 
    
-      </div>
       <Footer/>
 
       
 </React.Fragment>
+</div>
+
     );
   }else{
     return( 

@@ -8,7 +8,6 @@ export const asyncFetchProduct=()=>{
         axios.get('/products/')
         .then(re=>{
             dispatch(actions.getProduct(re.data))
-            console.log(re.data)
             dispatch(actions.getProductEnd())
         })
     }

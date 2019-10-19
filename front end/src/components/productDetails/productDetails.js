@@ -117,7 +117,7 @@ class productDetails extends Component {
           
             <Zoom in> 
                 
-              <div align='center'>
+              <div align='center' style={{maxWidth:'86%',margin:'auto'}}>
                     <div >
                             <img src={this.state.image} alt='hi' className={classes.Image} />
                     </div>

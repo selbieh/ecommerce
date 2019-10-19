@@ -5,7 +5,7 @@ export const trans={
     },
     aboutGlassOffice:{
         'ar':'عن جلاس اوفيس',
-        'en':'about Glass Office'
+        'en':'about us'
     },
     wellcome:{
         'ar':'اهلا بكم في عالم جلاس اوفيس للاثاث المكتبي',
@@ -200,7 +200,7 @@ export const trans={
        'ar':'جلاس اوفيس'
    },
    glassOfficeIntro:{
-       'en':'but now with Glass Office and get 30 % discount plus Tow years warranty for  Manufacturing defects',
+       'en':'buy now and get 30 % discount plus Tow years warranty for  Manufacturing defects',
        'ar':"افرش مكتبك دلوقتي مع جلاس اوفيس واستمتع بخصم 30 % وضمان لمد عامين ضد عيوب الصناعه"
    },
    prevOrder:{

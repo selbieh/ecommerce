@@ -9,6 +9,8 @@ import {connect} from 'react-redux';
 import {trans} from '../../../store/language/LangObject.js';
 import axios from '../../Axios/axios'
 import { Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
+
 
 
 const styles = {
@@ -88,14 +90,15 @@ class suscribe extends Component  {
 
     }else{
       return(
-
-        <Paper className={classes.root} elevation={1}>
+<Box justifyItems='center'>
+        <Paper className={classes.root} elevation={0} style={{width:'100%'}}>
         <InputBase className={classes.input} placeholder={trans.suscribeNewProduct[this.props.lang]} type="email" onChange={(e)=>this.emailHandler(e)}/>
         <Divider className={classes.divider} />
         <IconButton color="primary" className={classes.iconButton} aria-label="Directions" disabled={! this.state.valid}onClick={this.emailSubscribe}>
           <Email />
         </IconButton>
       </Paper>
+      </Box>
       )
 
     }

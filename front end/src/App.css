@@ -3,6 +3,7 @@
 .App {
     background-color:whitesmoke;
     width: 100%;
+    max-width:'auto';
     overflow: hidden;
 }
 

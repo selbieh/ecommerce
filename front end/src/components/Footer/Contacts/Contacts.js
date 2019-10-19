@@ -16,6 +16,7 @@ const styles = {
     opacity:'0.75',
     backgroundColor:'#7b1fa2',
     color:'white',
+    textAlign:'center'
     
   },
 };

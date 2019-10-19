@@ -2,5 +2,5 @@ cd /
 cd C:\Users\youssef\Desktop\ecommerce\backend\venv\Scripts
 activate
 cd /
-cd C:\Users\youssef\Desktop\ecommerce\backend\ecommerce\ecommerce
+cd C:\Users\youssef\Desktop\glass office from heroku\glass-office
 py manage.py runserver

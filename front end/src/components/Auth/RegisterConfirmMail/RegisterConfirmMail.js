@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import axios from 'axios';
+import axios from '../../Axios/axios';
 import Spinner from '../../spinner/spinner';
 import Modal from '../../Modal/Modal';
 import Container from '@material-ui/core/Container';
@@ -18,7 +18,7 @@ class RegisterConfirmMail extends Component {
 
     componentDidMount(){
         const token =this.props.match.params.token
-        axios.post('http://127.0.0.1:8000/rest-auth/registration/verify-email/',{key:token })
+        axios.post('/rest-auth/registration/verify-email/',{key:token })
          
         .then(res=>{
             //condetional setState to prevent infint loop warning and memory los 

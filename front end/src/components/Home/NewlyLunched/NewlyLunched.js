@@ -23,9 +23,9 @@ class NewlyLunched extends Component {
         return (
             <div >
                  <Grid container  spacing={10} justify="center">
-                    <Grid item xs={10} >
-                    <Typography component="h2" variant="h3" align='center' style={{margin:'120px',color:'gray'}} gutterBottom>
-                    {this.props.lang==='ar'?<React.Fragment>.  قائمه <span style={{color:"#7b1fa2"}}>المعروض</span> حديثا</React.Fragment> :<React.Fragment>Newly <span style={{color:"#7b1fa2"}}>joined</span> proudcts</React.Fragment>}
+                 <Grid item xs={10} ></Grid>
+                 <Typography component="h2" variant="h3" align='center' style={{margin:'120px',color:'gray'}} gutterBottom>
+                    {this.props.lang==='ar'?<React.Fragment>.  قائمه <span style={{color:"#7b1fa2"}}>المعروض</span> حديثا</React.Fragment> :<React.Fragment>Newly <span style={{color:"#7b1fa2"}}>joined</span> proudcts.</React.Fragment>}
                     </Typography>
 
                     <Grid container  justify="center" spacing={10}>
@@ -37,7 +37,6 @@ class NewlyLunched extends Component {
                         </Grid>
                         ))}
                     </Grid> 
-                    </Grid>
                     </Grid>
 
             </div>

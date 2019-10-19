@@ -10,15 +10,15 @@ export const asyncRegister=(data)=>{
 
         axios.post('/rest-auth/registration/',data)
         .then(res=>{
-
+            console.log(res,'hh')
             dispatch(actions.register(res.data.key));
             dispatch(actions.registerEnd()) ; 
             localStorage.setItem('tokenKey',res.data.key);
 
         }).catch(err=>{
-            console.log(err.response.data)
             if (err.response.data){
-                
+                console.log(err.response.data)
+
                 const registerBackendError=err.response.data;
                 const errors={}
                 Object.keys(registerBackendError).map(obj=>{

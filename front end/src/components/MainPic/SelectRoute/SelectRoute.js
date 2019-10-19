@@ -21,7 +21,7 @@ class SelectRoute extends Component {
 
     const allClasses=['btn btn-secondary',Classes.CustomNavi].join(' ')
     return (
-      <div className="btn-group" role="group" aria-label="Basic example" >
+      <div className="btn-group" role="group" aria-label="Basic example" style={{marginTop:'auto'}}>
           <NavLink className={allClasses}  to='/' activeStyle={{backgroundColor:'#7b1fa2'}} exact >
           <Home fontSize='small'/>
          <Typography fontSize='small'>{trans.home[this.props.lang]}</Typography> </NavLink>

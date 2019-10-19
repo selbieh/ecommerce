@@ -85,7 +85,7 @@ export const  incObject=(id,quantity,token)=>{
             if (quantity >= 1){
 
             axios({
-                url:`http://127.0.0.1:8000/prodctObject/${id}/`,
+                url:`/prodctObject/${id}/`,
                 method:'patch',
                 headers: {
                     Authorization:'Token '.concat(token),

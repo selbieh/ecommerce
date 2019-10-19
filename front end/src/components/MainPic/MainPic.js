@@ -39,19 +39,16 @@ class MainPic extends Component {
 
 
 
-            <Paper className={classes.root} elevation={1}>
-                <Typography variant="h5" component="h3">
+            <Paper className={classes.root} elevation={1}  style={{width:'90%',margin:'auto'}}>
+                <Typography variant="h5" component="h3" style={{marginTop:'auto'}}>
                  {trans.glassOffice[this.props.lang]}
                 </Typography>
-                <Typography component="p">
+                <Typography component="p" >
                   {trans.glassOfficeIntro[this.props.lang]}
                 </Typography>
           </Paper>
-          <br></br>
-          <br></br>
          
-
-          <Button variant="outlined"  style={{backgroundColor:'#7b1fa2',color:'white'}}
+          <Button variant="outlined"  style={{backgroundColor:'#7b1fa2',color:'white',marginBottom:'auto',marginTop:'auto'}}
           onClick={this.aboutUs}
           >{trans.aboutGlassOffice[this.props.lang]} </Button>
 
