@@ -10,7 +10,7 @@ export const asyncRegister=(data)=>{
 
         axios.post('/rest-auth/registration/',data)
         .then(res=>{
-            console.log(res,'hh')
+            //console.log(res,'hh')
             dispatch(actions.register(res.data.key));
             dispatch(actions.registerEnd()) ; 
             localStorage.setItem('tokenKey',res.data.key);

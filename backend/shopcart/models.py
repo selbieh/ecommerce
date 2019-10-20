@@ -8,7 +8,7 @@ class productobject(models.Model):
     quantity=models.PositiveSmallIntegerField(default=1)
     product=models.ForeignKey(product,on_delete=models.CASCADE)
     def __str__(self):
-        return self.product + ' ' + str(self.quantity)
+        return self.product.name + ' ' + str(self.quantity)
 
 
 

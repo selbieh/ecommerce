@@ -64,7 +64,7 @@ export const deletItem =(id,token)=>{
 
         axios({
             method:'delete',
-            url:`/prodctObject/${id}`,
+            url:`/prodctObject/${id}/`,
             headers: {
                 Authorization:'Token '.concat(token),
             },
@@ -75,6 +75,7 @@ export const deletItem =(id,token)=>{
             //console.log(res)
         })
         .catch(er=>{
+            console.log(er)
         })
 }
 }

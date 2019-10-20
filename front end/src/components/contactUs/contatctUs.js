@@ -256,7 +256,7 @@ class contatctUs extends Component {
                     <ContactMail />
                 </Avatar>
                 
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h5" align='center'>
                     {trans.contactUs[this.props.lang]}
                 </Typography>
                     {form}         

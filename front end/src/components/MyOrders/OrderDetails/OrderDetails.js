@@ -118,13 +118,9 @@ function ccyFormat(num) {
                </Paper>
                </div>
                <br/>
-               <Paper style={{width:'80%',margin:'auto'}} align='center'>
-                    <Typography align='center' variant='h4'>
-                    <Typography color='secondary' >  {trans.fullAdresse[this.props.lang]}</Typography>     {this.props.location.state.fullAdresse}
-                    </Typography>
-                    <Typography align='center' variant='h4'>
-                    <Typography color='secondary' > {trans.Mobile[this.props.lang]}</Typography>     {this.props.location.state.mobiel}
-                    </Typography>
+               <Paper  align='center'>
+                    <Typography color='secondary' >  {trans.fullAdresse[this.props.lang]}</Typography>    <Typography color='primary' >{this.props.location.state.fullAdresse} </Typography>  
+                    <Typography color='secondary' > {trans.Mobile[this.props.lang]}</Typography>   <Typography color='primary' > {this.props.location.state.mobiel}</Typography> 
               </Paper>
   
       </React.Fragment>

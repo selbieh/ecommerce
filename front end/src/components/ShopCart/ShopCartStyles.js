@@ -12,6 +12,6 @@ export const styles = theme => ({
     marginBottom: theme.spacing(2),
   },
   table: {
-    minWidth: 650,
+    minWidth: 'auto',
   },
   });

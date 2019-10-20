@@ -67,7 +67,7 @@ class ForgetPasswrd extends Component {
          const email = this.state.email
          axios.post('/rest-auth/password/reset/',{email:email})
          .then(res=>{
-             console.log(res)
+            // console.log(res)
              if(res.status === 200){
                 this.props.history.push('/message',{message:`${trans.checkMailRestPassword[this.props.lang]}`})
              }

@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'n7kws6^_u1k*0@m56kuqu6#$y*aedeq(thtxteolr19tfz!&pb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = ['*']
@@ -208,8 +208,8 @@ SITE_ID = 1
 # REST AUTH MAIL CONFIG
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'sayed.freelancer.web@gmail.com'
-EMAIL_HOST_PASSWORD = 'passwordHere'
+EMAIL_HOST_USER = 'email'
+EMAIL_HOST_PASSWORD = 'password'
 EMAIL_PORT = 587
 #rest auth setting
 OLD_PASSWORD_FIELD_ENABLED = True
